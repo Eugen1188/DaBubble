@@ -126,7 +126,7 @@
         color: #444df2;
         transform: scale(1.1);
       }
-      > a:nth-child(1) {
+      > button:nth-child(1) {
         display: flex;
         align-items: center;
         gap: 20px;
@@ -135,6 +135,9 @@
         font-weight: 500;
         font-family: "Nunito";
         color: #444df2;
+        background: none;
+        border: none;
+        cursor: pointer;
         &:hover {
           font-weight: 700;
         }
