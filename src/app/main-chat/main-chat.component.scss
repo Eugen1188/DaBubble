@@ -8,7 +8,7 @@ main {
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 30px;
   margin: 16px;
   flex: 1;
 }
@@ -67,9 +67,25 @@ main {
   outline: 1px solid var(--light-purple);
   border-radius: 20px;
   padding: 20px;
+  transition: all 0.125s ease-in-out;
+
+  &:hover {
+    outline: 1px solid var(--medium-purple);
+  }
+  &:has(textarea:focus-visible) {
+    outline: 1px solid var(--dark-purple);
+  }
 
   textarea {
     border: none;
+    resize: none;
+    &::-webkit-resizer {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 }
 
@@ -77,6 +93,28 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  > div {
+    display: flex;
+  }
+
+  .hover-filter {
+    transition: all 0.125s ease-in-out;
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(32%) sepia(65%)
+        saturate(4488%) hue-rotate(231deg) brightness(99%) contrast(91%);
+    }
+  }
+
+  .filter-purple {
+    transition: all 0.125s ease-in-out;
+    filter: brightness(0) saturate(100%) invert(31%) sepia(69%) saturate(5770%)
+      hue-rotate(234deg) brightness(97%) contrast(96%);
+    &:hover {
+      filter: brightness(0) saturate(100%) invert(50%) sepia(32%)
+        saturate(1070%) hue-rotate(200deg) brightness(99%) contrast(92%);
+    }
+  }
 }
 
 .align-center {
