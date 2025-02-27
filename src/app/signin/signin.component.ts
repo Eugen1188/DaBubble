@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
+import { ShareddataService } from '../shareddata.service';
 
 @Component({
   selector: 'app-signin',

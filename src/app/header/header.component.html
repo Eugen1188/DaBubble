@@ -1,7 +1,11 @@
 <div class="header">
-  <div><img src="img/headerlogo.png" alt="" /></div>
-  <div class="d-none"><input type="text" placeholder="Devspace durchsuchen" /></div>
-  <div class="">
+  <div>
+    <a routerLink="/main"><img src="img/headerlogo.png" alt="" /></a>
+  </div>
+  <div class="input" *ngIf="chatmoduleenabled.chatmoduleenabled">
+    <input type="text" placeholder="Devspace durchsuchen" />
+  </div>
+  <div class="signup">
     <p>Neu bei DABubble?</p>
     <a routerLink="/signin">Konto erstellen</a>
   </div>

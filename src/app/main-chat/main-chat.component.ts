@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { ShareddataService } from '../shareddata.service';
 
 @Component({
   selector: 'app-main-chat',
@@ -9,4 +10,9 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
 })
-export class MainChatComponent {}
+export class MainChatComponent {
+  chatmodule = inject(ShareddataService);
+  constructor() {
+    this.chatmodule.chatmoduleenabled = true;
+  }
+}
