@@ -1,10 +1,12 @@
 main {
-  background-color: #eceffe;
+  background-color: var(--bg-color);
   height: 100svh;
   display: flex;
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 20px;
   margin: 16px;
@@ -47,6 +49,34 @@ main {
     left: -40px;
     z-index: 3;
   }
+}
+
+.chat-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.card-footer {
+  padding: 25px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid var(--light-purple);
+  border-radius: 20px;
+  padding: 20px;
+
+  textarea {
+    border: none;
+  }
+}
+
+.action-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .align-center {
