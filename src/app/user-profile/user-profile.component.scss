@@ -1,0 +1,66 @@
+.profile-main-cont {
+  width: 500px;
+  height: 600px;
+  border-radius: 30px 0 30px 30px;
+  font-family: "Nunito";
+  background-color: rgb(114, 161, 220);
+  padding: 45px 40px 45px 40px;
+  box-sizing: border-box;
+  gap: 38px;
+  display: flex;
+  flex-direction: column;
+  .picture-cont {
+    display: flex;
+    place-self: center;
+    img {
+      border-radius: 500px;
+    }
+  }
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32.74px;
+  }
+  .discription-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .status-cont {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        .circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            background-color: rgba(146, 200, 62, 1);
+        }
+        .status {
+            color: rgba(146, 200, 62, 1);
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 27.28px;
+        }
+
+    }
+    .info-edit {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .name {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 43.65px;
+      }
+      .edit-btn {
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 24.55px;
+        color: var(--dark-purple-text)
+      }
+    }
+  }
+}
