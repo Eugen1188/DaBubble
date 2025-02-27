@@ -12,6 +12,10 @@
   src: url("/public/fonts/Nunito-VariableFont_wght.ttf") format("woff");
 }
 
+:root {
+  --light-purple: rgba(173, 176, 217, 1);
+}
+
 * {
   margin: 0;
   padding: 0;
