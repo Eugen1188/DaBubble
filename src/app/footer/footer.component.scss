@@ -1,0 +1,13 @@
+.footer {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  > a {
+    font-family: "Figtree";
+    font-weight: 400;
+    font-size: 18px;
+    color: #797ef3;
+    text-decoration: none;
+  }
+}
