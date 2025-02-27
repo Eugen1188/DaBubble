@@ -1,15 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 @font-face {
   font-family: "Figtree";
-  src: url("/public/fonts/Figtree-VariableFont_wght.ttf") format("woff");
+  src: url("/fonts/Figtree-VariableFont_wght.ttf") format("woff");
 }
 
 @font-face {
   font-family: "Nunito";
-  src: url("/public/fonts/Nunito-VariableFont_wght.ttf") format("woff");
+  src: url("/fonts/Nunito-VariableFont_wght.ttf") format("woff");
 }
 
 :root {
@@ -49,4 +47,8 @@
     background-color: #eceefe !important;
     border-radius: 30px !important;
   }
+}
+
+a {
+  text-decoration: none;
 }

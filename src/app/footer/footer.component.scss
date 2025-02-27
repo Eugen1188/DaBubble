@@ -9,5 +9,11 @@
     font-size: 18px;
     color: #797ef3;
     text-decoration: none;
+    padding: 10px 15px;
+    &:hover {
+      border: 1px solid #adb0d9;
+      padding: 9px 14px;
+      border-radius: 30px;
+    }
   }
 }
