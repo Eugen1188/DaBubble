@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { MaincomponentComponent } from './maincomponent/maincomponent.component';
-
 import { MainChatComponent } from './main-chat/main-chat.component';
 import { SigninComponent } from './signin/signin.component';
 

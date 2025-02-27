@@ -1,6 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/public/fonts/Figtree-VariableFont_wght.ttf") format("woff");
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/public/fonts/Nunito-VariableFont_wght.ttf") format("woff");
+}
+
 * {
   margin: 0;
   padding: 0;
+}
+
+.menu-box {
+  padding: 10px 0 10px 0 !important;
+  border-radius: 30px !important;
+  padding: 30px !important;
+  background-color: #ffffff !important;
+  > div:nth-child(1) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    align-items: center !important;
+  }
+}
+
+.cdk-overlay-pane {
+  top: 21px !important;
+  position: absolute !important;
+}
+
+.menu-box-btn {
+  width: 140px !important;
+  text-align: center !important;
+  &:hover {
+    background-color: #eceefe !important;
+    border-radius: 30px !important;
+  }
 }

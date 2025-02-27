@@ -1,7 +1,87 @@
 .header {
   padding: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  > div:nth-child(1) {
+    width: 30%;
+  }
+  > div:nth-child(2) {
+    border-radius: 42px;
+    outline: none;
+    width: calc(100% - 94px);
+    background-repeat: no-repeat;
+    background-position: 99%;
+    padding: 17.5px 45px 17.5px 45px;
+    background-color: #ffff;
+    background-image: url(/img/icons.png);
+    > input {
+      border: none;
+      outline: none;
+      &:hover {
+        outline: none;
+      }
+    }
+  }
+  > div:nth-child(3) {
+    width: 24%;
+    height: 70px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    flex-direction: column;
+    > p:nth-child(1) {
+      font-family: "Nunito";
+      font-weight: 400;
+      font-size: 18px;
+      color: #000000;
+      text-decoration: none;
+    }
+    > a:nth-child(2) {
+      font-family: "Figtree";
+      font-weight: 400;
+      font-size: 18px;
+      color: #797ef3;
+      text-decoration: none;
+      padding: 10px 15px;
+      &:hover {
+        border: 1px solid #adb0d9;
+        padding: 9px 14px;
+        border-radius: 30px;
+      }
+    }
+  }
+
   img {
     width: fit-content;
     height: fit-content;
+  }
+}
+
+.d-none {
+  display: none !important;
+}
+
+.user-menu {
+  width: 50%;
+  height: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  > div:nth-child(1) {
+    height: 70px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 82%;
+    > img:nth-child(2) {
+      margin-left: 5%;
+    }
+    > span:nth-child(1) {
+      font-family: "Nunito";
+      font-weight: 700;
+      font-size: 32px;
+      color: #000000;
+    }
   }
 }
