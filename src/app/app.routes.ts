@@ -4,6 +4,7 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
 import { MainChatComponent } from './main-chat/main-chat.component';
 import { SigninComponent } from './signin/signin.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SignupComponent } from './signup/signup.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -11,5 +12,5 @@ export const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'chat', component: MainChatComponent },
   { path: 'user-profile', component: UserProfileComponent },
-
+  { path: 'singup', component: SignupComponent },
 ];
