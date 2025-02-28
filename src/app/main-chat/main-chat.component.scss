@@ -55,7 +55,7 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: flex-end;
+  // justify-content: flex-end;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -146,8 +146,8 @@ li {
 
 .message {
   display: flex;
-  max-width: 80%;
   gap: 24px;
+  text-align: justify;
   > img {
     height: 70px;
     aspect-ratio: 1;
@@ -156,6 +156,7 @@ li {
   .content-container {
     flex-direction: column;
     gap: 8px;
+    max-width: 80%;
   }
 
   .content-container,
@@ -173,12 +174,14 @@ li {
 }
 
 .message.reverse {
-  .message-header,
   .message-footer,
   .content-main,
   .content-container {
     justify-content: flex-end;
     text-align: end;
+  }
+  .message-header {
+    direction: rtl;
   }
 }
 
