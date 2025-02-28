@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
-import { ShareddataService } from '../shareddata.service';
+import { GoogleAuthProvider, Auth } from '@angular/fire/auth';
+import { signInWithPopup } from '@firebase/auth';
 
 @Component({
   selector: 'app-signin',
@@ -9,4 +10,22 @@ import { ShareddataService } from '../shareddata.service';
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
 })
-export class SigninComponent {}
+export class SigninComponent {
+  googleAuthProvider = new GoogleAuthProvider();
+  auth = inject(Auth);
+  constructor(private router: Router) {}
+
+  signinwithgoogle() {
+    signInWithPopup(this.auth, this.googleAuthProvider)
+      .then((response) => {
+        this.redirectiontodashboard();
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  }
+
+  redirectiontodashboard() {
+    this.router.navigate(['/user-profile']);
+  }
+}
