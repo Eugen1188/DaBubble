@@ -20,4 +20,5 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   chatmoduleenabled = inject(ShareddataService);
+ 
 }

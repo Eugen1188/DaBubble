@@ -5,7 +5,7 @@
   <div class="input" *ngIf="chatmoduleenabled.chatmoduleenabled">
     <input type="text" placeholder="Devspace durchsuchen" />
   </div>
-  <div class="signup">
+  <div class="signup" *ngIf="!chatmoduleenabled.accountcreation">
     <p>Neu bei DABubble?</p>
     <a routerLink="/singup">Konto erstellen</a>
   </div>
