@@ -141,10 +141,67 @@ li {
   }
 }
 
+.message {
+  display: flex;
+  max-width: 80%;
+  gap: 24px;
+  > img {
+    height: 70px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+  .content-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .content-container,
+  .message-header,
+  .content-main,
+  .message-footer {
+    display: flex;
+  }
+
+  .message-main {
+    background-color: var(--bg-color);
+    padding: 15px;
+    border-radius: 30px;
+  }
+}
+
+.message.reverse {
+  .message-header,
+  .message-footer,
+  .content-main {
+    justify-content: flex-end;
+  }
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+
+.text-align-end {
+  text-align: end;
+  justify-content: end;
+}
+
+.font-size-14 {
+  font-size: 14px;
+}
+
+.font-size-18 {
+  font-size: 18px;
+}
+
 .align-center {
   display: flex;
   align-items: center;
 }
 .gap-10 {
   gap: 10px;
+}
+
+.gap-20 {
+  gap: 20px;
 }
