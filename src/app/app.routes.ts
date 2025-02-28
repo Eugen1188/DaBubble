@@ -5,6 +5,7 @@ import { MainChatComponent } from './main-chat/main-chat.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -13,4 +14,6 @@ export const routes: Routes = [
   { path: 'chat', component: MainChatComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'singup', component: SignupComponent },
+  { path: 'forgotpassword', component: ForgotpasswordComponent },
+
 ];

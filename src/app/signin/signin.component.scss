@@ -148,14 +148,21 @@
       width: 100%;
       display: flex;
       justify-content: space-evenly;
-      > a {
+      > button {
         border-radius: 25px;
         padding: 12px 25px;
         font-family: "Nunito";
         font-weight: 700;
         font-size: 18px;
         border: 1px solid #797ef3;
-        &:hover {
+        background: none;
+        cursor: pointer;
+        &:disabled {
+          background-color: #686868;
+          color: #ffffff;
+          cursor: unset;
+        }
+        &:hover:not(:disabled) {
           background-color: #444df2;
           color: #ffffff;
         }

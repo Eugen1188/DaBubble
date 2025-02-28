@@ -1,4 +1,4 @@
-<div class="signinbox">
+<form class="signinbox" #userauth="ngForm" (ngSubmit)="signin()">
   <div>
     <div><h1>Anmeldung</h1></div>
     <div>
@@ -12,10 +12,28 @@
   </div>
   <div>
     <div>
-      <div><input type="email" placeholder="beispielname@email.com" /></div>
-      <div><input type="password" placeholder="Passwort" /></div>
+      <div>
+        <input
+          type="email"
+          #email="ngModel"
+          required
+          name="email"
+          [(ngModel)]="user.email"
+          placeholder="beispielname@email.com"
+        />
+      </div>
+      <div>
+        <input
+          #password="ngModel"
+          required
+          name="password"
+          [(ngModel)]="user.password"
+          type="password"
+          placeholder="Passwort"
+        />
+      </div>
     </div>
-    <div><a routerLink="/Passwort vergessen?">Passwort vergessen?</a></div>
+    <div><a routerLink="/forgotpassword">Passwort vergessen?</a></div>
   </div>
   <div>
     <div class="divider">ODER</div>
@@ -26,6 +44,11 @@
         <img src="/img/Google.png" alt="" /> Anmelden mit Google
       </button>
     </div>
-    <div><a href="">Anmelden</a><a href="/chat">Gäste-Login</a></div>
+    <div>
+      <button [disabled]="userauth.invalid">Anmelden</button
+      ><button (click)="redirectiontodashboard()" href="/chat">
+        Gäste-Login
+      </button>
+    </div>
   </div>
-</div>
+</form>
