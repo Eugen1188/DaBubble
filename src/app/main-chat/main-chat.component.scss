@@ -58,6 +58,13 @@ main {
   // justify-content: flex-end;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-bottom: 16px;
+  min-height: 0;
+  height: 100%;
+}
+
+.chat-content > li:last-child {
+  margin-top: auto; /* Schiebt die letzten Nachrichten nach unten */
 }
 
 .card-footer {
