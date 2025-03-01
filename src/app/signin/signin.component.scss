@@ -10,6 +10,9 @@
   flex-direction: column;
   border-radius: 30px;
   background-color: #ffffff;
+  @media (max-width: 743px) {
+    width: 70%;
+  }
   > div:nth-child(1) {
     > div:nth-child(1) {
       > h1:nth-child(1) {
@@ -148,6 +151,11 @@
       width: 100%;
       display: flex;
       justify-content: space-evenly;
+      @media (max-width: 446px) {
+        justify-content: unset;
+        gap: 15px;
+        flex-direction: column;
+      }
       > button {
         border-radius: 25px;
         padding: 12px 25px;

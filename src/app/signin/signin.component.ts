@@ -11,7 +11,7 @@ import { UserService } from '../shared.service';
   selector: 'app-signin',
   imports: [RouterLink, MatDividerModule, FormsModule],
   templateUrl: './signin.component.html',
-  styleUrl: './signin.component.scss',
+  styleUrls: ['./signin.component.scss'],
 })
 export class SigninComponent {
   disabled = true;
