@@ -9,6 +9,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { AvatarselectionComponent } from './avatarselection/avatarselection.component';
 import { ContactbarComponent } from './contactbar/contactbar.component';
+import { AddChannelComponent } from './add-channel/add-channel.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -21,4 +22,5 @@ export const routes: Routes = [
   { path: 'resetpassword', component: ResetpasswordComponent },
   { path: 'avatarselection', component: AvatarselectionComponent },
   { path: 'contactbar', component: ContactbarComponent },
+  { path: 'add-channel', component: AddChannelComponent },
 ];

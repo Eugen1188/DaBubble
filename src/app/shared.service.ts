@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class SharedService {
+export class UserService {
   constructor(private router: Router) {}
   chatmoduleenabled = false;
   accountcreation = false;
