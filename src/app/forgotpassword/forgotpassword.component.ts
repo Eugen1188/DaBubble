@@ -4,9 +4,9 @@ import { FooterComponent } from '../footer/footer.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.class';
-import { ShareddataService } from '../shareddata.service';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../shared.service';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -23,7 +23,7 @@ import { RouterLink } from '@angular/router';
 export class ForgotpasswordComponent {
   user = new User();
   submitted = false;
-  accountcreationenabled = inject(ShareddataService);
+  accountcreationenabled = inject(UserService);
 
   auth = getAuth();
 

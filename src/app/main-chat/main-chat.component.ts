@@ -2,7 +2,7 @@ import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { ShareddataService } from '../shareddata.service';
+import { UserService } from '../shared.service';
 
 @Component({
   selector: 'app-main-chat',
@@ -11,7 +11,7 @@ import { ShareddataService } from '../shareddata.service';
   styleUrl: './main-chat.component.scss',
 })
 export class MainChatComponent implements OnInit, AfterViewInit {
-  chatmodule = inject(ShareddataService);
+  chatmodule = inject(UserService);
 
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
