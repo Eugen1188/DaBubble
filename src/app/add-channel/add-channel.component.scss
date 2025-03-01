@@ -16,40 +16,41 @@
     gap: 20px;
     flex-direction: column;
     button {
-        width: 125px;
-        height: 49px;
-        // padding: 12px 25px 12px 25px;
-        background-color: var(--dark-purple);
-        border-radius: 25px;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: 700;
-        font-family: "Nunito";
-        place-self: end;
+      width: 125px;
+      height: 49px;
+      // padding: 12px 25px 12px 25px;
+      background-color: var(--dark-purple);
+      border-radius: 25px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: "Nunito";
+      place-self: end;
     }
   }
   .input-cont {
     position: relative;
     &::before {
-        content: "#";
-        position: absolute;
-        left: 24px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 26px;
-        z-index: 1;
-        color: rgba(104, 104, 104, 1);
+      content: "#";
+      position: absolute;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 26px;
+      z-index: 1;
+      color: rgba(104, 104, 104, 1);
     }
     .channel-name {
-        padding-left: 50px;
-        &::placeholder {
-            color: rgba(104, 104, 104, 1);
-        }
+      padding-left: 50px;
+      &::placeholder {
+        color: rgba(104, 104, 104, 1);
+      }
     }
   }
-  input {
+  input,
+  textarea {
     outline: none;
     box-sizing: border-box;
     border-radius: 30px;
@@ -60,10 +61,10 @@
     font-weight: 400;
     cursor: pointer;
     &:hover {
-        border: 1px solid var(--medium-purple);
+      border: 1px solid var(--medium-purple);
     }
     &:focus-visible {
-        border: 1px solid var(--dark-purple-text);
+      border: 1px solid var(--dark-purple-text);
     }
   }
   .add-channel-header {
@@ -93,5 +94,10 @@
   }
   .channel-description {
     padding: 20px;
+    min-height: 60px;
+    max-height: 170px;
+    overflow-y: hidden;
+    resize: none;
+    transition: height 0.3s;
   }
 }

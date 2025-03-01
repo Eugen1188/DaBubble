@@ -25,7 +25,15 @@
       <div class="headline">Beschreibung</div>
       <div class="optional">(optional)</div>
     </div>
-    <input class="channel-description" type="text" />
+    <textarea
+      class="channel-description"
+      type="text"
+      name=""
+      id=""
+      (input)="adjustTextareaHeight($event)"
+      (blur)="shrinkTextarea($event)"
+      (focus)="expandTextarea($event)"
+    ></textarea>
     <button [disabled]="!channelForm.valid">Erstellen</button>
   </form>
 </div>

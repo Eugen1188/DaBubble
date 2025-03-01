@@ -21,4 +21,24 @@ export class AddChannelComponent {
     console.log("submit");
   }
 
+  adjustTextareaHeight(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    if (textarea.scrollHeight > 90) {
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    } else {
+      textarea.style.height = '90px';
+    }
+  }
+
+  expandTextarea(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = '90px';
+  }
+
+  shrinkTextarea(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = '60px';
+  }
+
 }
