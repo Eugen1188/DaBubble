@@ -2,10 +2,11 @@
   background-color: #5f66ee;
   width: 100%;
   height: 100vh;
-  background-image: url(/img/Logo.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow-x: none;
-  overflow-y: none;
-
+  > div:nth-child(1) {
+    background-image: url(/img/Logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+  }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 import * as AOS from 'aos';
 
 @Component({
@@ -11,7 +12,11 @@ import * as AOS from 'aos';
 export class AppComponent implements OnInit {
   title = 'DaBubble';
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngOnInit() {
-    AOS.init();
+    if (isPlatformBrowser(this.platformId)) {
+      AOS.init();
+    }
   }
 }
