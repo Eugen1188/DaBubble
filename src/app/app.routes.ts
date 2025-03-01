@@ -8,6 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { AvatarselectionComponent } from './avatarselection/avatarselection.component';
+import { ContactbarComponent } from './contactbar/contactbar.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -19,5 +20,5 @@ export const routes: Routes = [
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'resetpassword', component: ResetpasswordComponent },
   { path: 'avatarselection', component: AvatarselectionComponent },
-
+  { path: 'contactbar', component: ContactbarComponent },
 ];
