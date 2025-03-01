@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { AvatarselectionComponent } from './avatarselection/avatarselection.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -14,8 +15,9 @@ export const routes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'chat', component: MainChatComponent },
   { path: 'user-profile', component: UserProfileComponent },
-  { path: 'singup', component: SignupComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'avatarselection', component: AvatarselectionComponent },
 
 ];

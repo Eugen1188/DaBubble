@@ -3,8 +3,8 @@ import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ShareddataService } from '../shareddata.service';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../shared.service';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +19,5 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  chatmoduleenabled = inject(ShareddataService);
- 
+  chatmoduleenabled = inject(UserService);
 }

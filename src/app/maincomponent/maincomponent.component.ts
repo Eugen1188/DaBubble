@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SigninComponent } from '../signin/signin.component';
-import { ShareddataService } from '../shareddata.service';
+import { UserService } from '../shared.service';
 
 @Component({
   selector: 'app-maincomponent',
@@ -11,7 +11,7 @@ import { ShareddataService } from '../shareddata.service';
   styleUrl: './maincomponent.component.scss',
 })
 export class MaincomponentComponent {
-  chatmoduleenabled = inject(ShareddataService);
+  chatmoduleenabled = inject(UserService);
   constructor() {
     this.chatmoduleenabled.accountcreation = false;
   }
