@@ -3,12 +3,15 @@ export class Message {
   message: string;
   date: string;
   time: string;
-  messages: [] = [];
+  newDay: boolean;
+  avatar: string;
 
   constructor(obj?: any) {
     this.name = obj ? obj.name : '';
     this.message = obj ? obj.message : '';
     this.date = obj ? obj.date : '';
     this.time = obj ? obj.time : '';
+    this.newDay = obj ? obj.newDay : false;
+    this.avatar = obj ? obj.avatar : '';
   }
 }
