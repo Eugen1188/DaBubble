@@ -1,15 +1,31 @@
 <div class="add-channel-cont">
-    <div class="add-channel-header">
-        <div class="add-channel-text">Channel erstellen</div>
-        <div><img src="img/close.png" alt=""></div>
+  <div class="add-channel-header">
+    <div class="add-channel-text">Channel erstellen</div>
+    <div class="close-cont" onclick="closeScree()">
+      <img src="img/close.png" alt="" />
     </div>
-    <div class="description">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein  #marketing zum Beispiel.</div>
+  </div>
+  <div class="description">
+    Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+    themenbezogen sein #marketing zum Beispiel.
+  </div>
+  <form (ngSubmit)="onSubmit()" #channelForm="ngForm">
     <div class="headline">Channel-Name</div>
-    <input class="channel-name" type="text">
-    <div class="headline-optional">
-        <div class="headline">Beschreibung</div>
-        <div class="optional">(optional)</div>
+    <div class="input-cont">
+      <input
+        class="channel-name"
+        type="text"
+        placeholder="z.B. Kooperationsprojekte"
+        [(ngModel)]="channelName"
+        name="channelName"
+        required
+      />
     </div>
-    <input class="channel-description" type="text">
-
+    <div class="headline-optional">
+      <div class="headline">Beschreibung</div>
+      <div class="optional">(optional)</div>
+    </div>
+    <input class="channel-description" type="text" />
+    <button [disabled]="!channelForm.valid">Erstellen</button>
+  </form>
 </div>
