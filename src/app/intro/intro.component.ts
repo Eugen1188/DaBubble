@@ -13,6 +13,6 @@ export class IntroComponent {
   ngOnInit(): void {
     setTimeout(() => {
       this.router.navigate(['/main']);
-    }, 10000);
+    }, 3500);
   }
 }
