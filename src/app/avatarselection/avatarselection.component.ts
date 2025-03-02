@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -22,23 +22,24 @@ export class AvatarselectionComponent {
   shareddata = inject(UserService);
   auth = getAuth();
   user: User;
+  isOverlayActive = false;
   profilephoto = 'img/profilephoto.png';
   currentUser = this.auth.currentUser;
   newPassword: string;
+  @ViewChild('loginbutton') loginbutton!: ElementRef<HTMLButtonElement>;
 
   constructor(public firestore: Firestore, private userService: UserService) {
     this.user = this.userService.getUser();
     this.newPassword = this.user.password;
-    console.log(this.auth, this.user.email, this.user.password);
   }
 
   async selectphoto(profilephoto: string) {
     this.profilephoto = profilephoto;
     this.user.profilephoto = this.profilephoto;
-    console.log(this.user);
   }
 
   async login() {
+    this.isOverlayActive = true;
     await createUserWithEmailAndPassword(
       this.auth,
       this.user.email,
@@ -61,12 +62,13 @@ export class AvatarselectionComponent {
       .then(() => {
         setTimeout(() => {
           this.shareddata.redirectiontologinpage();
-        }, 1000);
+        }, 2000);
       })
       .catch((error) => {
         console.log('Error:', error);
         console.log('Email:', this.user.email);
         console.log('Password:', this.user.password);
+        this.isOverlayActive = false;
       });
   }
 }

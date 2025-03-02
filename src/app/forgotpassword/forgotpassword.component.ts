@@ -21,6 +21,7 @@ import { UserService } from '../shared.service';
   styleUrl: './forgotpassword.component.scss',
 })
 export class ForgotpasswordComponent {
+  isOverlayActive = false;
   user = new User();
   submitted = false;
   accountcreationenabled = inject(UserService);
@@ -32,6 +33,7 @@ export class ForgotpasswordComponent {
     this.accountcreationenabled.accountcreation = true;
   }
   async onSubmit(emailform: NgForm) {
+    this.isOverlayActive = true;
     await sendPasswordResetEmail(this.auth, this.user.email)
       .then(() => {
         console.log('send');
@@ -46,7 +48,8 @@ export class ForgotpasswordComponent {
     emailform.reset();
 
     setTimeout(() => {
+      this.isOverlayActive = false;
       this.submitted = false;
-    }, 1000);
+    }, 1500);
   }
 }

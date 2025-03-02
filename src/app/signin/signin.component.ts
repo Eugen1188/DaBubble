@@ -2,7 +2,11 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { GoogleAuthProvider, Auth } from '@angular/fire/auth';
-import { signInWithEmailAndPassword, signInWithPopup } from '@firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from '@firebase/auth';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.class';
 import { UserService } from '../shared.service';
@@ -21,25 +25,22 @@ export class SigninComponent {
   user = new User();
   constructor(private router: Router) {}
 
-  signin() {
-    signInWithEmailAndPassword(this.auth, this.user.email, this.user.password)
-      .then((response) => {
-        this.shareddata.redirectiontodashboard();
-        console.log('logged in');
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+  async signin() {
+    try {
+      await signInWithEmailAndPassword(
+        this.auth,
+        this.user.email,
+        this.user.password
+      );
+      this.shareddata.redirectiontodashboard();
+    } catch (error) {}
   }
 
-  signinwithgoogle() {
-    signInWithPopup(this.auth, this.googleAuthProvider)
-      .then((response) => {
-        this.shareddata.redirectiontodashboard();
-        console.log('logged in');
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+  async signinwithgoogle() {
+    try {
+      await signOut(this.auth); // Ensure session reset
+      await signInWithPopup(this.auth, this.googleAuthProvider);
+      this.shareddata.redirectiontodashboard();
+    } catch (error) {}
   }
 }
