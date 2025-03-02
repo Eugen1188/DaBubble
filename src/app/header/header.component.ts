@@ -31,10 +31,19 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTriggerRef!: MatMenuTrigger;
-
+  showmodifycontent = false;
   displayName: string | null = null;
   user: User | null = null;
   auth = inject(Auth);
+  opened = 0;
+  show() {
+    this.opened++;
+    this.showmodifycontent = true;
+  }
+
+  showmenu() {
+    this.showmodifycontent = false;
+  }
 
   chatmoduleenabled = inject(UserService);
   ngOnInit() {

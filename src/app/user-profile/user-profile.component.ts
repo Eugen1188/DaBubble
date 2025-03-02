@@ -14,6 +14,7 @@ import { getAuth, User, updateProfile } from 'firebase/auth';
 export class UserProfileComponent implements OnInit {
   newname: string = '';
   @Input() menuTrigger!: MatMenuTrigger;
+  @Input() showmodifycontent: boolean = false;
   auth = getAuth();
   user: User | null = null;
   displayName: string | null = null;
@@ -37,10 +38,11 @@ export class UserProfileComponent implements OnInit {
 
   async modify() {
     this.modifyinfos = true;
-    this.newname = this.user?.displayName ?? ''; // Provide a default value
+    this.newname = this.user?.displayName ?? ''; 
   }
 
   closeMenu() {
+    this.showmodifycontent = false;
     this.menuTrigger.closeMenu();
   }
 
