@@ -159,6 +159,7 @@ export class MainChatComponent implements OnInit, AfterViewInit {
 
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
+    this.chatmodule.accountcreation = false
   }
 
   ngOnInit(): void {

@@ -38,7 +38,6 @@ export class SigninComponent {
 
   async signinwithgoogle() {
     try {
-      await signOut(this.auth); // Ensure session reset
       await signInWithPopup(this.auth, this.googleAuthProvider);
       this.shareddata.redirectiontodashboard();
     } catch (error) {}

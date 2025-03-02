@@ -20,7 +20,7 @@ export class UserService {
   }
 
   redirectiontodashboard() {
-    this.router.navigate(['/user-profile']);
+    this.router.navigate(['/chat']);
   }
 
   redirectiontologinpage() {
