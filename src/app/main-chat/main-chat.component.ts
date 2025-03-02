@@ -5,10 +5,17 @@ import { MatDividerModule } from '@angular/material/divider';
 import { UserService } from '../shared.service';
 import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-main-chat',
-  imports: [MatIconModule, MatButtonModule, MatDividerModule, CommonModule],
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+    CommonModule,
+    HeaderComponent,
+  ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
 })

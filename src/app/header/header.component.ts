@@ -20,4 +20,6 @@ import { UserService } from '../shared.service';
 })
 export class HeaderComponent {
   chatmoduleenabled = inject(UserService);
+
+  
 }
