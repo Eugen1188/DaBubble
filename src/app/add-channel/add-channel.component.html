@@ -1,39 +1,59 @@
-<div class="add-channel-cont" data-aos="flip-up">
-  <div class="add-channel-header">
-    <div class="add-channel-text">Channel erstellen</div>
-    <div class="close-cont" onclick="closeScree()">
-      <img src="img/close.png" alt="" />
+<div
+  class="add-channel-cont"
+  [ngClass]="{ 'change-size': !selectChannelMember }"
+  data-aos="flip-up"
+  [attr.data-aos]="!selectChannelMember ? 'flip-up' : null"
+>
+  <div *ngIf="!selectChannelMember" class="add-channel-create">
+    <div class="add-channel-header">
+      <div class="add-channel-text">Channel erstellen</div>
+      <div class="close-cont" onclick="closeScree()">
+        <img src="img/close.png" alt="" />
+      </div>
     </div>
-  </div>
-  <div class="description">
-    Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
-    themenbezogen sein #marketing zum Beispiel.
-  </div>
-  <form (ngSubmit)="onSubmit()" #channelForm="ngForm">
-    <div class="headline">Channel-Name</div>
-    <div class="input-cont">
-      <input
-        class="channel-name"
+    <div class="description">
+      Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+      themenbezogen sein #marketing zum Beispiel.
+    </div>
+    <form (ngSubmit)="onSubmit()" #channelForm="ngForm">
+      <div class="headline">Channel-Name</div>
+      <div class="input-cont">
+        <input
+          class="channel-name"
+          type="text"
+          placeholder="z.B. Kooperationsprojekte"
+          [(ngModel)]="channelName"
+          name="channelName"
+          required
+        />
+      </div>
+      <div class="headline-optional">
+        <div class="headline">Beschreibung</div>
+        <div class="optional">(optional)</div>
+      </div>
+      <textarea
+        class="channel-description"
         type="text"
-        placeholder="z.B. Kooperationsprojekte"
-        [(ngModel)]="channelName"
-        name="channelName"
-        required
-      />
+        name=""
+        id=""
+        (input)="adjustTextareaHeight($event)"
+        (blur)="shrinkTextarea($event)"
+        (focus)="expandTextarea($event)"
+      ></textarea>
+      <button [disabled]="!channelForm.valid">Erstellen</button>
+    </form>
+  </div>
+
+  <div *ngIf="selectChannelMember" class="select-member-cont">
+    <div class="add-channel-user-header">
+      <div class="headline-channel-add-user">Leute hinzufügen</div>
+      <div class="close-cont" onclick="closeScree()">
+        <img src="img/close.png" alt="" />
+      </div>
     </div>
-    <div class="headline-optional">
-      <div class="headline">Beschreibung</div>
-      <div class="optional">(optional)</div>
+    <div class="decision">
+      <input type="checkbox" />
+      <input type="checkbox" />
     </div>
-    <textarea
-      class="channel-description"
-      type="text"
-      name=""
-      id=""
-      (input)="adjustTextareaHeight($event)"
-      (blur)="shrinkTextarea($event)"
-      (focus)="expandTextarea($event)"
-    ></textarea>
-    <button [disabled]="!channelForm.valid">Erstellen</button>
-  </form>
+  </div>
 </div>

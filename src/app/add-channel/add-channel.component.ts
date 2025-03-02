@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgClass, NgIf } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 import * as AOS from 'aos';
@@ -7,7 +7,7 @@ import 'aos/dist/aos.css';
 
 @Component({
   selector: 'app-add-channel',
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass, NgIf],
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss'
 })
@@ -15,6 +15,7 @@ export class AddChannelComponent {
 
   channelName: string = "";
   channelDescription: string = "";
+  selectChannelMember: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -31,6 +32,9 @@ export class AddChannelComponent {
 
   onSubmit() {
     console.log("submit");
+    this.selectChannelMember = true;
+    console.log(this.selectChannelMember);
+
   }
 
   adjustTextareaHeight(event: Event) {
