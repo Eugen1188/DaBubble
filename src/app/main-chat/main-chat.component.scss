@@ -63,10 +63,6 @@ main {
   height: 100%;
 }
 
-.chat-content > li:last-child {
-  margin-top: auto; /* Schiebt die letzten Nachrichten nach unten */
-}
-
 .card-footer {
   padding: 25px;
 }
@@ -174,10 +170,17 @@ li {
   }
 
   .message-main {
-    background-color: var(--bg-color);
     padding: 15px;
     border-radius: 30px;
   }
+}
+
+.bg-purple {
+  background-color: var(--bg-color);
+}
+
+.medium-purple {
+  background-color: var(--medium-purple) !important;
 }
 
 .message.reverse {

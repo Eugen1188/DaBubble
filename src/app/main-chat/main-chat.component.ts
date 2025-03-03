@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { UserService } from '../shared.service';
 import { Message } from '../../models/message.class';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { HeaderComponent } from '../header/header.component';
     MatButtonModule,
     MatDividerModule,
     CommonModule,
+    FormsModule,
     HeaderComponent,
   ],
   templateUrl: './main-chat.component.html',
@@ -157,9 +159,11 @@ export class MainChatComponent implements OnInit, AfterViewInit {
     },
   ];
 
+  currentMessage: any = new Message();
+
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
-    this.chatmodule.accountcreation = false
+    this.chatmodule.accountcreation = false;
   }
 
   ngOnInit(): void {
@@ -171,6 +175,11 @@ export class MainChatComponent implements OnInit, AfterViewInit {
     this.dummyData.forEach((m: any) => {
       this.messages.push(new Message(m));
     });
+  }
+
+  newMessage() {
+    this.dummyData.push(new Message(this.currentMessage));
+    console.log(this.dummyData);
   }
   ngAfterViewInit(): void {
     // const chatContent = document.querySelector('.chat-content');
