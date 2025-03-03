@@ -11,6 +11,7 @@ main {
   border-radius: 30px;
   margin: 16px;
   flex: 1;
+  max-height: calc(100svh - 208px);
 }
 
 .card-header {
@@ -54,7 +55,7 @@ main {
 .chat-content {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  // flex: 1;
   // justify-content: flex-end;
   overflow-y: auto;
   overflow-x: hidden;
