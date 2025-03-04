@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-import { Auth } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import {
   Firestore,
@@ -21,7 +21,6 @@ import {
 export class ChatContentComponent implements OnInit {
   firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
-  messages: Message[] = [];
   currentUser: any = new User();
   dummyData = [
     {
@@ -156,14 +155,31 @@ export class ChatContentComponent implements OnInit {
     },
   ];
 
+  channels!: any;
+  messages: Message[] = [];
   currentMessage: any = new Message();
+
+  unsubUser!: () => void;
 
   ngOnInit(): void {
     this.getMessages();
-    this.currentUser = this.auth.currentUser;
-    console.log(this.currentUser);
+    this.setCurrentUser();
+    this.getChannels();
 
     // this.scrollToBottom();
+  }
+
+  getChannels() {
+    this.channels = [];
+    this.unsubUser = onSnapshot(this.getCollectionRef('channels'), (list) => {
+      list.forEach((element) => {
+        this.channels.push({
+          key: element.id,
+          data: element.data(),
+        });
+      });
+    });
+    console.log(this.channels);
   }
 
   getMessages() {
@@ -172,9 +188,23 @@ export class ChatContentComponent implements OnInit {
     });
   }
 
+  setCurrentUser() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.currentUser = user;
+        console.log('User is still logged in:', user);
+      } else {
+        this.currentUser = null;
+        console.log('User is logged out');
+      }
+    });
+  }
+
   newMessage() {
-    this.dummyData.push(new Message(this.currentMessage));
-    console.log(this.dummyData);
+    if (this.currentUser) {
+      this.dummyData.push(new Message(this.currentMessage));
+      console.log('this.dummyData');
+    }
   }
   ngAfterViewInit(): void {
     // const chatContent = document.querySelector('.chat-content');
@@ -194,5 +224,9 @@ export class ChatContentComponent implements OnInit {
     //     }
     //   }, 1000);
     // }
+  }
+
+  getCollectionRef(ref: string) {
+    return collection(this.firestore, ref);
   }
 }
