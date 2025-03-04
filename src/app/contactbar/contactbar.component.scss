@@ -8,6 +8,10 @@ section {
     margin: 100px; //das margin muss wieder entfernt werden
     background-color: gainsboro; // muss wieder entfernt werden
     padding: 32px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }
 
 button {
@@ -26,43 +30,122 @@ button {
     width: 100%;
     max-width: 306px;
     height: 60px;
-  
+
 
     >div {
-      
+
         width: 100%;
         max-width: 250px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         gap: 15px;
-   
-        >img{
+
+        >img {
             width: 60px;
             height: 60px;
         }
     }
+
     >button {
         width: 40px;
         height: 40px;
-    
-    >img{
-        max-width: 40px;
-        height: 40px;
-    }
+
+        >img {
+            max-width: 40px;
+            height: 40px;
+        }
+
         &:hover {
 
-            >img{
+            >img {
                 content: url(/img/edit_square_hover.svg);
             }
         }
-    
+
         &:active {
             transform: scale(0.95);
         }
     }
 }
 
+.contactbar {
+    width: 100%;
+    max-width: 305px;
+    height: 671px;
+}
 
+.channels {
+    width: 100%;
+    height: 162px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
 
+.channelbar {
+    width: 100%;
+    height: 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    >div {
+        width: 176px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+
+        >button {
+            width: 30px;
+            height: 30px;
+
+        }
+
+        >div {
+            width: 121px;
+            height: 27px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            >span {
+                font-size: 20px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.addButton {
+    width: 30px;
+    height: 30px;
+
+    >img {
+        width: 14px;
+    }
+
+    &:hover {
+        >img {
+            content: url(/img/add-hover.svg);
+            width: 24px;
+        }
+    }
+    &:active{
+        transform: scale(0.95);
+    }
+
+}
+
+div,
+p,
+span,
+button,
+img {
+
+    border: solid;
+    border-width: 0.3px;
+}
