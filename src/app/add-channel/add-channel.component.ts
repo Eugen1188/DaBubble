@@ -9,16 +9,14 @@ import 'aos/dist/aos.css';
   selector: 'app-add-channel',
   imports: [FormsModule, NgClass, NgIf],
   templateUrl: './add-channel.component.html',
-  styleUrl: './add-channel.component.scss'
+  styleUrl: './add-channel.component.scss',
 })
 export class AddChannelComponent {
-
-  channelName: string = "";
-  channelDescription: string = "";
+  channelName: string = '';
+  channelDescription: string = '';
   selectChannelMember: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -26,15 +24,12 @@ export class AddChannelComponent {
     }
   }
 
-  closeScree() {
-
-  }
+  closeScree() {}
 
   onSubmit() {
-    console.log("submit");
+    console.log('submit');
     this.selectChannelMember = true;
     console.log(this.selectChannelMember);
-
   }
 
   adjustTextareaHeight(event: Event) {
@@ -50,8 +45,8 @@ export class AddChannelComponent {
   expandTextarea(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = '90px';
-    if(textarea.scrollHeight > 90) {
-      textarea.style.height =`${textarea.scrollHeight}px`;
+    if (textarea.scrollHeight > 90) {
+      textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }
 

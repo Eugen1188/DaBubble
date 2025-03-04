@@ -1,10 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-
+import { Auth } from '@angular/fire/auth';
+import { User } from '../../models/user.class';
+import {
+  Firestore,
+  collection,
+  doc,
+  onSnapshot,
+} from '@angular/fire/firestore';
 @Component({
   selector: 'app-chat-content',
   imports: [MatIconModule, MatButtonModule, CommonModule, FormsModule],
@@ -12,9 +19,10 @@ import { Message } from '../../models/message.class';
   styleUrl: './chat-content.component.scss',
 })
 export class ChatContentComponent implements OnInit {
+  firestore: Firestore = inject(Firestore);
+  auth = inject(Auth);
   messages: Message[] = [];
-  currentUser: string = 'Bob';
-
+  currentUser: any = new User();
   dummyData = [
     {
       name: 'Alice',
@@ -152,6 +160,9 @@ export class ChatContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMessages();
+    this.currentUser = this.auth.currentUser;
+    console.log(this.currentUser);
+
     // this.scrollToBottom();
   }
 

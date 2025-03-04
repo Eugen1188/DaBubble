@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-main-chat',
