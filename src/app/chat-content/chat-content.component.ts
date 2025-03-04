@@ -8,9 +8,12 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import {
   Firestore,
+  addDoc,
+  arrayUnion,
   collection,
   doc,
   onSnapshot,
+  updateDoc,
 } from '@angular/fire/firestore';
 @Component({
   selector: 'app-chat-content',
@@ -154,12 +157,13 @@ export class ChatContentComponent implements OnInit {
       avatar: 'avatar_1',
     },
   ];
-
+  loading: boolean = false;
   channels!: any;
   messages: Message[] = [];
   currentMessage: any = new Message();
+  currentChannel: any;
 
-  unsubUser!: () => void;
+  unsubChannel!: () => void;
 
   ngOnInit(): void {
     this.getMessages();
@@ -171,14 +175,17 @@ export class ChatContentComponent implements OnInit {
 
   getChannels() {
     this.channels = [];
-    this.unsubUser = onSnapshot(this.getCollectionRef('channels'), (list) => {
-      list.forEach((element) => {
-        this.channels.push({
-          key: element.id,
-          data: element.data(),
+    this.unsubChannel = onSnapshot(
+      this.getCollectionRef('channels'),
+      (list) => {
+        list.forEach((element) => {
+          this.channels.push({
+            key: element.id,
+            data: element.data(),
+          });
         });
-      });
-    });
+      }
+    );
     console.log(this.channels);
   }
 
@@ -200,12 +207,24 @@ export class ChatContentComponent implements OnInit {
     });
   }
 
-  newMessage() {
+  async newMessage() {
+    this.currentChannel = this.channels[0];
+
     if (this.currentUser) {
-      this.dummyData.push(new Message(this.currentMessage));
-      console.log('this.dummyData');
+      const currentChannelInFirebase = doc(
+        this.firestore,
+        'channels',
+        this.currentChannel.key
+      );
+
+      await updateDoc(currentChannelInFirebase, {
+        messages: arrayUnion(this.currentMessage.toJSON()),
+      })
+        .then(() => (this.loading = false))
+        .catch((err) => console.error(err));
     }
   }
+
   ngAfterViewInit(): void {
     // const chatContent = document.querySelector('.chat-content');
     // if (chatContent) {

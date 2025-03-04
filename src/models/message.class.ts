@@ -14,4 +14,15 @@ export class Message {
     this.newDay = obj ? obj.newDay : false;
     this.avatar = obj ? obj.avatar : '';
   }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      date: this.date,
+      time: this.time,
+      newDay: this.newDay,
+      avatar: this.avatar,
+    };
+  }
 }
