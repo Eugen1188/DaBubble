@@ -51,9 +51,15 @@
         <img src="img/close.png" alt="" />
       </div>
     </div>
-    <div class="decision">
-      <input type="checkbox" />
-      <input type="checkbox" />
-    </div>
+    <form action="">
+      <div class="decision">
+        <div><mat-radio-button value="" checked></mat-radio-button><label for="checkbox-all">Alle Mitglieder von OfficeTeam hinzufügen</label></div>
+        <div><mat-radio-button value=""></mat-radio-button><label for="checbox-choose">Bestimmte Leute hinzufügen</label></div>
+        <div><input type="text" id="choose-member"></div>
+      </div>
+      <div class="btn-cont">
+        <button>Erstellen</button>
+      </div>
+    </form>
   </div>
 </div>

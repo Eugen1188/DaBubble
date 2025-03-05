@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, NgClass, NgIf } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { FormsModule } from '@angular/forms';
 import * as AOS from 'aos';
@@ -7,7 +8,7 @@ import 'aos/dist/aos.css';
 
 @Component({
   selector: 'app-add-channel',
-  imports: [FormsModule, NgClass, NgIf],
+  imports: [FormsModule, NgClass, NgIf, MatRadioModule],
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss',
 })
