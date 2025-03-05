@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { Inject } from '@angular/core';
+
 
 @Component({
   selector: 'app-contactbar',
@@ -7,7 +11,15 @@ import { Component } from '@angular/core';
   templateUrl: './contactbar.component.html',
   styleUrl: './contactbar.component.scss'
 })
+
+@Injectable({
+  providedIn: 'root'
+})
+
+
 export class ContactbarComponent {
+  constructor(@Inject(Firestore) private firestore: Firestore) {}
+  public users: any[] = [];
   active: boolean = false;
   message: boolean = false;
   channels = [
@@ -23,41 +35,33 @@ export class ContactbarComponent {
 
   ]
 
-  contacts=[
-    {
-      name:'Frederik Beck (Du)',
-      default:'/img/man2active.svg'
-    },
-    {
-      name:'Sofia Müller',
-      default:'/img/woman1.svg'
-    },
-    {
-      name:'Noah Braun',
-      default:'/img/man1active.svg'
-    },
-    {
-      name:'Elise Roth',
-      default:'/img/woman2.svg'
-    },
-    {
-      name:'Elias Neumann',
-      default:'/img/man3active.svg'
-    },
-    {
-      name:'Steffen Hoffmann',
-      default:'/img/man4active.svg'
-    },
-  ]
+
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  async loadUsers() {
+    console.log(this.firestore);
+    const usersCollection = collection(this.firestore, 'users');
+    console.log(usersCollection);
+    const userSnapshot = await getDocs(usersCollection);
+    console.log(userSnapshot);
+    this.users = userSnapshot.docs.map(doc => doc.data());
+
+    console.log(this.users);
+    
+  }
+
+ 
 
   toggleActive() {
     this.active = !this.active;
-    console.log(this.active);
+
   }
 
   toggleMessage() {
     this.message = !this.message;
-    console.log('message = ' + this.message);
+
 
   }
 

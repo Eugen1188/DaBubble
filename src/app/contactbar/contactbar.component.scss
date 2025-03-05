@@ -383,6 +383,12 @@ button {
         border-radius: 35px;
         gap: 15px;
 
+        >img{
+            width: 24px;
+            height: 24px;
+            border-radius: 20px;
+        }
+
         &:hover {
             background-color: #ECEEFE;
 

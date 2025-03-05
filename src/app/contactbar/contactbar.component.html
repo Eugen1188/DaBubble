@@ -53,10 +53,10 @@
 
             </div>
             <div [ngClass]="{'show': isOpen()}"  class="contacts">
-                <div *ngFor="let contact of contacts" class="contactsrow">
+                <div *ngFor="let user of users" class="contactsrow">
                     <div>
-                        <img [src]="contact.default" alt="">
-                        <span>{{contact.name}}</span>
+                        <img style="width: 50px; height: 50px; border-radius: 50% ;" [src]="user.profilephoto" alt="">
+                        <span>{{user.fullname}}</span>
                     </div>
                 </div>
             </div>
