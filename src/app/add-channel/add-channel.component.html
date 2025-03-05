@@ -57,10 +57,10 @@
         <div><mat-radio-button value="true" (change)="setChannelMember(true)"></mat-radio-button><label for="checbox-choose">Bestimmte Leute hinzufügen</label></div>
         <mat-form-field *ngIf="chooseMember">
           <mat-label>Toppings</mat-label>
-          <mat-select [formControl]="toppings" multiple>
-            @for (topping of toppingList; track topping) {
-              <mat-option [value]="topping">{{topping}}</mat-option>
-            }
+          <mat-select [formControl]="channelUser" multiple>
+            <mat-option *ngFor="let user of users" [value]="user.uid">
+              <img src="photoURL" alt=""> {{displayName}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         
