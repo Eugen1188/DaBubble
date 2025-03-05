@@ -383,12 +383,6 @@ button {
         border-radius: 35px;
         gap: 15px;
 
-        >img{
-            width: 24px;
-            height: 24px;
-            border-radius: 20px;
-        }
-
         &:hover {
             background-color: #ECEEFE;
 
@@ -406,3 +400,32 @@ button {
     }
 }
 
+.profile-image {
+
+    width: 50px;
+    border-radius: 30px;
+
+
+
+
+}
+
+.imageContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 0;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    border: solid;
+    background-color: #92C83E;
+    border-radius: 50%;
+    border-color: #ECEEFE;
+    border-width: 2px;
+}

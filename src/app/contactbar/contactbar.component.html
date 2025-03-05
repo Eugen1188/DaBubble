@@ -55,7 +55,11 @@
             <div [ngClass]="{'show': isOpen()}"  class="contacts">
                 <div *ngFor="let user of users" class="contactsrow">
                     <div>
-                        <img style="width: 50px; height: 50px; border-radius: 50% ;" [src]="user.profilephoto" alt="">
+                        <div class="imageContainer">
+                            <img class="profile-image"  [src]="user.profilephoto" alt="">
+                            <div class="status-dot"></div>
+                        </div>
+                       
                         <span>{{user.fullname}}</span>
                     </div>
                 </div>

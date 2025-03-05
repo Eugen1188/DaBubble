@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Inject } from '@angular/core';
@@ -18,7 +18,7 @@ import { Inject } from '@angular/core';
 
 
 export class ContactbarComponent {
-  constructor(@Inject(Firestore) private firestore: Firestore) {}
+  constructor(@Inject(Firestore) private firestore: Firestore) { }
   public users: any[] = [];
   active: boolean = false;
   message: boolean = false;
@@ -49,10 +49,10 @@ export class ContactbarComponent {
     this.users = userSnapshot.docs.map(doc => doc.data());
 
     console.log(this.users);
-    
+
   }
 
- 
+
 
   toggleActive() {
     this.active = !this.active;
