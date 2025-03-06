@@ -32,7 +32,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:30',
       message: 'Hallo, wie geht’s dir?',
       newDay: true,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -40,7 +40,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:31',
       message: 'Mir geht’s gut, danke! Und dir?',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
     {
       name: 'Alice',
@@ -48,7 +48,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:32',
       message: 'Auch gut, danke der Nachfrage!',
       newDay: false,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -56,7 +56,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:33',
       message: 'Was hast du heute so vor?',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
     {
       name: 'Alice',
@@ -64,7 +64,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:35',
       message: 'Ich wollte ein bisschen lesen und später spazieren gehen.',
       newDay: false,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -72,7 +72,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:36',
       message: 'Klingt gut! Welches Buch liest du gerade?',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
     {
       name: 'Alice',
@@ -80,7 +80,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:37',
       message: 'Einen Krimi von Agatha Christie. Richtig spannend!',
       newDay: false,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -88,7 +88,7 @@ export class ChatContentComponent implements OnInit {
       time: '14:38',
       message: 'Oh cool! Ich mag ihre Bücher auch.',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
 
     {
@@ -97,7 +97,7 @@ export class ChatContentComponent implements OnInit {
       time: '10:15',
       message: 'Guten Morgen! Wie hast du geschlafen?',
       newDay: true,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -105,7 +105,7 @@ export class ChatContentComponent implements OnInit {
       time: '10:17',
       message: 'Guten Morgen! Ganz gut, danke. Und du?',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
     {
       name: 'Alice',
@@ -113,7 +113,7 @@ export class ChatContentComponent implements OnInit {
       time: '10:20',
       message: 'Auch gut! Ich hab ein bisschen länger geschlafen.',
       newDay: false,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -121,7 +121,7 @@ export class ChatContentComponent implements OnInit {
       time: '10:22',
       message: 'Manchmal braucht man das!',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
 
     {
@@ -130,7 +130,7 @@ export class ChatContentComponent implements OnInit {
       time: '09:00',
       message: 'Neuer Tag, neues Glück!',
       newDay: true,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -138,7 +138,7 @@ export class ChatContentComponent implements OnInit {
       time: '09:05',
       message: 'Genau! Was steht heute an?',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
     {
       name: 'Alice',
@@ -146,7 +146,7 @@ export class ChatContentComponent implements OnInit {
       time: '09:10',
       message: 'Ich muss ein paar Dinge erledigen, aber danach habe ich Zeit.',
       newDay: false,
-      avatar: 'avatar_3',
+      avatar: '/img/avatars/avatar_3.png',
     },
     {
       name: 'Bob',
@@ -154,22 +154,23 @@ export class ChatContentComponent implements OnInit {
       time: '09:12',
       message: 'Lass uns später treffen!',
       newDay: false,
-      avatar: 'avatar_1',
+      avatar: '/img/avatars/avatar_1.png',
     },
   ];
   loading: boolean = false;
-  channels!: any;
+  channels: any = [];
   messages: Message[] = [];
   currentMessage: any = new Message();
   currentChannel: any;
+  input: string = '';
+
+  testMode = false;
 
   unsubChannel!: () => void;
 
   ngOnInit(): void {
-    this.getMessages();
     this.setCurrentUser();
     this.getChannels();
-
     // this.scrollToBottom();
   }
 
@@ -183,16 +184,24 @@ export class ChatContentComponent implements OnInit {
             key: element.id,
             data: element.data(),
           });
+          this.getMessages();
         });
       }
     );
-    console.log(this.channels);
   }
 
   getMessages() {
-    this.dummyData.forEach((m: any) => {
-      this.messages.push(new Message(m));
-    });
+    this.currentChannel = this.channels[0];
+    if (this.testMode) {
+      this.messages = this.dummyData.map((m: any) => new Message(m));
+    } else if (!this.testMode) {
+      console.log('alle channels', this.channels);
+      console.log('aktueller channel', this.currentChannel);
+
+      this.currentChannel.data.messages.forEach((m: any) => {
+        this.messages.push(new Message(m));
+      });
+    }
   }
 
   setCurrentUser() {
@@ -207,9 +216,20 @@ export class ChatContentComponent implements OnInit {
     });
   }
 
-  async newMessage() {
-    this.currentChannel = this.channels[0];
+  buildMessageObject() {
+    return {
+      message: this.input,
+      avatar: this.currentUser.photoURL,
+      date: '',
+      name: this.currentUser.displayName,
+      newDay: false,
+      time: '212',
+    };
+  }
 
+  async newMessage() {
+    this.currentMessage = new Message(this.buildMessageObject());
+    this.currentChannel = this.channels[0];
     if (this.currentUser) {
       const currentChannelInFirebase = doc(
         this.firestore,
