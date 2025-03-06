@@ -197,18 +197,14 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
   getMessages() {
     this.messages = [];
 
-    if (!this.testMode && this.currentChannel.key) {
-      const currentChannelRef = doc(
-        this.firestore,
-        'channels',
-        this.currentChannel.key
-      );
+    if (!this.testMode) {
+      const currentChannelRef = this.getDocRef('channels');
 
       this.unsubMessages = onSnapshot(currentChannelRef, (docSnap) => {
         if (docSnap.exists()) {
-          this.messages = (docSnap.data()['messages'] || []).map(
-            (m: any) => new Message(m)
-          );
+          this.messages = docSnap
+            .data()
+            ['messages'].map((m: any) => new Message(m));
         }
       });
     } else this.messages = this.dummyData.map((m: any) => new Message(m));
@@ -232,7 +228,7 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
     return {
       message: this.input,
       avatar: this.currentUser.photoURL,
-      date: new Date().toString(),
+      date: new Date().toISOString().split('T')[0],
       name: this.currentUser.displayName,
       newDay: this.isNewDay(),
       time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
@@ -284,6 +280,10 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
     //     chatContent.scrollTop = chatContent.scrollHeight;
     //   }
     // }, 1000);
+  }
+
+  getDocRef(ref: string) {
+    return doc(this.firestore, ref, this.currentChannel.key);
   }
 
   getCollectionRef(ref: string) {

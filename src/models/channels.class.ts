@@ -8,6 +8,6 @@ export class Channel {
     this.name = obj ? obj.name : '';
     this.member = obj ? obj.member : '';
     this.description = obj ? obj.description : '';
-    this.messages = obj ? obj.messages : '';
+    this.messages = obj ? obj.messages : [];
   }
 }
