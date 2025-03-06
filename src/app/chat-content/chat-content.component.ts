@@ -187,15 +187,12 @@ export class ChatContentComponent implements OnInit {
     this.unsubChannels = onSnapshot(
       this.getCollectionRef('channels'),
       (list) => {
-        list.forEach((element) => {
-          this.channels.push({
-            key: element.id,
-            data: element.data(),
-          });
-          this.currentChannel = this.channels[0];
-
-          this.getMessages();
-        });
+        this.channels = list.docs.map((element) => ({
+          key: element.id,
+          data: element.data(),
+        }));
+        this.currentChannel = this.channels[0];
+        this.getMessages();
       }
     );
   }
@@ -264,7 +261,6 @@ export class ChatContentComponent implements OnInit {
           this.loading = false;
           this.scrollToBottom();
         })
-
         .catch((err) => console.error(err));
     }
   }
