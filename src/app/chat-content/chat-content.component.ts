@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,10 +21,18 @@ import {
   templateUrl: './chat-content.component.html',
   styleUrl: './chat-content.component.scss',
 })
-export class ChatContentComponent implements OnInit {
+export class ChatContentComponent implements OnInit, AfterViewInit {
   firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
   currentUser: any = new User();
+
+  loading: boolean = false;
+  channels: any = [];
+  messages: Message[] = [];
+  currentMessage: any = new Message();
+  currentChannel: any;
+  input: string = '';
+
   dummyData = [
     {
       name: 'Alice',
@@ -157,14 +165,7 @@ export class ChatContentComponent implements OnInit {
       avatar: '/img/avatars/avatar_1.png',
     },
   ];
-  loading: boolean = false;
-  channels: any = [];
-  messages: Message[] = [];
-  currentMessage: any = new Message();
-  currentChannel: any;
-  input: string = '';
-
-  testMode = false;
+  testMode: boolean = false;
 
   unsubChannel!: () => void;
 
@@ -184,6 +185,8 @@ export class ChatContentComponent implements OnInit {
             key: element.id,
             data: element.data(),
           });
+          this.currentChannel = this.channels[0];
+
           this.getMessages();
         });
       }
@@ -191,40 +194,48 @@ export class ChatContentComponent implements OnInit {
   }
 
   getMessages() {
-    this.currentChannel = this.channels[0];
-    if (this.testMode) {
-      this.messages = this.dummyData.map((m: any) => new Message(m));
-    } else if (!this.testMode) {
-      console.log('alle channels', this.channels);
-      console.log('aktueller channel', this.currentChannel);
+    this.messages = [];
 
-      this.currentChannel.data.messages.forEach((m: any) => {
-        this.messages.push(new Message(m));
-      });
-    }
+    if (!this.testMode) {
+      this.messages = this.currentChannel.data.messages.map(
+        (m: Message) => new Message(m)
+      );
+    } else this.messages = this.dummyData.map((m: any) => new Message(m));
   }
 
   setCurrentUser() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.currentUser = user;
-        console.log('User is still logged in:', user);
-      } else {
-        this.currentUser = null;
-        console.log('User is logged out');
-      }
-    });
+    if (!this.testMode) {
+      onAuthStateChanged(this.auth, (user) => {
+        if (user) {
+          this.currentUser = user;
+          console.log('User is still logged in:', user);
+        } else {
+          this.currentUser = null;
+          console.log('User is logged out');
+        }
+      });
+    } else this.currentUser.displayName = 'Bob';
   }
 
-  buildMessageObject() {
+  buildMessageObject(): {} {
     return {
       message: this.input,
       avatar: this.currentUser.photoURL,
-      date: '',
+      date: new Date().toString(),
       name: this.currentUser.displayName,
-      newDay: false,
-      time: '212',
+      newDay: this.isNewDay(),
+      time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
     };
+  }
+
+  isNewDay(): boolean {
+    if (this.messages.length === 0) return true;
+
+    let lastMessage = this.messages[this.messages.length - 1];
+    let lastMessageDate = lastMessage.date;
+    let todayDate = new Date().toISOString().split('T')[0];
+
+    return lastMessageDate !== todayDate;
   }
 
   async newMessage() {
@@ -254,15 +265,14 @@ export class ChatContentComponent implements OnInit {
   }
 
   scrollToBottom(): void {
-    //   setTimeout(() => {
-    //     const chatContent = document.querySelector(
-    //       '.chat-content'
-    //     ) as HTMLElement;
-    //     if (chatContent) {
-    //       chatContent.scrollTop = chatContent.scrollHeight;
-    //     }
-    //   }, 1000);
-    // }
+    // setTimeout(() => {
+    //   const chatContent = document.querySelector(
+    //     '.chat-content'
+    //   ) as HTMLElement;
+    //   if (chatContent) {
+    //     chatContent.scrollTop = chatContent.scrollHeight;
+    //   }
+    // }, 1000);
   }
 
   getCollectionRef(ref: string) {

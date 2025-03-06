@@ -26,7 +26,7 @@
                     </div>
                 </li>
 
-                <li class="message" [ngClass]="{ 'reverse' : message.name == currentUser.displayName}">
+                <li class="message" [ngClass]="{ 'reverse' : message.name == currentUser?.displayName}">
                     <img [src]=" message.avatar " alt="Avatar" />
 
                     <div class="content-container">
@@ -56,7 +56,7 @@
                         <mat-icon class="hover-filter">sentiment_satisfied</mat-icon>
                         <mat-icon class="hover-filter">alternate_email</mat-icon>
                     </div>
-                    <button (click)="newMessage()" mat-button>
+                    <button [disabled]="loading" (click)="newMessage()" mat-button>
                         <mat-icon class="filter-purple">send</mat-icon>
                     </button>
                 </div>

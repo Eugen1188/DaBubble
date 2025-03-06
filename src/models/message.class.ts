@@ -1,3 +1,5 @@
+import { doc } from '@angular/fire/firestore';
+
 export class Message {
   name: string;
   message: string;
