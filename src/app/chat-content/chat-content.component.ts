@@ -167,7 +167,8 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
   ];
   testMode: boolean = false;
 
-  unsubChannel!: () => void;
+  unsubChannels!: () => void;
+  unsubMessages!: () => void;
 
   ngOnInit(): void {
     this.setCurrentUser();
@@ -177,7 +178,7 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
 
   getChannels() {
     this.channels = [];
-    this.unsubChannel = onSnapshot(
+    this.unsubChannels = onSnapshot(
       this.getCollectionRef('channels'),
       (list) => {
         list.forEach((element) => {
@@ -196,10 +197,20 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
   getMessages() {
     this.messages = [];
 
-    if (!this.testMode) {
-      this.messages = this.currentChannel.data.messages.map(
-        (m: Message) => new Message(m)
+    if (!this.testMode && this.currentChannel.key) {
+      const currentChannelRef = doc(
+        this.firestore,
+        'channels',
+        this.currentChannel.key
       );
+
+      this.unsubMessages = onSnapshot(currentChannelRef, (docSnap) => {
+        if (docSnap.exists()) {
+          this.messages = (docSnap.data()['messages'] || []).map(
+            (m: any) => new Message(m)
+          );
+        }
+      });
     } else this.messages = this.dummyData.map((m: any) => new Message(m));
   }
 
