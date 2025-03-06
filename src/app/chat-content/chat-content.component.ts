@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
   OnInit,
   ViewChild,
-  Inject,
-  AfterViewInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,11 +14,11 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import {
   Firestore,
-  arrayUnion,
+  onSnapshot,
   collection,
   doc,
-  onSnapshot,
   updateDoc,
+  arrayUnion,
 } from '@angular/fire/firestore';
 @Component({
   selector: 'app-chat-content',
