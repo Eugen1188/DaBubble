@@ -18,7 +18,7 @@
             </div>
         </section>
 
-        <ul class="chat-content gap-10">
+        <ul class="chat-content gap-10" #chatContent>
             <ng-container *ngFor="let message of messages">
                 <li *ngIf="message.newDay === true">
                     <div class="date-container">

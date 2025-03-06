@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+  Inject,
+  AfterViewInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +17,6 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import {
   Firestore,
-  addDoc,
   arrayUnion,
   collection,
   doc,
@@ -21,7 +29,9 @@ import {
   templateUrl: './chat-content.component.html',
   styleUrl: './chat-content.component.scss',
 })
-export class ChatContentComponent implements OnInit, AfterViewInit {
+export class ChatContentComponent implements OnInit {
+  @ViewChild('chatContent') chatContentRef!: ElementRef;
+
   firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
   currentUser: any = new User();
@@ -173,7 +183,6 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.setCurrentUser();
     this.getChannels();
-    // this.scrollToBottom();
   }
 
   getChannels() {
@@ -195,18 +204,20 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
   }
 
   getMessages() {
-    this.messages = [];
+    //this.messages = []; wegen dem nach untenscrollen auskommentiert
 
     if (!this.testMode) {
-      const currentChannelRef = this.getDocRef('channels');
-
-      this.unsubMessages = onSnapshot(currentChannelRef, (docSnap) => {
-        if (docSnap.exists()) {
-          this.messages = docSnap
-            .data()
-            ['messages'].map((m: any) => new Message(m));
+      this.unsubMessages = onSnapshot(
+        this.getDocRef('channels', this.currentChannel.key),
+        (docSnap) => {
+          if (docSnap.exists()) {
+            this.messages = docSnap
+              .data()
+              ['messages'].map((m: any) => new Message(m));
+          }
+          this.scrollToBottom();
         }
-      });
+      );
     } else this.messages = this.dummyData.map((m: any) => new Message(m));
   }
 
@@ -226,10 +237,10 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
 
   buildMessageObject(): {} {
     return {
-      message: this.input,
-      avatar: this.currentUser.photoURL,
+      message: this.input || '',
+      avatar: this.currentUser?.photoURL || '',
       date: new Date().toISOString().split('T')[0],
-      name: this.currentUser.displayName,
+      name: this.currentUser?.displayName || 'Unbekannt',
       newDay: this.isNewDay(),
       time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
     };
@@ -249,41 +260,29 @@ export class ChatContentComponent implements OnInit, AfterViewInit {
     this.currentMessage = new Message(this.buildMessageObject());
     this.currentChannel = this.channels[0];
     if (this.currentUser) {
-      const currentChannelInFirebase = doc(
-        this.firestore,
-        'channels',
-        this.currentChannel.key
-      );
-
-      await updateDoc(currentChannelInFirebase, {
+      await updateDoc(this.getDocRef('channels', this.currentChannel.key), {
         messages: arrayUnion(this.currentMessage.toJSON()),
       })
-        .then(() => (this.loading = false))
+        .then(() => {
+          this.loading = false;
+          this.scrollToBottom();
+        })
+
         .catch((err) => console.error(err));
     }
   }
 
-  ngAfterViewInit(): void {
-    // const chatContent = document.querySelector('.chat-content');
-    // if (chatContent) {
-    //   const observer = new MutationObserver(() => this.scrollToBottom());
-    //   observer.observe(chatContent, { childList: true, subtree: true });
-    // }
-  }
-
   scrollToBottom(): void {
-    // setTimeout(() => {
-    //   const chatContent = document.querySelector(
-    //     '.chat-content'
-    //   ) as HTMLElement;
-    //   if (chatContent) {
-    //     chatContent.scrollTop = chatContent.scrollHeight;
-    //   }
-    // }, 1000);
+    setTimeout(() => {
+      const chatContent = this.chatContentRef.nativeElement as HTMLElement;
+      if (chatContent) {
+        chatContent.scrollTop = chatContent.scrollHeight;
+      }
+    }, 0);
   }
 
-  getDocRef(ref: string) {
-    return doc(this.firestore, ref, this.currentChannel.key);
+  getDocRef(ref: string, id: string) {
+    return doc(this.firestore, ref, id);
   }
 
   getCollectionRef(ref: string) {
