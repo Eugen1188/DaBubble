@@ -20,7 +20,7 @@ export class UserService {
   }
 
   redirectiontodashboard() {
-    this.router.navigate(['/add-channel']);
+    this.router.navigate(['/chat']);
   }
 
   redirectiontologinpage() {
