@@ -12,14 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
-import {
-  Firestore,
-  onSnapshot,
-  collection,
-  doc,
-  updateDoc,
-  arrayUnion,
-} from '@angular/fire/firestore';
+import { onSnapshot, updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { FireServiceService } from '../fire-service.service';
 @Component({
   selector: 'app-chat-content',
   imports: [MatIconModule, MatButtonModule, CommonModule, FormsModule],
@@ -29,11 +23,11 @@ import {
 export class ChatContentComponent implements OnInit {
   @ViewChild('chatContent') chatContentRef!: ElementRef;
 
-  firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
-  currentUser: any = new User();
+  fireService: FireServiceService = inject(FireServiceService);
 
   loading: boolean = false;
+  currentUser: any = new User();
   channels: any = [];
   messages: Message[] = [];
   currentMessage: any = new Message();
@@ -172,6 +166,7 @@ export class ChatContentComponent implements OnInit {
       avatar: '/img/avatars/avatar_1.png',
     },
   ];
+
   testMode: boolean = false;
 
   unsubChannels!: () => void;
@@ -185,7 +180,7 @@ export class ChatContentComponent implements OnInit {
   getChannels() {
     this.channels = [];
     this.unsubChannels = onSnapshot(
-      this.getCollectionRef('channels'),
+      this.fireService.getCollectionRef('channels'),
       (list) => {
         this.channels = list.docs.map((element) => ({
           key: element.id,
@@ -202,7 +197,7 @@ export class ChatContentComponent implements OnInit {
 
     if (!this.testMode) {
       this.unsubMessages = onSnapshot(
-        this.getDocRef('channels', this.currentChannel.key),
+        this.fireService.getDocRef('channels', this.currentChannel.key),
         (docSnap) => {
           if (docSnap.exists()) {
             this.messages = docSnap
@@ -254,9 +249,12 @@ export class ChatContentComponent implements OnInit {
     this.currentMessage = new Message(this.buildMessageObject());
     this.currentChannel = this.channels[0];
     if (this.currentUser) {
-      await updateDoc(this.getDocRef('channels', this.currentChannel.key), {
-        messages: arrayUnion(this.currentMessage.toJSON()),
-      })
+      await updateDoc(
+        this.fireService.getDocRef('channels', this.currentChannel.key),
+        {
+          messages: arrayUnion(this.currentMessage.toJSON()),
+        }
+      )
         .then(() => {
           this.loading = false;
           this.scrollToBottom();
@@ -272,13 +270,5 @@ export class ChatContentComponent implements OnInit {
         chatContent.scrollTop = chatContent.scrollHeight;
       }
     }, 0);
-  }
-
-  getDocRef(ref: string, id: string) {
-    return doc(this.firestore, ref, id);
-  }
-
-  getCollectionRef(ref: string) {
-    return collection(this.firestore, ref);
   }
 }
