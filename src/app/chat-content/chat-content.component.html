@@ -19,14 +19,15 @@
         </section>
 
         <ul class="chat-content gap-10" #chatContent>
-            <ng-container *ngFor="let message of messages.data">
+            <ng-container *ngFor="let message of messages; index as i">
                 <li *ngIf="message.newDay === true">
                     <div class="date-container">
                         <span class="date">{{ message.date }}</span>
                     </div>
                 </li>
 
-                <li class="message" [ngClass]="{ 'reverse' : message.name == currentUser?.displayName}">
+                <li (click)="editMessage(i)" class="message"
+                    [ngClass]="{ 'reverse' : message.name == currentUser?.displayName}">
                     <img [src]=" message.avatar " alt="Avatar" />
 
                     <div class="content-container">

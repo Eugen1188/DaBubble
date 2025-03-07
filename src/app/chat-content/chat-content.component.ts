@@ -14,6 +14,7 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import { onSnapshot, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
+import { log } from 'console';
 @Component({
   selector: 'app-chat-content',
   imports: [MatIconModule, MatButtonModule, CommonModule, FormsModule],
@@ -29,7 +30,7 @@ export class ChatContentComponent implements OnInit {
   loading: boolean = false;
   currentUser: any = new User();
   channels: any = [];
-  messages: any = [{ key: '', data: new Message() }];
+  messages: any = [];
   currentMessage: any = new Message();
   currentChannel: any;
   input: string = '';
@@ -199,16 +200,14 @@ export class ChatContentComponent implements OnInit {
       this.unsubMessages = onSnapshot(
         this.fireService.getDocRef('channels', this.currentChannel.key),
         (element) => {
-          if (element.exists()) {
-            this.messages = {
-              key: element.id,
-              data: element.data()['messages'].map((m: any) => new Message(m)),
-            };
-          }
-          this.scrollToBottom();
+          if (element.exists())
+            (this.messages = element
+              .data()
+              ['messages'].map((m: any) => new Message(m))),
+              this.scrollToBottom();
         }
       );
-    } else this.messages.data = this.dummyData.map((m: any) => new Message(m));
+    } else this.messages = this.dummyData.map((m: any) => new Message(m));
   }
 
   setCurrentUser() {
@@ -271,5 +270,9 @@ export class ChatContentComponent implements OnInit {
         chatContent.scrollTop = chatContent.scrollHeight;
       }
     }, 0);
+  }
+
+  editMessage(i: number) {
+    console.log(i);
   }
 }
