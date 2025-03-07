@@ -29,7 +29,7 @@ export class ChatContentComponent implements OnInit {
   loading: boolean = false;
   currentUser: any = new User();
   channels: any = [];
-  messages: Message[] = [];
+  messages: any = [{ key: '', data: new Message() }];
   currentMessage: any = new Message();
   currentChannel: any;
   input: string = '';
@@ -198,16 +198,17 @@ export class ChatContentComponent implements OnInit {
     if (!this.testMode) {
       this.unsubMessages = onSnapshot(
         this.fireService.getDocRef('channels', this.currentChannel.key),
-        (docSnap) => {
-          if (docSnap.exists()) {
-            this.messages = docSnap
-              .data()
-              ['messages'].map((m: any) => new Message(m));
+        (element) => {
+          if (element.exists()) {
+            this.messages = {
+              key: element.id,
+              data: element.data()['messages'].map((m: any) => new Message(m)),
+            };
           }
           this.scrollToBottom();
         }
       );
-    } else this.messages = this.dummyData.map((m: any) => new Message(m));
+    } else this.messages.data = this.dummyData.map((m: any) => new Message(m));
   }
 
   setCurrentUser() {
