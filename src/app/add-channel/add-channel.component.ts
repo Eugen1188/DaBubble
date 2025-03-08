@@ -1,66 +1,51 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser, NgClass, NgIf } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID, NgModule } from '@angular/core';
+import { CommonModule, isPlatformBrowser, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
-
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
-import { _MatInternalFormField } from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { getAuth, User } from 'firebase/auth';
 
 
 @Component({
   selector: 'app-add-channel',
-  imports: [CommonModule, FormsModule, NgClass, NgIf, MatRadioModule, MatSelectModule, ReactiveFormsModule, MatFormFieldModule],
+  imports: [CommonModule, FormsModule, NgClass, NgIf, NgFor, MatRadioModule],
   templateUrl: './add-channel.component.html',
-  styleUrl: './add-channel.component.scss',
+  styleUrls: ['./add-channel.component.scss'],
 })
-export class AddChannelComponent {
+export class AddChannelComponent implements OnInit {
   channelName: string = '';
   channelDescription: string = '';
   selectChannelMember: boolean = false;
-  chooseMember:boolean = false;
+  chooseMember: boolean = false;
   auth = getAuth();
   user: User | null = null;
   displayName: string | null = null;
   photoURL: string | null = null;
   uid: string | null = null;
   users: any[] = [];
-//test
-  channelUser = new FormControl('');
+  selectedUsers: any[] = [];
+  filteredUsers: any[] = [];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       AOS.init();
     }
-    this.initUser();
     this.loadUsers();
-  }
-
-  initUser() {
-    this.user = this.auth.currentUser;
-    if (this.user) {
-      this.displayName = this.user.displayName;
-      this.photoURL = this.user.photoURL;
-      this.uid = this.user.uid;
-      console.log('logedin');
-    }
   }
 
   async loadUsers() {
     const querySnapshot = await getDocs(collection(this.firestore, 'users'));
     this.users = querySnapshot.docs.map(doc => doc.data());
-    console.log(this.users);
+    console.log(this.users[0].fullname);
   }
 
-  closeScree() {
+  closeScreen() {
     console.log('close window');
-    
   }
 
   onSubmit() {

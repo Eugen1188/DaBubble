@@ -7,9 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./intro.component.scss'],
 })
 export class IntroComponent implements OnInit {
-  animationStateUp = 'beginup';
-  animationStateRight = 'startright';
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {
