@@ -23,14 +23,14 @@ import { Router } from '@angular/router';
           height: '75px',
         })
       ),
-      transition('beginup => endbegin', animate('2000ms  ease-out')),
+      transition('beginup => endbegin', animate('1500ms  ease-out')),
     ]),
     trigger('moveRight', [
       state('startright', style({ transform: 'translateX(0)' })),
       state('end', style({ transform: 'translateX(200px)' })),
       state('back', style({ transform: 'translateX(93px)' })),
       transition('startright => end', animate('1000ms ease-out')),
-      transition('end => back', animate('1000ms 700ms ease-out')),
+      transition('end => back', animate('1000ms 500ms ease-out')),
     ]),
   ],
 })
@@ -50,7 +50,7 @@ export class IntroComponent implements OnInit {
         this.animationStateUp = 'endbegin';
       }, 3800);
       setTimeout(() => {
-        this.router.navigate(['/main']);
+       // this.router.navigate(['/main']);
       }, 6500);
     }, 2500);
   }
