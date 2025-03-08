@@ -7,7 +7,7 @@
   <div *ngIf="!selectChannelMember" class="add-channel-create">
     <div class="add-channel-header">
       <div class="add-channel-text">Channel erstellen</div>
-      <div class="close-cont" (click)="closeScree()">
+      <div class="close-cont" (click)="closeScreen()">
         <img src="img/close.png" alt="" />
       </div>
     </div>
@@ -47,27 +47,28 @@
   <div *ngIf="selectChannelMember" class="select-member-cont">
     <div class="add-channel-user-header">
       <div class="headline-channel-add-user">Leute hinzufügen</div>
-      <div class="close-cont" (click)="closeScree()">
+      <div class="close-cont" (click)="closeScreen()">
         <img src="img/close.png" alt="" />
       </div>
     </div>
-    <form action="">
+    <form>
       <div class="decision">
-        <div><mat-radio-button value="false" (change)="setChannelMember(false)" checked></mat-radio-button><label for="checkbox-all">Alle Mitglieder von OfficeTeam hinzufügen</label></div>
-        <div><mat-radio-button value="true" (change)="setChannelMember(true)"></mat-radio-button><label for="checbox-choose">Bestimmte Leute hinzufügen</label></div>
-        <mat-form-field *ngIf="chooseMember">
-          <mat-label>Toppings</mat-label>
-          <mat-select [formControl]="channelUser" multiple>
-            <mat-option *ngFor="let user of users" [value]="user.uid">
-              <img src="photoURL" alt=""> {{displayName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        
+        <div>
+          <input type="radio" id="allMembers" name="channelMember" value="false" (change)="setChannelMember(false)" checked>
+          <label for="allMembers">Alle Mitglieder von OfficeTeam hinzufügen</label>
+        </div>
+        <div>
+          <input type="radio" id="specificMembers" name="channelMember" value="true" (change)="setChannelMember(true)">
+          <label for="specificMembers">Bestimmte Leute hinzufügen</label>
+        </div>
+        <div class="input-cont" *ngIf="chooseMember">
+          <div class="input-helpt-cont"><div *ngFor="let user of users; let index = index">{{user.fullname}}</div></div>
+          <input name="" id="">
+        </div>
       </div>
-      <div class="btn-cont">
-        <button>Erstellen</button>
-      </div>
+        <div class="btn-cont">
+          <button>Erstellen</button>
+        </div>
     </form>
   </div>
 </div>
