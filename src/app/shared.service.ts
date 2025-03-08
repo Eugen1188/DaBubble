@@ -1,15 +1,19 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.class';
 import { Router } from '@angular/router';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.setCurrentUser();
+  }
+  auth = inject(Auth);
   chatmoduleenabled = false;
   accountcreation = false;
-  private user: User = new User();
+  user: any = new User();
 
   setUser(user: User) {
     this.user = user;
@@ -29,5 +33,17 @@ export class UserService {
 
   continue() {
     this.router.navigate(['/avatarselection']);
+  }
+
+  setCurrentUser() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.user = user;
+        console.log('User is still logged in:', user);
+      } else {
+        this.user = null;
+        console.log('User is logged out');
+      }
+    });
   }
 }

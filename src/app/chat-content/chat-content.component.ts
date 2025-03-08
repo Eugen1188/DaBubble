@@ -10,11 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from '../../models/user.class';
 import { onSnapshot, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
-import { log } from 'console';
+import { UserService } from '../shared.service';
 @Component({
   selector: 'app-chat-content',
   imports: [MatIconModule, MatButtonModule, CommonModule, FormsModule],
@@ -24,11 +23,10 @@ import { log } from 'console';
 export class ChatContentComponent implements OnInit {
   @ViewChild('chatContent') chatContentRef!: ElementRef;
 
-  auth = inject(Auth);
   fireService: FireServiceService = inject(FireServiceService);
+  userService: UserService = inject(UserService);
 
   loading: boolean = false;
-  currentUser: any = new User();
   channels: any = [];
   messages: any = [];
   currentMessage: any = new Message();
@@ -174,7 +172,6 @@ export class ChatContentComponent implements OnInit {
   unsubMessages!: () => void;
 
   ngOnInit(): void {
-    this.setCurrentUser();
     this.getChannels();
   }
 
@@ -210,26 +207,12 @@ export class ChatContentComponent implements OnInit {
     } else this.messages = this.dummyData.map((m: any) => new Message(m));
   }
 
-  setCurrentUser() {
-    if (!this.testMode) {
-      onAuthStateChanged(this.auth, (user) => {
-        if (user) {
-          this.currentUser = user;
-          console.log('User is still logged in:', user);
-        } else {
-          this.currentUser = null;
-          console.log('User is logged out');
-        }
-      });
-    } else this.currentUser.displayName = 'Bob';
-  }
-
   buildMessageObject(): {} {
     return {
       message: this.input || '',
-      avatar: this.currentUser?.photoURL || '',
+      avatar: this.userService.user?.photoURL || '',
       date: new Date().toISOString().split('T')[0],
-      name: this.currentUser?.displayName || 'Unbekannt',
+      name: this.userService.user?.displayName || 'Unbekannt',
       newDay: this.isNewDay(),
       time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
     };
@@ -248,7 +231,7 @@ export class ChatContentComponent implements OnInit {
   async newMessage() {
     this.currentMessage = new Message(this.buildMessageObject());
     this.currentChannel = this.channels[0];
-    if (this.currentUser) {
+    if (this.userService.user) {
       await updateDoc(
         this.fireService.getDocRef('channels', this.currentChannel.key),
         {

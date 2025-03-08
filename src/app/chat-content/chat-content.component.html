@@ -27,7 +27,7 @@
                 </li>
 
                 <li (click)="editMessage(i)" class="message"
-                    [ngClass]="{ 'reverse' : message.name == currentUser?.displayName}">
+                    [ngClass]="{ 'reverse' : message.name == this.userService.user?.displayName}">
                     <img [src]=" message.avatar " alt="Avatar" />
 
                     <div class="content-container">
@@ -36,7 +36,7 @@
                             <span class="font-size-14">{{ message.time }} Uhr</span>
                         </div>
                         <div class="message-main"
-                            [ngClass]="{'medium-purple': message.name == currentUser?.displayName, 'bg-purple': message.name !== currentUser?.displayName}">
+                            [ngClass]="{'medium-purple': message.name == this.userService.user?.displayName, 'bg-purple': message.name !== this.userService.user?.displayName}">
                             {{ message.message }}
                         </div>
                         <div class="message-footer gap-20">
