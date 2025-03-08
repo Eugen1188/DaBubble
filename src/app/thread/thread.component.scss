@@ -8,7 +8,7 @@ main {
     width: 485px;
     height: 940px;
     border-radius: 30px;
-    background-color: rgb(177, 241, 231);
+    border: 1px solid black;
 }
 
 .thread-channel-close-button-container {
@@ -17,7 +17,10 @@ main {
     align-items: center;
     padding: 24px 24px 24px 24px;
     border-bottom: 2px solid grey;
+
     .close-button {
+        cursor: pointer;
+
         img {
             width: 16px;
             height: 16px;
@@ -46,12 +49,146 @@ main {
     }
 }
 
-.user-message-container {
-    display:flex;
-    .user-profile-avatar-container {
-        width: 32px;
-        height: 32px;
-        background-color: grey;
-        border-radius: 50%;
+// OTHER USER MESSAGE STYLES
+.background-color-effect {
+    padding-bottom: 8px;
+    background-color: #FFFFFF;
+    transition: background-color 0.15s ease-in-out;
+
+    .message-container {
+        background-color: #ECEEFE;
+        transition: background-color 0.15s ease-in-out;
+    }
+
+    &:hover {
+        background-color: #ECEEFE;
+        transition: background-color 0.15s ease-in-out;
+        .message-container {
+            background-color: #FFFFFF;
+        }
+    }
+
+    .user-message-container {
+        margin-left: 24px;
+        margin-right: 24px;
+        font-family: Nunito;
+        font-size: 18px;
+        display: flex;
+        margin-top: 24px;
+        padding-top: 8px;
+
+        .name-time-message-container {
+            margin-left: 16px;
+            display: flex;
+            flex-direction: column;
+
+            .message-container {
+                margin-top: 8px;
+                font-size: 18px;
+                padding: 15px;
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+                border-bottom-left-radius: 20px;
+            }
+
+            .name-time-container {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .name-container {
+                    font-weight: 700;
+                    font-size: 18px;
+                }
+
+                .time-container {
+                    font-family: Nunito;
+                    font-size: 14px;
+                    color: #686868;
+                }
+            }
+        }
+
+
+        .user-profile-avatar-container {
+            img {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+// YOUR LOGGED IN MESSAGE STYLES
+.you-user-message-container {
+    margin-left: 24px;
+    margin-right: 24px;
+    font-family: Nunito;
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+
+    .you-name-time-message-container {
+        margin-right: 16px;
+        display: flex;
+        flex-direction: column;
+
+        .you-message-container {
+            margin-top: 8px;
+            font-size: 18px;
+            padding: 15px;
+            border-top-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            background-color: #797EF3;
+        }
+
+        .you-name-time-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            .you-name-container {
+                font-weight: 700;
+                font-size: 18px;
+            }
+
+            .you-time-container {
+                font-family: Nunito;
+                font-size: 14px;
+                color: #686868;
+            }
+        }
+    }
+
+
+    .you-user-profile-avatar-container {
+        img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+    }
+}
+
+.answers-line-container {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    margin-left: 24px;
+    font-family: Nunito;
+    font-size: 18px;
+    color: #ADB0D9;
+
+    .line-container {
+        height: 1px;
+        width: 70%;
+        margin-right: 24px;
+        background-color: #ADB0D9;
     }
 }
