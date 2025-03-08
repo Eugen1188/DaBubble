@@ -1,6 +1,6 @@
 .content-container {
   display: grid;
-  grid-template-columns: 1fr 60% 1fr;
+  grid-template-columns: 20% 1fr;
   grid-template-rows: auto 1fr;
   height: 100svh;
 }
@@ -12,12 +12,8 @@ app-header {
   grid-column: 1;
   grid-row: 2;
 }
-app-chat-content {
-  grid-column: 2;
-  grid-row: 2;
-}
 
-.placeholder-tread {
-  grid-column: 3;
+.chat-content {
+  grid-column: 2;
   grid-row: 2;
 }

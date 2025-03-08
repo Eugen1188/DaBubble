@@ -255,7 +255,7 @@ export class ChatContentComponent implements OnInit {
     }, 0);
   }
 
-  editMessage(i: number) {
-    console.log(i);
+  editMessage(m: any, i: number) {
+    console.log(m, i);
   }
 }

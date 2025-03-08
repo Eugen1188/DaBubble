@@ -1,6 +1,19 @@
 <div class="content-container">
     <app-header></app-header>
     <div class="placeholder-channel"> Hier Channel einfügen</div>
-    <app-chat-content></app-chat-content>
-    <div class="placeholder-tread"> Hier Tread einfügen</div>
+
+    <mat-drawer-container class="chat-content" autosize>
+        <mat-drawer position="end" #drawer class="tread-container" mode="side">
+            <div class="placeholder-tread"> Hier Tread einfügen</div>
+        </mat-drawer>
+
+        <div>
+            <button type="button" mat-button (click)="drawer.toggle()">
+                Toggle Tread Test Version
+            </button>
+            <app-chat-content></app-chat-content>
+        </div>
+    </mat-drawer-container>
+
+
 </div>
