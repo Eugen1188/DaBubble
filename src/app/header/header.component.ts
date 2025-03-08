@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../shared.service';
-import { getAuth, signOut, User } from '@firebase/auth';
+import { getAuth, onAuthStateChanged, signOut, User } from '@firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 
@@ -36,6 +36,8 @@ export class HeaderComponent implements OnInit {
   user: User | null = null;
   auth = inject(Auth);
   opened = 0;
+  chatmoduleenabled = inject(UserService);
+
   show() {
     this.opened++;
     this.showmodifycontent = true;
@@ -45,12 +47,13 @@ export class HeaderComponent implements OnInit {
     this.showmodifycontent = false;
   }
 
-  chatmoduleenabled = inject(UserService);
   ngOnInit() {
-    this.user = this.auth.currentUser;
-    if (this.user) {
-      this.displayName = this.user.displayName;
-    }
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.user = user;
+        this.displayName = user.displayName ;
+      }
+    });
   }
 
   async signOut() {

@@ -16,7 +16,7 @@
   </div>
   <div class="user-menu" *ngIf="chatmoduleenabled.chatmoduleenabled">
     <div>
-      <span>{{ user?.displayName }}</span>
+      <span>{{ user?.displayName || "Gast" }}</span>
       <img src="img/Profile bild.png" alt="" />
       <div>
         <button
@@ -42,6 +42,7 @@
               *ngIf="!showmodifycontent"
               class="menu-box-btn"
               mat-menu-item
+              (click)="signOut()"
             >
               Log out
             </button>
