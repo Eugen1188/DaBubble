@@ -1,0 +1,183 @@
+.borders {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.d-none {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-image: url(/img/Kontoerstellung.png);
+  background-repeat: no-repeat;
+  background-position: 96% 90%;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+}
+
+.overlay.active {
+  transform: translateX(0);
+}
+
+.content {
+  max-width: 606px;
+  width: 100%;
+  height: 669px;
+  gap: 45px;
+  > form:nth-child(1) {
+    padding: 54px;
+    display: flex;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: #ffffff;
+    position: relative;
+    gap: 30px;
+    > div:nth-child(1) {
+      display: flex;
+      width: 100%;
+      align-items: flex-start;
+      text-align: center;
+      gap: 28px;
+      > button:nth-child(1) {
+        position: relative;
+        left: 0;
+        top: 25px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      > div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > h1:nth-child(1) {
+          font-family: "Nunito";
+          font-weight: 700;
+          font-size: 46px;
+          color: #444df2;
+        }
+        > span:nth-child(2) {
+          display: flex;
+          max-width: 441px;
+          width: 100%;
+          font-family: "Nunito";
+          font-weight: 400;
+          font-size: 20px;
+          color: #000000;
+          line-height: 24px;
+        }
+      }
+    }
+    > div:nth-child(3) {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      > input:nth-child(1) {
+        padding: 12px 25px;
+        border-radius: 25px;
+        background-color: #444df2;
+        font-family: "Nunito";
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 24.55px;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        &:disabled {
+          background-color: #686868;
+          color: #ffffff;
+          cursor: unset;
+        }
+        &:hover:not(:disabled) {
+          background-color: #797ef3;
+        }
+      }
+    }
+  }
+}
+
+.profilebox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  > div:nth-child(1) {
+    max-width: 168px;
+    width: 100%;
+    height: 168px;
+    > img:nth-child(1) {
+      max-width: 168px;
+      width: 100%;
+      height: 168px;
+      border-radius: 50%;
+    }
+  }
+  > div:nth-child(2) {
+    width: 100%;
+    > h2:nth-child(1) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: "Nunito";
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 43.65px;
+      color: #000000;
+    }
+    > p:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: "Nunito";
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 27.28px;
+      color: #000000;
+    }
+  }
+}
+
+.profileicons {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+
+  > img {
+    max-width: 64px;
+    width: 100%;
+    height: 64px;
+    border-radius: 50%;
+  }
+}
+
+.singup {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eceefe;
+}
+
+app-footer {
+  width: 100%;
+  height: 150px;
+  background-color: #eceefe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

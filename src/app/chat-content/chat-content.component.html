@@ -1,0 +1,67 @@
+<main>
+    <div class="card">
+        <section class="card-header">
+            <div class="align-center">
+                # Entwicklerteam
+                <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
+            </div>
+            <div class="align-center gap-10">
+                <div class="avatar-container">
+                    <img class="avatar" src="img/avatars/avatar_1.png" alt="Name" />
+                    <img class="avatar" src="img/avatars/avatar_2.png" alt="Name" />
+                    <img class="avatar" src="img/avatars/avatar_3.png" alt="Name" />
+                </div>
+                3
+                <button mat-mini-fab>
+                    <mat-icon>person_add</mat-icon>
+                </button>
+            </div>
+        </section>
+
+        <ul class="chat-content gap-10" #chatContent>
+            <ng-container *ngFor="let message of messages; index as i">
+                <li *ngIf="message.newDay === true">
+                    <div class="date-container">
+                        <span class="date">{{ message.date }}</span>
+                    </div>
+                </li>
+
+                <li (click)="editMessage(i)" class="message"
+                    [ngClass]="{ 'reverse' : message.name == currentUser?.displayName}">
+                    <img [src]=" message.avatar " alt="Avatar" />
+
+                    <div class="content-container">
+                        <div class="message-header gap-20">
+                            <b class="font-size-18">{{ message.name }}</b>
+                            <span class="font-size-14">{{ message.time }} Uhr</span>
+                        </div>
+                        <div class="message-main"
+                            [ngClass]="{'medium-purple': message.name == currentUser?.displayName, 'bg-purple': message.name !== currentUser?.displayName}">
+                            {{ message.message }}
+                        </div>
+                        <div class="message-footer gap-20">
+                            <span>2 Antworten</span>
+                            <span class="font-size-14">Letzte Antwort 14.26 Uhr</span>
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+        </ul>
+
+        <section class="card-footer">
+            <div class="input-container">
+                <textarea [(ngModel)]="input" rows="4" placeholder="Nachricht an #Entwicklerteam"></textarea>
+
+                <div class="action-container">
+                    <div class="gap-10">
+                        <mat-icon class="hover-filter">sentiment_satisfied</mat-icon>
+                        <mat-icon class="hover-filter">alternate_email</mat-icon>
+                    </div>
+                    <button [disabled]="loading" (click)="newMessage()" mat-button>
+                        <mat-icon class="filter-purple">send</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

@@ -1,3 +1,22 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+@import "aos/dist/aos.css";
+
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 @font-face {
@@ -15,11 +34,25 @@
   --light-purple: rgba(173, 176, 217, 1);
   --medium-purple: rgba(121, 126, 243, 1);
   --dark-purple: rgba(68, 77, 242, 1);
+  --dark-purple-text: rgba(83, 90, 241, 1);
+  --blue-email-color: rgba(19, 129, 255, 1);
+  --mat-sys-primary: rgba(68, 77, 242, 1); // Material Design
+}
+
+.mat-mdc-menu-panel {
+  max-width: unset !important;
+}
+
+body,
+html {
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 * {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 .menu-box {
@@ -51,4 +84,13 @@
 
 a {
   text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

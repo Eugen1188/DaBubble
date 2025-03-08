@@ -3,12 +3,24 @@ import { IntroComponent } from './intro/intro.component';
 import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 import { MainChatComponent } from './main-chat/main-chat.component';
 import { SigninComponent } from './signin/signin.component';
-import { ThreadComponent } from './thread/thread.component';
+import { SignupComponent } from './signup/signup.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { AvatarselectionComponent } from './avatarselection/avatarselection.component';
+import { ContactbarComponent } from './contactbar/contactbar.component';
+import { AddChannelComponent } from './add-channel/add-channel.component';
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'main', component: MaincomponentComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'chat', component: MainChatComponent },
-  { path: 'thread', component: ThreadComponent },
+  { path: 'user-profile', component: UserProfileComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'forgotpassword', component: ForgotpasswordComponent },
+  { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'avatarselection', component: AvatarselectionComponent },
+  { path: 'contactbar', component: ContactbarComponent },
+  { path: 'add-channel', component: AddChannelComponent },
 ];

@@ -10,6 +10,9 @@
   flex-direction: column;
   border-radius: 30px;
   background-color: #ffffff;
+  @media (max-width: 743px) {
+    width: 70%;
+  }
   > div:nth-child(1) {
     > div:nth-child(1) {
       > h1:nth-child(1) {
@@ -126,7 +129,7 @@
         color: #444df2;
         transform: scale(1.1);
       }
-      > a:nth-child(1) {
+      > button:nth-child(1) {
         display: flex;
         align-items: center;
         gap: 20px;
@@ -135,6 +138,9 @@
         font-weight: 500;
         font-family: "Nunito";
         color: #444df2;
+        background: none;
+        border: none;
+        cursor: pointer;
         &:hover {
           font-weight: 700;
         }
@@ -145,14 +151,26 @@
       width: 100%;
       display: flex;
       justify-content: space-evenly;
-      > a {
+      @media (max-width: 446px) {
+        justify-content: unset;
+        gap: 15px;
+        flex-direction: column;
+      }
+      > button {
         border-radius: 25px;
         padding: 12px 25px;
         font-family: "Nunito";
         font-weight: 700;
         font-size: 18px;
         border: 1px solid #797ef3;
-        &:hover {
+        background: none;
+        cursor: pointer;
+        &:disabled {
+          background-color: #686868;
+          color: #ffffff;
+          cursor: unset;
+        }
+        &:hover:not(:disabled) {
           background-color: #444df2;
           color: #ffffff;
         }

@@ -1,16 +1,26 @@
 <div class="header">
-  <div><img src="img/headerlogo.png" alt="" /></div>
-  <div class="d-none"><input type="text" placeholder="Devspace durchsuchen" /></div>
-  <div class="">
-    <p>Neu bei DABubble?</p>
-    <a routerLink="/signin">Konto erstellen</a>
+  <div>
+    <a routerLink="/main"><img src="img/headerlogo.png" alt="" /></a>
   </div>
-  <div class="user-menu d-none">
+  <div class="input" *ngIf="chatmoduleenabled.chatmoduleenabled">
+    <input type="text" placeholder="Devspace durchsuchen" />
+  </div>
+  <div
+    class="signup"
+    *ngIf="
+      chatmoduleenabled.accountcreation || !chatmoduleenabled.chatmoduleenabled
+    "
+  >
+    <p>Neu bei DABubble?</p>
+    <a routerLink="/signup">Konto erstellen</a>
+  </div>
+  <div class="user-menu" *ngIf="chatmoduleenabled.chatmoduleenabled">
     <div>
-      <span>Frederik Beck</span>
+      <span>{{ user?.displayName }}</span>
       <img src="img/Profile bild.png" alt="" />
       <div>
         <button
+          (click)="showmenu()"
           mat-icon-button
           [matMenuTriggerFor]="beforeMenu"
           aria-label="Example icon-button with a menu"
@@ -18,8 +28,31 @@
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu class="menu-box" #beforeMenu="matMenu" xPosition="before">
-          <button class="menu-box-btn" mat-menu-item>Profil</button>
-          <button class="menu-box-btn" mat-menu-item>Log out</button>
+          <div *ngIf="showmenu">
+            <button
+              *ngIf="!showmodifycontent"
+              (click)="show()"
+              class="menu-box-btn"
+              mat-menu-item
+              (click)="$event.stopPropagation()"
+            >
+              Profil
+            </button>
+            <button
+              *ngIf="!showmodifycontent"
+              class="menu-box-btn"
+              mat-menu-item
+            >
+              Log out
+            </button>
+          </div>
+
+          <app-user-profile
+            (click)="$event.stopPropagation()"
+            [menuTrigger]="menuTriggerRef"
+            [showmodifycontent]="showmodifycontent"
+            *ngIf="showmodifycontent"
+          ></app-user-profile>
         </mat-menu>
       </div>
     </div>

@@ -1,51 +1,6 @@
-<main>
-    <div class="card">
-        <section class="card-header">
-            <div class="align-center"># Entwicklerteam
-                <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
-            </div>
-            <div class="align-center gap-10">
-                <div class="avatar-container">
-                    <img class="avatar" src="img/avatars/avatar_1.png" alt="Name">
-                    <img class="avatar" src="img/avatars/avatar_2.png" alt="Name">
-                    <img class="avatar" src="img/avatars/avatar_3.png" alt="Name">
-                </div>
-                3
-                <button mat-mini-fab>
-                    <mat-icon>person_add</mat-icon>
-                </button>
-            </div>
-        </section>
-
-        <section class="chat-content">
-            <ul>
-                <li>
-                    <div class="date-container">
-                        <span class="date">Dienstag, 14. Januar</span>
-                    </div>
-                </li>
-            </ul>
-
-
-
-
-            <div class="message"></div>
-            <div class="message own"></div>
-        </section>
-
-        <section class="card-footer">
-            <div class="input-container">
-                <textarea name="" id="" rows="4" placeholder="Nachricht an #Entwicklerteam"></textarea>
-
-                <div class="action-container">
-                    <div class="gap-10">
-                        <mat-icon class="hover-filter">sentiment_satisfied</mat-icon>
-                        <mat-icon class="hover-filter">alternate_email</mat-icon>
-                    </div>
-                    <button mat-button>
-                        <mat-icon class="filter-purple">send</mat-icon></button>
-                </div>
-            </div>
-        </section>
-    </div>
-</main>
+<div class="content-container">
+    <app-header></app-header>
+    <div class="placeholder-channel"> Hier Channel einfügen</div>
+    <app-chat-content></app-chat-content>
+    <div class="placeholder-tread"> Hier Tread einfügen</div>
+</div>
