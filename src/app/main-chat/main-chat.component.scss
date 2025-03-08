@@ -1,9 +1,10 @@
 .content-container {
   display: grid;
-  grid-template-columns: 20% 1fr;
+  grid-template-columns: 366px 1fr;
   grid-template-rows: auto 1fr;
   height: 100svh;
 }
+
 app-header {
   grid-column: span 3;
 }
@@ -16,4 +17,8 @@ app-header {
 .chat-content {
   grid-column: 2;
   grid-row: 2;
+}
+
+.placeholder-tread {
+  width: 485px;
 }

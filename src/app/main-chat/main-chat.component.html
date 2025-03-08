@@ -7,12 +7,10 @@
             <div class="placeholder-tread"> Hier Tread einfügen</div>
         </mat-drawer>
 
-        <div>
-            <button type="button" mat-button (click)="drawer.toggle()">
-                Toggle Tread Test Version
-            </button>
-            <app-chat-content></app-chat-content>
-        </div>
+        <!-- <button type="button" mat-button (click)="drawer.toggle()">
+            Toggle Tread Test Version
+        </button> -->
+        <app-chat-content (toggleThread)="toggleThread()"></app-chat-content>
     </mat-drawer-container>
 
 

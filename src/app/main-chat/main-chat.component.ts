@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-main-chat',
@@ -26,10 +26,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class MainChatComponent {
   chatmodule = inject(UserService);
+  @ViewChild('drawer') drawer!: MatDrawer;
   showFiller = true;
 
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
     this.chatmodule.accountcreation = false;
+  }
+
+  toggleThread() {
+    this.drawer.toggle(); // MatDrawer direkt toggeln
   }
 }
