@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Inject } from '@angular/core';
+import { log } from 'console';
 
 
 @Component({
@@ -20,9 +21,10 @@ import { Inject } from '@angular/core';
 export class ContactbarComponent {
   constructor(@Inject(Firestore) private firestore: Firestore) { }
   public users: any[] = [];
+  public channels: any[] = [];
   active: boolean = false;
   message: boolean = false;
-  channels = [
+  lchannels = [
     {
       name: 'Entwicklerteam'
     },
@@ -38,20 +40,24 @@ export class ContactbarComponent {
 
   ngOnInit() {
     this.loadUsers();
+    this.loadChannels();
   }
 
   async loadUsers() {
-    console.log(this.firestore);
     const usersCollection = collection(this.firestore, 'users');
-    console.log(usersCollection);
     const userSnapshot = await getDocs(usersCollection);
-    console.log(userSnapshot);
     this.users = userSnapshot.docs.map(doc => doc.data());
-
     console.log(this.users);
 
   }
 
+async loadChannels(){
+  const channelCollection = collection(this.firestore, 'channels');
+  const channelSnapshot = await getDocs(channelCollection);
+  this.channels = channelSnapshot.docs.map(doc => doc.data());
+  console.log(this.channels);
+  
+}
 
 
   toggleActive() {

@@ -53,7 +53,7 @@
 
             </div>
             <div [ngClass]="{'show': isOpen()}"  class="contacts">
-                <div *ngFor="let user of users" class="contactsrow">
+                <div *ngFor="let user of users let index = index" class="contactsrow">
                     <div>
                         <div class="imageContainer">
                             <img class="profile-image"  [src]="user.profilephoto" alt="">
