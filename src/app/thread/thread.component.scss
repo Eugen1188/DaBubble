@@ -8,7 +8,7 @@ main {
     width: 485px;
     height: 940px;
     border-radius: 30px;
-    background-color: grey;
+    background-color: rgb(177, 241, 231);
 }
 
 .thread-channel-close-button-container {
@@ -16,6 +16,13 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 24px 24px 24px 24px;
+    border-bottom: 2px solid grey;
+    .close-button {
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
 
     .thread-channel-container {
         display: flex;
@@ -23,6 +30,7 @@ main {
         align-items: center;
 
         .channel-name-container {
+            margin-left: 8px;
             font-family: Nunito;
             font-size: 14px;
             color: #797EF3;
@@ -35,5 +43,15 @@ main {
             font-weight: 700;
             font-size: 24px;
         }
+    }
+}
+
+.user-message-container {
+    display:flex;
+    .user-profile-avatar-container {
+        width: 32px;
+        height: 32px;
+        background-color: grey;
+        border-radius: 50%;
     }
 }
