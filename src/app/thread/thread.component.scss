@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    box-sizing: border-box;
+    width: 485px;
+    height: 940px;
+    border-radius: 30px;
+    background-color: grey;
+}
+
+.thread-channel-close-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 24px 24px 24px;
+
+    .thread-channel-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .thread-container {
+        p {
+            font-family: Nunito;
+            font-weight: 700;
+            font-size: 24px;
+        }
+    }
+}
