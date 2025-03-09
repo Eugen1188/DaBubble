@@ -1,12 +1,11 @@
 section {
     width: 100%;
     max-width: 306px;
-    height: 878px;
+    height: 100%;
     background-color: #ffffff;
     border-radius: 30px;
     font-family: 'Nunito';
-    margin: 100px; //das margin muss wieder entfernt werden
-    border: solid; // muss wieder entfernt werden
+
     padding: 32px 30px;
     display: flex;
     flex-direction: column;
@@ -265,7 +264,7 @@ button {
         display: flex;
         align-items: center;
         gap: 10px;
-        width: 186px;
+
         height: 25px;
         padding: 4px 10px;
 
@@ -293,7 +292,7 @@ button {
 
 .messages {
     width: 100%;
-    height: 484px;
+    height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -357,7 +356,7 @@ button {
 
 .contacts {
     width: 100%;
-    height: 413px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;

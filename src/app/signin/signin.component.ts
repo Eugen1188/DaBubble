@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
-import { GoogleAuthProvider, Auth } from '@angular/fire/auth';
+import { GoogleAuthProvider, Auth, onAuthStateChanged } from '@angular/fire/auth';
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -47,16 +47,16 @@ export class SigninComponent {
       await signInWithPopup(this.auth, this.googleAuthProvider);
       await this.setOnlineStatus();
       this.shareddata.redirectiontodashboard();
-  
+
     } catch (error) { }
   }
 
   async setOnlineStatus() {
-    const currentUser = this.shareddata.getUser();
-    currentUser.online = true;
-    await this.fireService.updateOnlineStatus(currentUser);
+        const currentUser = this.shareddata.getUser();
+        currentUser.online = true;
+        await this.fireService.updateOnlineStatus(currentUser);
+      } 
+  
   }
 
 
-
-}

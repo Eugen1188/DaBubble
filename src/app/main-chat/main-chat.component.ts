@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { ContactbarComponent } from '../contactbar/contactbar.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -20,6 +21,7 @@ import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
     HeaderComponent,
     ChatContentComponent,
     MatSidenavModule,
+    ContactbarComponent
   ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
