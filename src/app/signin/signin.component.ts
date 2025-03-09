@@ -10,6 +10,9 @@ import {
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/user.class';
 import { UserService } from '../shared.service';
+import { FireServiceService } from '../fire-service.service';
+import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-signin',
@@ -23,7 +26,9 @@ export class SigninComponent {
   shareddata = inject(UserService);
   auth = inject(Auth);
   user = new User();
-  constructor(private router: Router) {}
+  firestore = inject(Firestore);
+  fireService = inject(FireServiceService)
+  constructor(private router: Router) { }
 
   async signin() {
     try {
@@ -32,14 +37,26 @@ export class SigninComponent {
         this.user.email,
         this.user.password
       );
+      await this.setOnlineStatus();
       this.shareddata.redirectiontodashboard();
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async signinwithgoogle() {
     try {
       await signInWithPopup(this.auth, this.googleAuthProvider);
+      await this.setOnlineStatus();
       this.shareddata.redirectiontodashboard();
-    } catch (error) {}
+  
+    } catch (error) { }
   }
+
+  async setOnlineStatus() {
+    const currentUser = this.shareddata.getUser();
+    currentUser.online = true;
+    await this.fireService.updateOnlineStatus(currentUser);
+  }
+
+
+
 }

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, doc, Firestore } from '@angular/fire/firestore';
+import { collection, doc, updateDoc, Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -15,4 +15,15 @@ export class FireServiceService {
   getCollectionRef(ref: string) {
     return collection(this.firestore, ref);
   }
+
+  async updateOnlineStatus(currentUser: any) {
+    if (currentUser.uid) {
+      const userRef = doc(this.firestore, 'users', currentUser.uid);
+      await updateDoc(userRef, {
+        online: currentUser.online,
+      })
+    }
+
+  }
 }
+

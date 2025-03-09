@@ -15,6 +15,7 @@ import { UserService } from '../shared.service';
 import { getAuth, onAuthStateChanged, signOut, User } from '@firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { FireServiceService } from '../fire-service.service';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +38,8 @@ export class HeaderComponent implements OnInit {
   auth = inject(Auth);
   opened = 0;
   chatmoduleenabled = inject(UserService);
+  shareddata = inject(UserService);
+  fireService = inject(FireServiceService);
 
   show() {
     this.opened++;
@@ -51,13 +54,17 @@ export class HeaderComponent implements OnInit {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.user = user;
-        this.displayName = user.displayName ;
+        this.displayName = user.displayName;
       }
     });
   }
 
-  async signOut() {
+  async signOut() { 
+    const currentUser = this.shareddata.getUser();
+    currentUser.online = false;
+    await this.fireService.updateOnlineStatus(currentUser);
     await signOut(this.auth);
+   
     this.chatmoduleenabled.redirectiontologinpage();
   }
 }

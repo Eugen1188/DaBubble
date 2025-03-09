@@ -56,6 +56,8 @@ export class AvatarselectionComponent {
             fullname: this.user.fullname,
             email: this.user.email,
             profilephoto: this.user.profilephoto,
+            messages: [],
+            online: false,
           });
         });
       })
