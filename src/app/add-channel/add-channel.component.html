@@ -54,21 +54,54 @@
     <form>
       <div class="decision">
         <div>
-          <input type="radio" id="allMembers" name="channelMember" value="false" (change)="setChannelMember(false)" checked>
-          <label for="allMembers">Alle Mitglieder von OfficeTeam hinzufügen</label>
+          <input
+            type="radio"
+            id="allMembers"
+            name="channelMember"
+            value="false"
+            (change)="setChannelMember(false)"
+            checked
+          />
+          <label for="allMembers"
+            >Alle Mitglieder von OfficeTeam hinzufügen</label
+          >
         </div>
         <div>
-          <input type="radio" id="specificMembers" name="channelMember" value="true" (change)="setChannelMember(true)">
+          <input
+            type="radio"
+            id="specificMembers"
+            name="channelMember"
+            value="true"
+            (change)="setChannelMember(true)"
+          />
           <label for="specificMembers">Bestimmte Leute hinzufügen</label>
         </div>
         <div class="input-cont" *ngIf="chooseMember">
-          <div class="input-helpt-cont"><div *ngFor="let user of users; let index = index">{{user.fullname}}</div></div>
-          <input name="" id="">
+          <div class="input-help-cont">
+            <div
+              class="mini-profile-cont"
+              *ngFor="let user of users; let index = index">
+              <img class="user-img-mini" src="{{ user.profilephoto }}" alt="" />
+              <div class="username-mini">{{ user.fullname }}</div>
+              <img src="img/close.png" alt="" class="cross-mini" />
+            </div>
+            <div class="choose-user-bar">
+              <div class="user-select-cont" *ngFor="let user of users; let index = index">
+                <div class="img-status-cont">
+                  <img src="{{ user.profilephoto }}" alt=""/>
+                  <div class="satus circle"></div>
+                </div>
+                <div>{{user.fullname}}</div>
+              </div>
+              <div></div>
+            </div>
+          </div>
+          <input name="" id="" />
         </div>
       </div>
-        <div class="btn-cont">
-          <button>Erstellen</button>
-        </div>
+      <div class="btn-cont">
+        <button>Erstellen</button>
+      </div>
     </form>
   </div>
 </div>

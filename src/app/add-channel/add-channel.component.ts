@@ -5,8 +5,8 @@ import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-import { getAuth, User } from 'firebase/auth';
-
+import { getAuth } from 'firebase/auth';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-add-channel',
@@ -28,6 +28,7 @@ export class AddChannelComponent implements OnInit {
   selectedUsers: any[] = [];
   filteredUsers: any[] = [];
 
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {
   }
 
@@ -43,6 +44,7 @@ export class AddChannelComponent implements OnInit {
     this.users = querySnapshot.docs.map(doc => doc.data());
     console.log(this.users[0].fullname);
   }
+
 
   closeScreen() {
     console.log('close window');
