@@ -24,8 +24,18 @@ html {
   src: url("/fonts/Figtree-VariableFont_wght.ttf") format("woff");
 }
 
+app-intro {
+  background-color: #5f66ee !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 app-header {
   background-color: #eceefe;
+  display: flex;
+  justify-content: center;
 }
 
 app-footer {
