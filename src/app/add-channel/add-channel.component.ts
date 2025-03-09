@@ -45,6 +45,11 @@ export class AddChannelComponent implements OnInit {
     console.log(this.users[0].fullname);
   }
 
+  addUserToSelection(index: number) {
+    this.selectedUsers.push(this.users[index]);
+    console.log(this.selectedUsers);
+  }
+
 
   closeScreen() {
     console.log('close window');

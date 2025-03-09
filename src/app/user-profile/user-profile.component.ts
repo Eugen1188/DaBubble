@@ -23,6 +23,7 @@ export class UserProfileComponent implements OnInit {
   emailVerified: boolean = false;
   uid: string | null = null;
   modifyinfos = false;
+  selectedUsers: any[] = [];
   constructor(public firestore: Firestore) {}
 
   ngOnInit() {
