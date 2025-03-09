@@ -16,7 +16,7 @@ export class DirectmessagesComponent {
   currentReciever: any;
   currentUser: any;
   currentUserName: any = this.userService.user.displayName;
-  currentUserID: string = this.userService.user.uid;
+  userID: string = this.userService.user.uid;
 
   firestore = inject(Firestore);
   text:string='hallo';
@@ -25,14 +25,18 @@ export class DirectmessagesComponent {
   async ngOnInit() {
     await this.loadUsers();
     this.findcurrentUserinUsers();
+    this.setCurrentReciever();
+
+  }
+
+  setCurrentReciever(){
     this.userService.currentIndex$.subscribe(index => {
       this.index = index;
-      this.currentReciever = this.users[this.index];
-      
-      this.currentReciever.messages.push(this.text);
-      console.log(this.currentReciever);
-      
     });
+    this.currentReciever = this.users[this.index];
+    this.currentReciever.messages.push(this.text);
+    console.log(this.currentReciever);
+
   }
 
   async loadUsers() {
@@ -47,7 +51,7 @@ export class DirectmessagesComponent {
 
   findcurrentUserinUsers() {
     this.users.forEach(user => {
-      if (this.currentUserID === user.id) {
+      if (this.userID === user.id) {
         console.log(user.id);
         console.log(this.userService.user.uid);
         this.currentUser = user;
