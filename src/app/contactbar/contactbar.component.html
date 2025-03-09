@@ -55,9 +55,9 @@
             <div [ngClass]="{'show': isOpen()}"  class="contacts">
                 <div *ngFor="let user of users let index = index" class="contactsrow">
                     <div>
-                        <div class="imageContainer">
+                        <div id="user{{index}}" class="imageContainer">
                             <img class="profile-image"  [src]="user.profilephoto" alt="">
-                            <div class="status-dot"></div>
+                            <div class="status-dot" [ngClass]="{'green': user.online}" ></div>
                         </div>
                        
                         <span>{{user.fullname}}</span>

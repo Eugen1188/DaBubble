@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Inject } from '@angular/core';
-import { log } from 'console';
+import { UserService } from '../shared.service';
+import { user } from '@angular/fire/auth';
+
 
 
 @Component({
@@ -24,6 +26,7 @@ export class ContactbarComponent {
   public channels: any[] = [];
   active: boolean = false;
   message: boolean = false;
+  shareddata = inject(UserService);
   lchannels = [
     {
       name: 'Entwicklerteam'
@@ -38,9 +41,10 @@ export class ContactbarComponent {
   ]
 
 
-  ngOnInit() {
-    this.loadUsers();
-    this.loadChannels();
+  async ngOnInit() {
+    await this.loadUsers();
+    await this.loadChannels();
+   
   }
 
   async loadUsers() {
@@ -51,13 +55,14 @@ export class ContactbarComponent {
 
   }
 
-async loadChannels(){
-  const channelCollection = collection(this.firestore, 'channels');
-  const channelSnapshot = await getDocs(channelCollection);
-  this.channels = channelSnapshot.docs.map(doc => doc.data());
-  console.log(this.channels);
-  
-}
+  async loadChannels() {
+    const channelCollection = collection(this.firestore, 'channels');
+    const channelSnapshot = await getDocs(channelCollection);
+    this.channels = channelSnapshot.docs.map(doc => doc.data());
+    console.log(this.channels);
+
+  }
+
 
 
   toggleActive() {
