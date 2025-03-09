@@ -4,7 +4,7 @@ import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Inject } from '@angular/core';
 import { UserService } from '../shared.service';
-import { user } from '@angular/fire/auth';
+
 
 
 
@@ -22,29 +22,16 @@ import { user } from '@angular/fire/auth';
 
 export class ContactbarComponent {
   constructor(@Inject(Firestore) private firestore: Firestore) { }
-  public users: any[] = [];
   public channels: any[] = [];
+  public users: any[] = [];
   active: boolean = false;
   message: boolean = false;
-  shareddata = inject(UserService);
-  lchannels = [
-    {
-      name: 'Entwicklerteam'
-    },
-    {
-      name: 'Backoffice'
-    },
-    {
-      name: 'Support'
-    },
-
-  ]
-
-
+  userService = inject(UserService)
+  currentUser: any;
   async ngOnInit() {
     await this.loadUsers();
     await this.loadChannels();
-   
+
   }
 
   async loadUsers() {
@@ -63,7 +50,18 @@ export class ContactbarComponent {
 
   }
 
+  openPersonalChat(index: number) {
 
+    this.userService.getReciepent(index);
+
+    // this.currentUser = this.userService.user;
+    //const reciever = this.users[index];
+
+
+
+
+
+  }
 
   toggleActive() {
     this.active = !this.active;

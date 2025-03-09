@@ -229,7 +229,6 @@ export class ChatContentComponent implements OnInit {
 
   isNewDay(): boolean {
     if (this.messages.length === 0) return true;
-
     let lastMessage = this.messages[this.messages.length - 1];
     let lastMessageDate = lastMessage.date;
     let todayDate = new Date().toISOString().split('T')[0];

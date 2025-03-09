@@ -1,6 +1,6 @@
 section {
     width: 100%;
-    max-width: 306px;
+   
     height: 100%;
     background-color: #ffffff;
     border-radius: 30px;
@@ -371,7 +371,7 @@ button {
     display: flex;
     justify-content: flex-start;
     padding-left: 25px;
-
+cursor: pointer;
     >div {
         width: fit-content;
         height: 50px;

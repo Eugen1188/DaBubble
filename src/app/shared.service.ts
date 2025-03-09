@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +15,11 @@ export class UserService {
   chatmoduleenabled = false;
   accountcreation = false;
   user: any = new User();
+  firestore = inject(Firestore)
+  public users: any[] = [];
+  private indexSource = new BehaviorSubject<number>(-1);
+  currentIndex$ = this.indexSource.asObservable();
+
 
   setUser(user: User) {
     this.user = user;
@@ -47,5 +53,13 @@ export class UserService {
     });
   }
 
-  
+
+
+
+
+  getReciepent(index: number) {
+    this.indexSource.next(index);
+    console.log(this.currentIndex$);
+this.router.navigate(['/direct'])
+  }
 }

@@ -11,6 +11,8 @@ import { AvatarselectionComponent } from './avatarselection/avatarselection.comp
 import { ContactbarComponent } from './contactbar/contactbar.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { ThreadComponent } from './thread/thread.component';
+import { DirectmessagesComponent } from './directmessages/directmessages.component';
+
 
 export const routes: Routes = [
   { path: '', component: IntroComponent },
@@ -25,4 +27,5 @@ export const routes: Routes = [
   { path: 'contactbar', component: ContactbarComponent },
   { path: 'add-channel', component: AddChannelComponent },
   { path: 'thread', component: ThreadComponent },
+  { path: 'direct', component: DirectmessagesComponent },
 ];
