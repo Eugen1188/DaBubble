@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { UserService } from '../shared.service';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-directmessages',
@@ -12,38 +13,60 @@ export class DirectmessagesComponent {
   userService = inject(UserService);
   index: number = -1;
   users: any[] = [];
-  currentRecieverName: string = '';
-  currentUserName: string = '';
+  currentReciever: any;
+  currentUser: any;
+  currentUserName: any = this.userService.user.displayName;
+  currentUserID: string = this.userService.user.uid;
+
   firestore = inject(Firestore);
-  constructor() {
-
-
-
-
-
-
-  }
+  text:string='hallo';
+  constructor() {}
 
   async ngOnInit() {
     await this.loadUsers();
-    console.log(this.userService.currentIndex$);
-
+    this.findcurrentUserinUsers();
     this.userService.currentIndex$.subscribe(index => {
       this.index = index;
-
-
-      this.currentRecieverName = this.users[this.index].fullname
-
-      this.currentUserName=this.userService.user.displayName
-
+      this.currentReciever = this.users[this.index];
+      
+      this.currentReciever.messages.push(this.text);
+      console.log(this.currentReciever);
+      
     });
   }
 
   async loadUsers() {
     const usersCollection = collection(this.firestore, 'users');
     const userSnapshot = await getDocs(usersCollection);
-    this.users = userSnapshot.docs.map(doc => doc.data());
-    console.log(this.users);
-
+    this.users = userSnapshot.docs.map(doc => ({
+      id: doc.id,      
+      ...doc.data()     
+    }));
+   
   }
+
+  findcurrentUserinUsers() {
+    this.users.forEach(user => {
+      if (this.currentUserID === user.id) {
+        console.log(user.id);
+        console.log(this.userService.user.uid);
+        this.currentUser = user;
+        console.log(this.currentUser);
+      }
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
