@@ -27,6 +27,7 @@ export class AddChannelComponent implements OnInit {
   users: any[] = [];
   selectedUsers: any[] = [];
   filteredUsers: any[] = [];
+  showUserBar: boolean = false;
 
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {
@@ -47,9 +48,22 @@ export class AddChannelComponent implements OnInit {
 
   addUserToSelection(index: number) {
     this.selectedUsers.push(this.users[index]);
+    this.refreshBar()
     console.log(this.selectedUsers);
   }
 
+  removeSelectedUser(index: number) {
+    this.selectedUsers.splice(index, 1);
+    console.log(this.selectedUsers);
+  }
+
+  refreshBar() {
+    const refresh = document.getElementById('user-search-bar') as HTMLInputElement | null;
+    if (refresh) {
+      console.log('refresh');
+      refresh.value = '';
+    }
+  }
 
   closeScreen() {
     console.log('close window');
@@ -87,5 +101,9 @@ export class AddChannelComponent implements OnInit {
   shrinkTextarea(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = '60px';
+  }
+
+  openUserBar() {
+    this.showUserBar = !this.showUserBar;
   }
 }
