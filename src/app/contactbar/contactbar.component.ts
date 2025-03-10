@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Inject } from '@angular/core';
@@ -43,13 +43,17 @@ export class ContactbarComponent {
   }
 
   async loadUsers() {
-    const usersCollection = collection(this.firestore, 'users');
-    const userSnapshot = await getDocs(usersCollection);
-    this.users = userSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-    console.log(this.users);
+    try {
+      const usersCollection = collection(this.firestore, 'users');
+      const userSnapshot = await getDocs(usersCollection);
+      this.users = userSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      console.log(this.users);
+    } catch (error) {
+      console.error("Error loading users:", error);
+    }
   }
 
   async loadChannels() {
@@ -65,11 +69,7 @@ export class ContactbarComponent {
   }
 
   openPersonalChat(index: any) {
-    this.users.forEach(user => {
-      if (this.userID === user.id) {
-        this.currentUser = user;
-      }
-    })
+    this.currentUser = this.users.find(user => this.userID === user.id);
     this.currentReciever = this.users[index]
     this.userService.getReciepent(this.currentReciever, this.currentUser);
 
