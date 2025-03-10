@@ -19,7 +19,8 @@ export class UserService {
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
-
+  currentReciever: any;
+  currentUser: any;
 
   setUser(user: User) {
     this.user = user;
@@ -53,13 +54,16 @@ export class UserService {
     });
   }
 
-  
 
 
-  getReciepent(index: number) {
-    this.indexSource.next(index);
-    localStorage.setItem('currentIndex', index.toString());
+
+  getReciepent(reciever: any, user: any) {
+    this.indexSource.next(reciever);
+    this.currentReciever = reciever;
+    this.currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('currentReceiver', JSON.stringify(reciever));
     this.router.navigate(['/direct'])
-    
+
   }
 }
