@@ -14,7 +14,7 @@
 
 .add-channel-cont {
   width: 710px;
-  height: 279px;
+  height: auto;
   padding: 40px;
   font-family: "Nunito";
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
@@ -39,6 +39,7 @@
     }
     .input-cont {
       position: relative;
+      cursor: default !important;
       &::before {
         content: "#";
         position: absolute;
@@ -149,6 +150,7 @@
         font-size: 18px;
         font-weight: 400;
         position: static;
+        cursor: default !important;
         .choose-user-bar {
           top: 235px;
           width: 335px;
@@ -167,10 +169,22 @@
             width: fit-content;
             border-radius: 30px;
             padding: 4px 20px 4px 20px;
+            cursor: pointer;
             &:hover {
               background-color: var(--bg-color);
             }
             .img-status-cont {
+              position: relative;
+              .satus-circle {
+                position: absolute;
+                background-color: rgba(104, 104, 104, 1);
+                border: 2px solid rgba(255, 255, 255, 1);
+                top: 40px;
+                left: 36px;
+                width: 14px;
+                height: 14px;
+                border-radius: 100%;
+              }
               img {
                 width: 50px;
                 height: 50px;
@@ -200,7 +214,8 @@
           }
           .cross-mini {
             width: 10px;
-            height: 10px;          
+            height: 10px;     
+            cursor: pointer;     
           }
           .username-mini {
             width: max-content;
