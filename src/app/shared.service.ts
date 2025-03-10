@@ -53,13 +53,13 @@ export class UserService {
     });
   }
 
-
-
+  
 
 
   getReciepent(index: number) {
     this.indexSource.next(index);
-    console.log(this.currentIndex$);
-this.router.navigate(['/direct'])
+    localStorage.setItem('currentIndex', index.toString());
+    this.router.navigate(['/direct'])
+    
   }
 }

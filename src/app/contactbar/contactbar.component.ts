@@ -56,11 +56,6 @@ export class ContactbarComponent {
 
     // this.currentUser = this.userService.user;
     //const reciever = this.users[index];
-
-
-
-
-
   }
 
   toggleActive() {

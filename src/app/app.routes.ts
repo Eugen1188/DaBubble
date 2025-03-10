@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes} from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 import { MainChatComponent } from './main-chat/main-chat.component';
@@ -12,6 +12,7 @@ import { ContactbarComponent } from './contactbar/contactbar.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { ThreadComponent } from './thread/thread.component';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
+
 
 
 export const routes: Routes = [

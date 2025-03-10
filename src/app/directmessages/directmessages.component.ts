@@ -1,7 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Injectable, OnInit } from '@angular/core';
 import { UserService } from '../shared.service';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-import { user } from '@angular/fire/auth';
+
+@Injectable({
+  providedIn: 'root'
+})
+
 
 @Component({
   selector: 'app-directmessages',
@@ -9,33 +13,23 @@ import { user } from '@angular/fire/auth';
   templateUrl: './directmessages.component.html',
   styleUrl: './directmessages.component.scss'
 })
-export class DirectmessagesComponent {
+export class DirectmessagesComponent implements OnInit {
   userService = inject(UserService);
   index: number = -1;
-  users: any[] = [];
-  currentReciever: any;
-  currentUser: any;
-  currentUserName: any = this.userService.user.displayName;
-  userID: string = this.userService.user.uid;
+  public users: any[] = [];
+  public currentReciever: any = null;
+  public currentUser: any = null;
+ 
+  userID: string = '';
 
   firestore = inject(Firestore);
-  text:string='hallo';
-  constructor() {}
-
-  async ngOnInit() {
-    await this.loadUsers();
-    this.findcurrentUserinUsers();
-    this.setCurrentReciever();
-
+  text: string = 'hallo';
+  constructor() {
   }
 
-  setCurrentReciever(){
-    this.userService.currentIndex$.subscribe(index => {
-      this.index = index;
-    });
-    this.currentReciever = this.users[this.index];
-    this.currentReciever.messages.push(this.text);
-    console.log(this.currentReciever);
+  async ngOnInit() {
+    this.userID = this.userService.user.uid;
+    await this.loadUsers();
 
   }
 
@@ -43,11 +37,27 @@ export class DirectmessagesComponent {
     const usersCollection = collection(this.firestore, 'users');
     const userSnapshot = await getDocs(usersCollection);
     this.users = userSnapshot.docs.map(doc => ({
-      id: doc.id,      
-      ...doc.data()     
+      id: doc.id,
+      ...doc.data()
     }));
-   
+    this.setCurrentReciever();
+    this.findcurrentUserinUsers();
+
   }
+
+  setCurrentReciever() {
+    this.userService.currentIndex$.subscribe(index => {
+      this.index = index;
+    });
+    //const storedIndex = localStorage.getItem('currentIndex');
+    //this.index = storedIndex ? +storedIndex : -1;
+    this.currentReciever = this.users[this.index] || { fullname: 'Unbekannt', messages: [] };
+    this.currentReciever.messages.push(this.text);
+    console.log(this.currentReciever);
+
+  }
+
+
 
   findcurrentUserinUsers() {
     this.users.forEach(user => {
