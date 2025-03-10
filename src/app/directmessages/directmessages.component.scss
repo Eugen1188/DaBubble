@@ -104,6 +104,7 @@ section {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
     }
 }
@@ -168,4 +169,5 @@ button{
     border: none;
     background-color: transparent;
     padding: 0;
+    cursor: pointer;
 }
