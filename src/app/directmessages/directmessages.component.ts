@@ -68,7 +68,7 @@ export class DirectmessagesComponent implements OnInit {
     console.log(this.currentReciever);
     console.log(this.currentUser);
     await this.updateUsers();
-    this.loadMessages();
+    this.loadMessages()
   }
 
 
@@ -89,12 +89,21 @@ export class DirectmessagesComponent implements OnInit {
   }
 
 
+
+
   loadMessages() {
     this.currentMessages = [];
     this.currentUser.messages.forEach((message: any) => {
-      if (message.to === this.currentReciever.id || message.from === this.currentReciever.id) {
-        this.currentMessages.push(message);
+      if (this.currentUser.id===this.currentReciever.id) {
+        if (message.to === this.currentReciever.id && message.from === this.currentReciever.id) {
+          this.currentMessages.push(message);
+        }
+      }else{
+        if (message.to === this.currentReciever.id || message.from === this.currentReciever.id) {
+          this.currentMessages.push(message);
+        }
       }
+     
     });
     this.currentMessages.sort((a: any, b: any) => {
       const timeA = new Date(a.time);
