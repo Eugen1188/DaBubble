@@ -6,31 +6,33 @@ import { Inject } from '@angular/core';
 import { UserService } from '../shared.service';
 import { getAuth } from '@angular/fire/auth';
 
-
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'app-contactbar',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './contactbar.component.html',
   styleUrl: './contactbar.component.scss'
 })
 
-@Injectable({
-  providedIn: 'root'
-})
 
 
 export class ContactbarComponent {
-  constructor(@Inject(Firestore) private firestore: Firestore) { }
+  constructor() { }
   public channels: any[] = [];
   public users: any[] = [];
   active: boolean = false;
   message: boolean = false;
   userService = inject(UserService)
+  firestore = inject(Firestore); 
   currentUser: any;
   currentReciever: any;
   userID: string = '';
   auth=getAuth();
+
   async ngOnInit() {
     await this.loadUsers();
     await this.loadChannels();
