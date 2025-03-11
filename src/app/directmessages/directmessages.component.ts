@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../directmessage.class';
 import { FireServiceService } from '../fire-service.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +29,7 @@ export class DirectmessagesComponent implements OnInit {
   userID: string = '';
   currentMessages: any[] = [];
   firestore = inject(Firestore);
+  isEmpty: boolean = false;
 
   constructor() {
   }
@@ -112,6 +114,7 @@ export class DirectmessagesComponent implements OnInit {
     });
 
     this.sortMessages();
+    this.checkMessages();
   }
 
   sortMessages() {
@@ -146,5 +149,11 @@ export class DirectmessagesComponent implements OnInit {
     const messageDate = new Date(date);
     return today === messageDate.toDateString();
 
+  }
+
+  checkMessages() {
+    if (this.currentMessages.length === 0) {
+     this.isEmpty = true;
+    }
   }
 }

@@ -9,6 +9,7 @@ import { HeaderComponent } from '../header/header.component';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ContactbarComponent } from '../contactbar/contactbar.component';
+import { DirectmessagesComponent } from '../directmessages/directmessages.component';
 
 @Component({
   selector: 'app-main-chat',
@@ -21,7 +22,8 @@ import { ContactbarComponent } from '../contactbar/contactbar.component';
     HeaderComponent,
     ChatContentComponent,
     MatSidenavModule,
-    ContactbarComponent
+    ContactbarComponent,
+    DirectmessagesComponent
   ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',

@@ -64,7 +64,7 @@ export class UserService {
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     localStorage.setItem('currentReceiver', JSON.stringify(this.currentReciever));
     setTimeout(() => {
-      this.router.navigate(['/direct'])
+     this.router.navigate(['/direct'])
     }, 1000);
 
 
