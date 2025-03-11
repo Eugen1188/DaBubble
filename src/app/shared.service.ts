@@ -58,12 +58,15 @@ export class UserService {
 
 
   getReciepent(reciever: any, user: any) {
-    this.indexSource.next(reciever);
+    //this.indexSource.next(reciever);
     this.currentReciever = reciever;
     this.currentUser = user;
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    localStorage.setItem('currentReceiver', JSON.stringify(reciever));
-    this.router.navigate(['/direct'])
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    localStorage.setItem('currentReceiver', JSON.stringify(this.currentReciever));
+    setTimeout(() => {
+      this.router.navigate(['/direct'])
+    }, 1000);
+
 
   }
 }

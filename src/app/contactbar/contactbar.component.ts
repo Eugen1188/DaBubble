@@ -27,19 +27,17 @@ export class ContactbarComponent {
   active: boolean = false;
   message: boolean = false;
   userService = inject(UserService)
-  firestore = inject(Firestore); 
+  firestore = inject(Firestore);
   currentUser: any;
   currentReciever: any;
   userID: string = '';
-  auth=getAuth();
+  auth = getAuth();
 
   async ngOnInit() {
     await this.loadUsers();
     await this.loadChannels();
-    if (this.auth) {
-      this.userID = this.userService.user.uid
-    }
-   
+
+
   }
 
   async loadUsers() {
@@ -69,9 +67,17 @@ export class ContactbarComponent {
   }
 
   openPersonalChat(index: any) {
-    this.currentUser = this.users.find(user => this.userID === user.id);
-    this.currentReciever = this.users[index]
-    this.userService.getReciepent(this.currentReciever, this.currentUser);
+if (this.userService.user.uid) {
+  this.userID = this.userService.user.uid
+
+  this.currentUser = this.users.find(user => this.userID === user.id);
+  this.currentReciever = this.users[index]
+  this.userService.getReciepent(this.currentReciever, this.currentUser);
+}else{
+  console.log('users wurde nicht richtig geladen');
+  
+}
+  
 
     // this.currentUser = this.userService.user;
     //const reciever = this.users[index];

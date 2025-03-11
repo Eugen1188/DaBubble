@@ -28,6 +28,7 @@ export class DirectmessagesComponent implements OnInit {
   userID: string = '';
   currentMessages: any[] = [];
   firestore = inject(Firestore);
+
   constructor() {
   }
 
@@ -40,26 +41,33 @@ export class DirectmessagesComponent implements OnInit {
 
   setCurrentReciever() {
 
-    // this.currentReciever=this.userService.currentReciever;
-    // this.currentUser=this.userService.currentUser;
+    this.currentReciever = this.userService.currentReciever;
+    this.currentUser = this.userService.currentUser;
 
-    const storedReceiver = localStorage.getItem('currentReceiver');
-    if (storedReceiver) {
-      this.currentReciever = JSON.parse(storedReceiver);
+
+    if (!this.currentReciever || !this.currentUser) {
+      console.error('currentReciever oder currentUser sind nicht definiert!');
+      return;
     }
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      this.currentUser = JSON.parse(storedUser);
-    }
+
+    //const storedReceiver = localStorage.getItem('currentReceiver');
+    //if (storedReceiver) {
+    //this.currentReciever = JSON.parse(storedReceiver);
+    //}
+    //const storedUser = localStorage.getItem('currentUser');
+    //if (storedUser) {
+    //this.currentUser = JSON.parse(storedUser);
+    //}
   }
 
 
   async sendMessage() {
-    const message = new DirectMessage(this.currentUser.fullname, this.message, this.currentUser.id, this.currentReciever.id);
+    const message = new DirectMessage(this.currentUser.fullname, this.currentUser.profilephoto, this.message, this.currentUser.id, this.currentReciever.id);
     const messageData = {
-      name:message.name,
+      name: message.name,
+      photo: message.photo,
       content: message.content,
-      time: message.time.toISOString(), 
+      time: message.time.toISOString(),
       from: message.from,
       to: message.to
     };
@@ -74,11 +82,11 @@ export class DirectmessagesComponent implements OnInit {
 
   async updateUsers() {
     try {
-      const receiverDocRef = doc(this.firestore, `users/${this.currentReciever.id}`); 
-      const senderDocRef = doc(this.firestore, `users/${this.currentUser.id}`); 
+      const receiverDocRef = doc(this.firestore, `users/${this.currentReciever.id}`);
+      const senderDocRef = doc(this.firestore, `users/${this.currentUser.id}`);
       await updateDoc(receiverDocRef, {
         messages: this.currentReciever.messages
-      });     
+      });
       await updateDoc(senderDocRef, {
         messages: this.currentUser.messages
       });
@@ -89,27 +97,54 @@ export class DirectmessagesComponent implements OnInit {
   }
 
 
-
-
   loadMessages() {
     this.currentMessages = [];
     this.currentUser.messages.forEach((message: any) => {
-      if (this.currentUser.id===this.currentReciever.id) {
+      if (this.currentUser.id === this.currentReciever.id) {
         if (message.to === this.currentReciever.id && message.from === this.currentReciever.id) {
           this.currentMessages.push(message);
         }
-      }else{
+      } else {
         if (message.to === this.currentReciever.id || message.from === this.currentReciever.id) {
           this.currentMessages.push(message);
         }
       }
-     
     });
+
+    this.sortMessages();
+  }
+
+  sortMessages() {
     this.currentMessages.sort((a: any, b: any) => {
       const timeA = new Date(a.time);
       const timeB = new Date(b.time);
       return timeA.getTime() - timeB.getTime();
     });
+
+  }
+
+
+  isNewDay(currentMessage: any, previousMessage: any) {
+    if (!previousMessage) { return true };
+    const currentDate = new Date(currentMessage.time).toDateString();
+    const previousDate = new Date(previousMessage.time).toDateString();
+    const today = new Date().toDateString();
+
+
+    return currentDate !== previousDate;
+
+  }
+
+  isUser(message: any) {
+    console.log(message.from, this.currentUser.id);
+    return message.from === this.currentUser.id
+
+  }
+
+  isToday(date: string) {
+    const today = new Date().toDateString();
+    const messageDate = new Date(date);
+    return today === messageDate.toDateString();
 
   }
 }
