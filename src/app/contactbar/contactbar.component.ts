@@ -101,4 +101,8 @@ if (this.userService.user.uid) {
   isActive() {
     return this.active === true;
   }
+
+  openWindow(window:string){
+    this.userService.loadComponent(window)
+  }
 }

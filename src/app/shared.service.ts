@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { DirectmessagesComponent } from './directmessages/directmessages.component';
+import { ChatContentComponent } from './chat-content/chat-content.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,8 +21,11 @@ export class UserService {
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
+  private currentComponent = new BehaviorSubject<any>('');
+  component$ = this.currentComponent.asObservable();
   currentReciever: any;
   currentUser: any;
+  component: string = '';
 
   setUser(user: User) {
     this.user = user;
@@ -63,10 +68,22 @@ export class UserService {
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     localStorage.setItem('currentReceiver', JSON.stringify(this.currentReciever));
-    setTimeout(() => {
-     this.router.navigate(['/direct'])
-    }, 1000);
+
 
 
   }
+
+ 
+    loadComponent(component: string) {
+      if (component === 'chat') {
+        this.currentComponent.next(DirectmessagesComponent); // Setze DirectmessagesComponent, wenn 'chat'
+      } else if (component === 'channel') {
+        this.currentComponent.next(ChatContentComponent); // Setze ChatContentComponent, wenn 'channel'
+      } else {
+        // Optional: Ein Fallback-Wert, wenn der `component` ein anderer String ist
+        console.warn('Unbekannter Component-Wert:', component);
+      }
+      console.log(component); // Logge den Wert von `component`
+    }
 }
+

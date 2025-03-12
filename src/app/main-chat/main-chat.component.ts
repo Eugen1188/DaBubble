@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -10,6 +10,7 @@ import { ChatContentComponent } from '../chat-content/chat-content.component';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ContactbarComponent } from '../contactbar/contactbar.component';
 import { DirectmessagesComponent } from '../directmessages/directmessages.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main-chat',
@@ -32,13 +33,31 @@ export class MainChatComponent {
   chatmodule = inject(UserService);
   @ViewChild('drawer') drawer!: MatDrawer;
   showFiller = true;
-
+  currentComponent: any = '';
+  private componentSubscription: Subscription | null = null;
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
     this.chatmodule.accountcreation = false;
   }
 
+  ngOnInit(): void {
+    this.componentSubscription = this.chatmodule.component$.subscribe(component => {
+      this.currentComponent = component;
+      console.log('Aktuelle Komponente:', component);
+    });
+
+  }
+  ngOnDestroy(): void {
+    // Verhindere Speicherlecks durch Abbestellung des Observables
+    if (this.componentSubscription) {
+      this.componentSubscription.unsubscribe();
+    }
+  }
+
   toggleThread() {
     this.drawer.toggle(); // MatDrawer direkt toggeln
   }
+
+
+
 }

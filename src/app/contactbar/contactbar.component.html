@@ -24,7 +24,7 @@
             </div>
             <div [ngClass]="{'show':isActive()}"  class="channellist">
                 <div class="channelrow" *ngFor="let channel of channels let index = index">
-                    <div>
+                    <div (click)="openWindow('channel')">
                         <img src="/img/tag.svg" alt="">
                         <span>{{channel.name}}</span>
                     </div>
@@ -53,7 +53,7 @@
 
             </div>
             <div [ngClass]="{'show': isOpen()}"  class="contacts">
-                <div *ngFor="let user of this.users let index = index" class="contactsrow" (click)="openPersonalChat(index)">
+                <div *ngFor="let user of this.users let index = index" class="contactsrow" (click)="openWindow('chat'); openPersonalChat(index)">
                     <div>
                         <div class="imageContainer">
                             <img class="profile-image"  [src]="user.profilephoto" alt="">

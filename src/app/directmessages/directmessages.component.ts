@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../directmessage.class';
 import { FireServiceService } from '../fire-service.service';
+import { updateCurrentUser } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +31,29 @@ export class DirectmessagesComponent implements OnInit {
   currentMessages: any[] = [];
   firestore = inject(Firestore);
   isEmpty: boolean = false;
-
+  isYou: boolean = false;
+  isChat: boolean = false;
   constructor() {
   }
 
   async ngOnInit() {
-
-
-    this.setCurrentReciever();
-    this.loadMessages();
+    this.startChat();
   }
+
+  startChat() {
+    if (this.userService.user != null && this.userService.currentReciever != null) {
+      this.setCurrentReciever();
+      this.loadMessages();
+      this.checkReciever();
+      this.isChat = true;
+    } else {
+      this.isChat === false
+      console.log('keine User oder Reciever');
+    }
+
+
+  }
+
 
   setCurrentReciever() {
 
@@ -73,10 +87,14 @@ export class DirectmessagesComponent implements OnInit {
       from: message.from,
       to: message.to
     };
-    this.currentReciever.messages.push(messageData);
+    if (this.currentReciever.id !== this.currentUser.id) {
+      this.currentReciever.messages.push(messageData);
+    }
     this.currentUser.messages.push(messageData);
-    console.log(this.currentReciever);
-    console.log(this.currentUser);
+
+
+
+    this.isEmpty = false;
     await this.updateUsers();
     this.loadMessages()
   }
@@ -86,9 +104,11 @@ export class DirectmessagesComponent implements OnInit {
     try {
       const receiverDocRef = doc(this.firestore, `users/${this.currentReciever.id}`);
       const senderDocRef = doc(this.firestore, `users/${this.currentUser.id}`);
-      await updateDoc(receiverDocRef, {
-        messages: this.currentReciever.messages
-      });
+      if (this.currentReciever.id !== this.currentUser.id) {
+        await updateDoc(receiverDocRef, {
+          messages: this.currentReciever.messages
+        });
+      }
       await updateDoc(senderDocRef, {
         messages: this.currentUser.messages
       });
@@ -153,7 +173,15 @@ export class DirectmessagesComponent implements OnInit {
 
   checkMessages() {
     if (this.currentMessages.length === 0) {
-     this.isEmpty = true;
+      this.isEmpty = true;
+    }
+  }
+
+  checkReciever() {
+    if (this.currentReciever.id === this.currentUser.id) {
+      this.isYou = true;
+    } else {
+      this.isYou = false;
     }
   }
 }
