@@ -76,12 +76,12 @@ export class UserService {
  
     loadComponent(component: string) {
  
-    this.currentComponent.next(null); // Setze kurzzeitig null
+    this.currentComponent.next(null);
     setTimeout(() => {
       if (component === 'chat') {
-        this.currentComponent.next(DirectmessagesComponent); // Lade DirectmessagesComponent nach Timeout
+        this.currentComponent.next(DirectmessagesComponent); 
       } else if (component === 'channel') {
-        this.currentComponent.next(ChatContentComponent); // Lade ChatContentComponent nach Timeout
+        this.currentComponent.next(ChatContentComponent); 
       }
     }, 0);
 }
