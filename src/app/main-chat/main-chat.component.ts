@@ -60,7 +60,6 @@ export class MainChatComponent {
   }
 
   toggleThread() {
-    console.log('Thread toggled!');
     this.drawer.toggle();
   }
 }

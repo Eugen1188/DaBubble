@@ -7,10 +7,6 @@
             <div class="placeholder-tread"> Hier Tread einfügen</div>
         </mat-drawer>
 
-        <!-- <button type="button" mat-button (click)="drawer.toggle()">
-            Toggle Tread Test Version
-        </button> -->
-        <!--  <app-chat-content (toggleThread)="toggleThread()"></app-chat-content>-->
-        <ng-container *ngComponentOutlet="currentComponent" (toggleThread)="toggleThread()"></ng-container>
+        <ng-container *ngComponentOutlet="currentComponent"></ng-container>
     </mat-drawer-container>
 </div>
