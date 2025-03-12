@@ -13,7 +13,6 @@ import { Message } from '../../models/message.class';
 import { onSnapshot, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
-import { Output, EventEmitter } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
@@ -83,7 +82,7 @@ export class ChatContentComponent implements OnInit {
       message: this.input || '',
       avatar: this.userService.user?.photoURL || '',
       date: new Date().toISOString().split('T')[0],
-      name: this.userService.user?.displayName || 'Unbekannt',
+      name: this.userService?.user?.displayName || 'Unbekannt',
       newDay: this.isNewDay(),
       time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
     };
@@ -128,9 +127,7 @@ export class ChatContentComponent implements OnInit {
     console.log(m, i);
   }
 
-  @Output() toggleThread = new EventEmitter<void>();
-
   toggle() {
-    this.toggleThread.emit();
+    this.userService.toggleThread();
   }
 }

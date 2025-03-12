@@ -11,8 +11,6 @@
             Toggle Tread Test Version
         </button> -->
         <!--  <app-chat-content (toggleThread)="toggleThread()"></app-chat-content>-->
-        <ng-container *ngComponentOutlet="currentComponent"></ng-container>
+        <ng-container *ngComponentOutlet="currentComponent" (toggleThread)="toggleThread()"></ng-container>
     </mat-drawer-container>
-
-
 </div>

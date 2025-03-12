@@ -21,7 +21,6 @@ import { Subscription } from 'rxjs';
     CommonModule,
     FormsModule,
     HeaderComponent,
-
     MatSidenavModule,
     ContactbarComponent,
   ],
@@ -34,6 +33,8 @@ export class MainChatComponent {
   showFiller = true;
   currentComponent: any;
   private componentSubscription: Subscription | null = null;
+  private threadSubscription!: Subscription;
+
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
     this.chatmodule.accountcreation = false;
@@ -46,7 +47,12 @@ export class MainChatComponent {
         console.log('Aktuelle Komponente:', component);
       }
     );
+
+    this.threadSubscription = this.chatmodule.threadToggle$.subscribe(() => {
+      this.toggleThread();
+    });
   }
+
   ngOnDestroy(): void {
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
@@ -54,6 +60,7 @@ export class MainChatComponent {
   }
 
   toggleThread() {
+    console.log('Thread toggled!');
     this.drawer.toggle();
   }
 }

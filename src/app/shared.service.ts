@@ -3,7 +3,7 @@ import { User } from '../models/user.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
 import { ChatContentComponent } from './chat-content/chat-content.component';
 @Injectable({
@@ -17,7 +17,7 @@ export class UserService {
   chatmoduleenabled = false;
   accountcreation = false;
   user: any = new User();
-  firestore = inject(Firestore)
+  firestore = inject(Firestore);
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
@@ -26,6 +26,8 @@ export class UserService {
   currentReciever: any;
   currentUser: any;
   component: string = '';
+  private threadToggleSubject = new Subject<void>();
+  threadToggle$ = this.threadToggleSubject.asObservable();
 
   setUser(user: User) {
     this.user = user;
@@ -59,23 +61,18 @@ export class UserService {
     });
   }
 
-
-
-
   getReciepent(reciever: any, user: any) {
     //this.indexSource.next(reciever);
     this.currentReciever = reciever;
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    localStorage.setItem('currentReceiver', JSON.stringify(this.currentReciever));
-
-
-
+    localStorage.setItem(
+      'currentReceiver',
+      JSON.stringify(this.currentReciever)
+    );
   }
 
- 
-    loadComponent(component: string) {
- 
+  loadComponent(component: string) {
     this.currentComponent.next(null); // Setze kurzzeitig null
     setTimeout(() => {
       if (component === 'chat') {
@@ -84,6 +81,9 @@ export class UserService {
         this.currentComponent.next(ChatContentComponent); // Lade ChatContentComponent nach Timeout
       }
     }, 0);
-}
-}
+  }
 
+  toggleThread() {
+    this.threadToggleSubject.next();
+  }
+}
