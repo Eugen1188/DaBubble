@@ -78,17 +78,23 @@ export class AddChannelComponent implements OnInit {
 
   removeUserFromBar(index: number) {
     this.users.splice(index, 1);
+    this.filterUsers()
     console.log(this.users);
+
+    console.log(this.filteredUsers);
   }
  
   removeSelectedUser(index: number) {
+    this.addUserToBar(index);
     this.selectedUsers.splice(index, 1);
-    this.addUserToBar(index)
   }
 
   addUserToBar(index: number) {
     this.users.push(this.selectedUsers[index]);
+    this.filterUsers()
     console.log(this.users);
+    console.log(this.filteredUsers);
+
   }
 
   refreshBar() {
@@ -109,8 +115,12 @@ export class AddChannelComponent implements OnInit {
     console.log(this.selectChannelMember);
   }
 
-  setChannelMember(value: boolean) {
+  setChannelMember(value: boolean, setHeight: string) {
+    const heightElement = document.getElementById('add-channel-cont') as HTMLElement;
     this.chooseMember = value;
+    if (heightElement) {
+      heightElement.style.height = setHeight;
+    }
     console.log(this.chooseMember);
   }
 
