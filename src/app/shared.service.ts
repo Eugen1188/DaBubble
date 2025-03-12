@@ -21,7 +21,7 @@ export class UserService {
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
-  private currentComponent = new BehaviorSubject<any>(null);
+  private currentComponent = new BehaviorSubject<any>(DirectmessagesComponent);
   component$ = this.currentComponent.asObservable();
   currentReciever: any;
   currentUser: any;

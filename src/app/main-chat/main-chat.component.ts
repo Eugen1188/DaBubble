@@ -21,10 +21,10 @@ import { Subscription } from 'rxjs';
     CommonModule,
     FormsModule,
     HeaderComponent,
-    ChatContentComponent,
+  
     MatSidenavModule,
     ContactbarComponent,
-    DirectmessagesComponent,
+   
   ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
