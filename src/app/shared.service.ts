@@ -2,10 +2,17 @@ import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import {
+  Firestore,
+  collection,
+  getDocs,
+  onSnapshot,
+} from '@angular/fire/firestore';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
 import { ChatContentComponent } from './chat-content/chat-content.component';
+import { Message } from '../models/message.class';
+import { FireServiceService } from './fire-service.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,19 +20,32 @@ export class UserService {
   constructor(private router: Router) {
     this.setCurrentUser();
   }
+
   auth = inject(Auth);
+  firestore = inject(Firestore);
+  fireService: FireServiceService = inject(FireServiceService);
+
   chatmoduleenabled = false;
   accountcreation = false;
   user: any = new User();
-  firestore = inject(Firestore)
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
   private currentComponent = new BehaviorSubject<any>(DirectmessagesComponent);
   component$ = this.currentComponent.asObservable();
+  private threadToggleSubject = new Subject<void>();
+  threadToggle$ = this.threadToggleSubject.asObservable();
   currentReciever: any;
   currentUser: any;
   component: string = '';
+
+  channels: any = [];
+  currentChannel: any;
+
+  messages: any = [];
+
+  unsubChannels!: () => void;
+  unsubMessages!: () => void;
 
   setUser(user: User) {
     this.user = user;
@@ -59,24 +79,51 @@ export class UserService {
     });
   }
 
+  getChannels() {
+    this.channels = [];
+    this.unsubChannels = onSnapshot(
+      this.fireService.getCollectionRef('channels'),
+      (colSnap) => {
+        this.channels = colSnap.docs.map((colSnap) => ({
+          key: colSnap.id,
+          data: colSnap.data(),
+        }));
+        this.currentChannel = this.channels[0];
+        console.log(this.currentChannel);
 
+        this.getMessages();
+      }
+    );
+  }
 
+  getMessages() {
+    this.unsubMessages = onSnapshot(
+      this.fireService.getDocRef('channels', this.currentChannel.key),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          this.messages = docSnap
+            .data()
+            ['messages'].map((m: any) => new Message(m));
+        }
+      }
+    );
+  }
 
   getReciepent(reciever: any, user: any) {
     //this.indexSource.next(reciever);
     this.currentReciever = reciever;
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    localStorage.setItem('currentReceiver', JSON.stringify(this.currentReciever));
-
-
-
+    localStorage.setItem(
+      'currentReceiver',
+      JSON.stringify(this.currentReciever)
+    );
   }
 
  
     loadComponent(component: string) {
- 
-    this.currentComponent.next(null);
+
+    this.currentComponent.next(null); // Setze kurzzeitig null
     setTimeout(() => {
       if (component === 'chat') {
         this.currentComponent.next(DirectmessagesComponent); 
@@ -84,6 +131,9 @@ export class UserService {
         this.currentComponent.next(ChatContentComponent); 
       }
     }, 0);
-}
-}
+  }
 
+  toggleThread() {
+    this.threadToggleSubject.next();
+  }
+}

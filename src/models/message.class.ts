@@ -7,8 +7,6 @@ export class Message {
   time: string;
   newDay: boolean;
   avatar: string;
-  from: string;
-  to: string;
 
   constructor(obj?: any) {
     this.name = obj ? obj.name : '';
@@ -17,8 +15,6 @@ export class Message {
     this.time = obj ? obj.time : '';
     this.newDay = obj ? obj.newDay : false;
     this.avatar = obj ? obj.avatar : '';
-    this.from = obj ? obj.from : '';
-    this.to = obj ? obj.to : '';
   }
 
   toJSON() {
@@ -29,8 +25,6 @@ export class Message {
       time: this.time,
       newDay: this.newDay,
       avatar: this.avatar,
-      from: this.from,
-      to: this.to,
     };
   }
 }

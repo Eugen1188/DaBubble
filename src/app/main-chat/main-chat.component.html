@@ -1,18 +1,12 @@
 <div class="content-container">
     <app-header></app-header>
-    <div class="placeholder-channel"> <app-contactbar></app-contactbar></div>
+    <app-contactbar></app-contactbar>
 
     <mat-drawer-container class="chat-content" autosize>
         <mat-drawer position="end" #drawer class="tread-container" mode="side">
             <div class="placeholder-tread"> Hier Tread einfügen</div>
         </mat-drawer>
 
-        <!-- <button type="button" mat-button (click)="drawer.toggle()">
-            Toggle Tread Test Version
-        </button> -->
-      <!--  <app-chat-content (toggleThread)="toggleThread()"></app-chat-content>-->
-      <ng-container *ngComponentOutlet="currentComponent"></ng-container>
+        <ng-container *ngComponentOutlet="currentComponent"></ng-container>
     </mat-drawer-container>
-
-
 </div>
