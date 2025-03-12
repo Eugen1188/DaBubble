@@ -22,7 +22,7 @@
             <ng-container *ngFor="let message of this.userService.messages; index as i">
                 <li *ngIf="message.newDay === true">
                     <div class="date-container">
-                        <span class="date">{{ message.date }}</span>
+                        <span class="date">{{ isToday(message.date)? 'Heute' : (message.date) }}</span>
                     </div>
                 </li>
 

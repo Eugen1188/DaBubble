@@ -65,6 +65,12 @@ export class ChatContentComponent implements OnInit {
     return lastMessageDate !== todayDate;
   }
 
+  isToday(date: string) {
+    const today = new Date().toDateString();
+    const messageDate = new Date(date);
+    return today === messageDate.toDateString();
+  }
+
   async newMessage() {
     this.currentMessage = new Message(this.buildMessageObject());
     if (this.userService.user) {
