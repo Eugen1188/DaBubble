@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
     ChatContentComponent,
     MatSidenavModule,
     ContactbarComponent,
-    DirectmessagesComponent
+    DirectmessagesComponent,
   ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
