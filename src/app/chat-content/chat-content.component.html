@@ -7,11 +7,13 @@
             </div>
             <div class="align-center gap-10">
                 <div class="avatar-container">
-                    <img class="avatar" src="img/avatars/avatar_1.png" alt="Name" />
-                    <img class="avatar" src="img/avatars/avatar_2.png" alt="Name" />
-                    <img class="avatar" src="img/avatars/avatar_3.png" alt="Name" />
+                    <ng-container *ngFor="let member of this.userService.currentChannel?.data.member">
+                        <img class="avatar" src="img/avatars/avatar_1.png" alt="Name" />
+                        <!-- <img class="avatar" src="img/avatars/avatar_2.png" alt="Name" />
+                        <img class="avatar" src="img/avatars/avatar_3.png" alt="Name" /> -->
+                    </ng-container>
                 </div>
-                3
+                {{ this.userService.currentChannel?.data.member.length }}
                 <button mat-mini-fab>
                     <mat-icon>person_add</mat-icon>
                 </button>
