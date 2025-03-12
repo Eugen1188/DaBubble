@@ -154,7 +154,7 @@
         .choose-user-bar {
           top: 235px;
           width: 335px;
-          height: 171px;
+          max-height: 171px;
           border-radius: 0 30px 30px 30px;
           background-color: white;
           position: absolute;

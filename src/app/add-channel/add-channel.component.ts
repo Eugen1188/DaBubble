@@ -5,6 +5,8 @@ import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+
+
 import { getAuth } from 'firebase/auth';
 import { User } from '../../models/user.class';
 
@@ -38,23 +40,55 @@ export class AddChannelComponent implements OnInit {
       AOS.init();
     }
     this.loadUsers();
+    document.addEventListener('click', this.handleOutsideClick.bind(this));
+  }
+
+  handleOutsideClick(event: Event) {
+    const inputField = document.getElementById('user-search-bar');
+    if (inputField && !inputField.contains(event.target as Node)) {
+      this.showUserBar = false;
+    }
+  }
+
+  filterUsers() {
+    let filter = document.getElementById('user-search-bar') as HTMLInputElement | null;
+    if (filter) {
+      const filterValue = filter.value.toLowerCase();
+      this.filteredUsers = this.users.filter(user => user.fullname.toLowerCase().includes(filterValue));
+    } else {
+      this.filteredUsers = this.users;
+    }
   }
 
   async loadUsers() {
-    const querySnapshot = await getDocs(collection(this.firestore, 'users'));
-    this.users = querySnapshot.docs.map(doc => doc.data());
-    console.log(this.users[0].fullname);
+    try {
+      const usersCollection = collection(this.firestore, 'users');
+      const querySnapshot = await getDocs(usersCollection);
+      this.users = querySnapshot.docs.map(doc => doc.data());
+    } catch (error) {
+      console.error("Fehler beim Laden der Benutzer:", error);
+    }
   }
 
   addUserToSelection(index: number) {
-    this.selectedUsers.push(this.users[index]);
-    this.refreshBar()
-    console.log(this.selectedUsers);
+    this.selectedUsers.push(this.filteredUsers[index]);
+    this.removeUserFromBar(index);
+    this.refreshBar();
   }
 
+  removeUserFromBar(index: number) {
+    this.users.splice(index, 1);
+    console.log(this.users);
+  }
+ 
   removeSelectedUser(index: number) {
     this.selectedUsers.splice(index, 1);
-    console.log(this.selectedUsers);
+    this.addUserToBar(index)
+  }
+
+  addUserToBar(index: number) {
+    this.users.push(this.selectedUsers[index]);
+    console.log(this.users);
   }
 
   refreshBar() {
@@ -105,5 +139,6 @@ export class AddChannelComponent implements OnInit {
 
   openUserBar() {
     this.showUserBar = !this.showUserBar;
+    this.filterUsers();
   }
 }

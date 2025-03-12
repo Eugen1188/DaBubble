@@ -81,22 +81,22 @@
             <div
               class="mini-profile-cont"
               *ngFor="let selectedUser of selectedUsers; let index = index">
-              <img class="user-img-mini" src="{{ selectedUsers[index].profilephoto }}" alt="" />
-              <div class="username-mini">{{ selectedUsers[index].fullname }}</div>
+              <img class="user-img-mini" src="{{ selectedUsers[index]?.profilephoto }}" alt="" />
+              <div class="username-mini">{{ selectedUsers[index]?.fullname }}</div>
               <img (click)="removeSelectedUser(index)" src="img/close.png" alt="" class="cross-mini" />
             </div>
             <div class="choose-user-bar" *ngIf="showUserBar">
-              <div class="user-select-cont" (click)="addUserToSelection(index)" *ngFor="let user of users; let index = index">
+              <div class="user-select-cont" (click)="addUserToSelection(index)" *ngFor="let filteredUser of filteredUsers; let index = index">
                 <div class="img-status-cont">
-                  <img src="{{ user.profilephoto }}" alt=""/>
+                  <img src="{{ filteredUser.profilephoto }}" alt=""/>
                   <div class="satus-circle"></div>
                 </div>
-                <div>{{user.fullname}}</div>
+                <div>{{filteredUser.fullname}}</div>
               </div>
               <div></div>
             </div>
           </div>
-          <input name="" id="user-search-bar" (focus)="openUserBar()"/>
+          <input name="" id="user-search-bar" (focus)="openUserBar()" (keyup)="filterUsers()"/>
         </div>
       </div>
       <div class="btn-cont">
