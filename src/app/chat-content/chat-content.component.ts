@@ -239,12 +239,11 @@ export class ChatContentComponent implements OnInit {
   async newMessage() {
     this.currentMessage = new Message(this.buildMessageObject());
     this.currentChannel = this.channels[0];
+    console.log(this.currentMessage.toJSON());
     if (this.userService.user) {
       await updateDoc(
         this.fireService.getDocRef('channels', this.currentChannel.key),
-        {
-          messages: arrayUnion(this.currentMessage.toJSON()),
-        }
+        { messages: arrayUnion(this.currentMessage.toJSON()) }
       )
         .then(() => {
           this.loading = false;

@@ -21,10 +21,9 @@ import { Subscription } from 'rxjs';
     CommonModule,
     FormsModule,
     HeaderComponent,
-  
+
     MatSidenavModule,
     ContactbarComponent,
-   
   ],
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
@@ -41,23 +40,20 @@ export class MainChatComponent {
   }
 
   ngOnInit(): void {
-    this.componentSubscription = this.chatmodule.component$.subscribe(component => {
-      this.currentComponent = component;
-      console.log('Aktuelle Komponente:', component);
-    });
-
+    this.componentSubscription = this.chatmodule.component$.subscribe(
+      (component) => {
+        this.currentComponent = component;
+        console.log('Aktuelle Komponente:', component);
+      }
+    );
   }
   ngOnDestroy(): void {
-   
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
     }
   }
 
   toggleThread() {
-    this.drawer.toggle(); // MatDrawer direkt toggeln
+    this.drawer.toggle();
   }
-
-
-
 }
