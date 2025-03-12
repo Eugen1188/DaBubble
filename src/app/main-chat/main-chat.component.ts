@@ -33,7 +33,7 @@ export class MainChatComponent {
   chatmodule = inject(UserService);
   @ViewChild('drawer') drawer!: MatDrawer;
   showFiller = true;
-  currentComponent: any = '';
+  currentComponent: any;
   private componentSubscription: Subscription | null = null;
   constructor() {
     this.chatmodule.chatmoduleenabled = true;
@@ -48,7 +48,7 @@ export class MainChatComponent {
 
   }
   ngOnDestroy(): void {
-    // Verhindere Speicherlecks durch Abbestellung des Observables
+   
     if (this.componentSubscription) {
       this.componentSubscription.unsubscribe();
     }

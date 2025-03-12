@@ -21,7 +21,7 @@ export class UserService {
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
   currentIndex$ = this.indexSource.asObservable();
-  private currentComponent = new BehaviorSubject<any>('');
+  private currentComponent = new BehaviorSubject<any>(null);
   component$ = this.currentComponent.asObservable();
   currentReciever: any;
   currentUser: any;
@@ -75,15 +75,15 @@ export class UserService {
 
  
     loadComponent(component: string) {
+ 
+    this.currentComponent.next(null); // Setze kurzzeitig null
+    setTimeout(() => {
       if (component === 'chat') {
-        this.currentComponent.next(DirectmessagesComponent); // Setze DirectmessagesComponent, wenn 'chat'
+        this.currentComponent.next(DirectmessagesComponent); // Lade DirectmessagesComponent nach Timeout
       } else if (component === 'channel') {
-        this.currentComponent.next(ChatContentComponent); // Setze ChatContentComponent, wenn 'channel'
-      } else {
-        // Optional: Ein Fallback-Wert, wenn der `component` ein anderer String ist
-        console.warn('Unbekannter Component-Wert:', component);
+        this.currentComponent.next(ChatContentComponent); // Lade ChatContentComponent nach Timeout
       }
-      console.log(component); // Logge den Wert von `component`
-    }
+    }, 0);
+}
 }
 
