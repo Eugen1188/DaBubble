@@ -176,6 +176,16 @@ li {
   }
 }
 
+.message-footer {
+  > span:first-child {
+    transition: all 0.125s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      cursor: pointer;
+    }
+  }
+}
+
 .bg-purple {
   background-color: var(--bg-color);
 }
