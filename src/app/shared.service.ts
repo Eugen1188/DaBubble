@@ -121,15 +121,13 @@ export class UserService {
     );
   }
 
- 
-    loadComponent(component: string) {
-
+  loadComponent(component: string) {
     this.currentComponent.next(null); // Setze kurzzeitig null
     setTimeout(() => {
       if (component === 'chat') {
-        this.currentComponent.next(DirectmessagesComponent); 
+        this.currentComponent.next(DirectmessagesComponent);
       } else if (component === 'channel') {
-        this.currentComponent.next(ChatContentComponent); 
+        this.currentComponent.next(ChatContentComponent);
       }
     }, 0);
   }
