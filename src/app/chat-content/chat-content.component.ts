@@ -40,8 +40,8 @@ export class ChatContentComponent implements OnInit {
   input: string = '';
 
   ngOnInit(): void {
-    this.userService.getChannels();
     this.scrollToBottom();
+    this.userService.getChannels();
   }
 
   buildMessageObject(): {} {
@@ -67,8 +67,6 @@ export class ChatContentComponent implements OnInit {
 
   async newMessage() {
     this.currentMessage = new Message(this.buildMessageObject());
-    this.userService.currentChannel = this.userService.channels[0];
-    console.log(this.currentMessage.toJSON());
     if (this.userService.user) {
       await updateDoc(
         this.fireService.getDocRef(
@@ -85,7 +83,7 @@ export class ChatContentComponent implements OnInit {
     }
   }
 
-  scrollToBottom(): void {
+  scrollToBottom() {
     setTimeout(() => {
       const chatContent = this.chatContentRef.nativeElement as HTMLElement;
       if (chatContent) {

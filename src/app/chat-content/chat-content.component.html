@@ -2,7 +2,7 @@
     <div class="card">
         <section class="card-header">
             <div class="align-center">
-                # {{ currentChannel.data.name }}
+                # {{ this.userService.currentChannel?.data.name }}
                 <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
             </div>
             <div class="align-center gap-10">
@@ -19,7 +19,7 @@
         </section>
 
         <ul class="chat-content gap-10" #chatContent>
-            <ng-container *ngFor="let message of messages; index as i">
+            <ng-container *ngFor="let message of this.userService.messages; index as i">
                 <li *ngIf="message.newDay === true">
                     <div class="date-container">
                         <span class="date">{{ message.date }}</span>

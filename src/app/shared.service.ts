@@ -7,6 +7,7 @@ import {
   collection,
   getDocs,
   onSnapshot,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
@@ -21,8 +22,8 @@ export class UserService {
     this.setCurrentUser();
   }
 
-  auth = inject(Auth);
-  firestore = inject(Firestore);
+  auth: Auth = inject(Auth);
+  firestore: Firestore = inject(Firestore);
   fireService: FireServiceService = inject(FireServiceService);
 
   chatmoduleenabled = false;
@@ -90,13 +91,13 @@ export class UserService {
         }));
         this.currentChannel = this.channels[0];
         console.log(this.currentChannel);
-
         this.getMessages();
       }
     );
   }
 
   getMessages() {
+    this.currentChannel = this.channels[0];
     this.unsubMessages = onSnapshot(
       this.fireService.getDocRef('channels', this.currentChannel.key),
       (docSnap) => {
