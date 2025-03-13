@@ -1,14 +1,14 @@
-import { Component, OnInit, Inject, PLATFORM_ID, NgModule } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, NgModule, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
-
-
+import { UserService } from '../shared.service';
 import { getAuth } from 'firebase/auth';
 import { User } from '../../models/user.class';
+import { Channel } from '../../models/channels.class';
 
 @Component({
   selector: 'app-add-channel',
@@ -30,8 +30,10 @@ export class AddChannelComponent implements OnInit {
   selectedUsers: any[] = [];
   filteredUsers: any[] = [];
   showUserBar: boolean = false;
-
-
+  channelmodule = inject(UserService);
+  channel = new Channel();
+  channels: any = [];
+  
   constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {
   }
 
@@ -40,7 +42,9 @@ export class AddChannelComponent implements OnInit {
       AOS.init();
     }
     this.loadUsers();
+    this.loadChannel();
     document.addEventListener('click', this.handleOutsideClick.bind(this));
+    console.log(this.channel);
   }
 
   handleOutsideClick(event: Event) {
@@ -68,6 +72,10 @@ export class AddChannelComponent implements OnInit {
     } catch (error) {
       console.error("Fehler beim Laden der Benutzer:", error);
     }
+  }
+  async loadChannel() {
+    this.channels = this.channelmodule.getChannels();
+    console.log(this.channels);
   }
 
   addUserToSelection(index: number) {
@@ -111,8 +119,26 @@ export class AddChannelComponent implements OnInit {
 
   onSubmit() {
     console.log('submit');
+    if(!this.selectChannelMember) {
+      this.addChannel();
+      console.log('channel erstellt');
+    }
     this.selectChannelMember = true;
-    console.log(this.selectChannelMember);
+    console.log(this.channelmodule.channels);
+  }
+
+  addChannel() {
+  console.log('channel erstellt')
+
+  }
+
+  newChannel() {
+    const newChannel: Channel = {
+      name: this.channelName,
+      description: this.channelDescription,
+      member: this.selectedUsers,
+      messages: [],
+    };
   }
 
   setChannelMember(value: boolean, setHeight: string) {
@@ -121,7 +147,6 @@ export class AddChannelComponent implements OnInit {
     if (heightElement) {
       heightElement.style.height = setHeight;
     }
-    console.log(this.chooseMember);
   }
 
   adjustTextareaHeight(event: Event) {

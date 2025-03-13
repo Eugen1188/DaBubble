@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.class';
+import { Channel } from '../models/channels.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import {
