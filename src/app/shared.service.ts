@@ -21,11 +21,9 @@ export class UserService {
   constructor(private router: Router) {
     this.setCurrentUser();
   }
-
   auth: Auth = inject(Auth);
   firestore: Firestore = inject(Firestore);
   fireService: FireServiceService = inject(FireServiceService);
-
   chatmoduleenabled = false;
   accountcreation = false;
   user: any = new User();
