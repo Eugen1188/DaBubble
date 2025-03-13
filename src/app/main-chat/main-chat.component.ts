@@ -47,7 +47,6 @@ export class MainChatComponent {
         console.log('Aktuelle Komponente:', component);
       }
     );
-
     this.threadSubscription = this.chatmodule.threadToggle$.subscribe(() => {
       this.toggleThread();
     });
