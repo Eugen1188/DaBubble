@@ -110,7 +110,8 @@
   background-position: 99%;
   padding: 17.5px 45px 17.5px 45px;
   background-color: #ffff;
-  background-image: url(/img/icons.png);
+  display: flex;
+  justify-content: space-between;
   @media (max-width: 1204px) {
     display: none;
   }
@@ -123,5 +124,10 @@
     &:hover {
       outline: none;
     }
+  }
+  > button {
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 }
