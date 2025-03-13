@@ -1,12 +1,11 @@
-import { Component, inject, Injectable, OnInit } from '@angular/core';
+import { Component, inject, Injectable, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../shared.service';
 import { Firestore, updateDoc, doc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../directmessage.class';
 import { FireServiceService } from '../fire-service.service';
-import { updateCurrentUser } from 'firebase/auth';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ import { updateCurrentUser } from 'firebase/auth';
   styleUrl: './directmessages.component.scss'
 })
 export class DirectmessagesComponent implements OnInit {
+  @ViewChild('chat') chatContentRef!: ElementRef;
   userService = inject(UserService);
   fireService = inject(FireServiceService);
   index: number = -1;
@@ -34,10 +34,17 @@ export class DirectmessagesComponent implements OnInit {
   isYou: boolean = false;
   isChat: boolean = false;
   constructor() {
+  
   }
-
+  ngAfterViewInit() {
+    // Stelle sicher, dass das Element existiert
+    if (this.chatContentRef) {
+      this.scrollToBottom();
+    }
+  }
   async ngOnInit() {
     this.startChat();
+    
   }
 
   startChat() {
@@ -56,30 +63,32 @@ export class DirectmessagesComponent implements OnInit {
 
 
   setCurrentReciever() {
-
     this.currentReciever = this.userService.currentReciever;
     this.currentUser = this.userService.currentUser;
-
-
     if (!this.currentReciever || !this.currentUser) {
       console.error('currentReciever oder currentUser sind nicht definiert!');
       return;
     }
 
-    //const storedReceiver = localStorage.getItem('currentReceiver');
-    //if (storedReceiver) {
-    //this.currentReciever = JSON.parse(storedReceiver);
-    //}
-    //const storedUser = localStorage.getItem('currentUser');
-    //if (storedUser) {
-    //this.currentUser = JSON.parse(storedUser);
-    //}
   }
 
 
   async sendMessage() {
     const message = new DirectMessage(this.currentUser.fullname, this.currentUser.profilephoto, this.message, this.currentUser.id, this.currentReciever.id);
-    const messageData = {
+    if (this.message===''){return};
+    const messageData = this.createMessageData(message);
+    if (this.currentReciever.id !== this.currentUser.id) {
+      this.currentReciever.messages.push(messageData);
+    }
+    this.currentUser.messages.push(messageData);
+    this.isEmpty = false;
+    await this.updateUsers();
+    this.loadMessages()
+    this.scrollToBottom();
+  }
+
+  createMessageData(message: DirectMessage) {
+    return {
       name: message.name,
       photo: message.photo,
       content: message.content,
@@ -87,18 +96,17 @@ export class DirectmessagesComponent implements OnInit {
       from: message.from,
       to: message.to
     };
-    if (this.currentReciever.id !== this.currentUser.id) {
-      this.currentReciever.messages.push(messageData);
-    }
-    this.currentUser.messages.push(messageData);
-
-
-
-    this.isEmpty = false;
-    await this.updateUsers();
-    this.loadMessages()
   }
 
+
+  scrollToBottom() {
+    setTimeout(() => {
+      const chat = this.chatContentRef.nativeElement as HTMLElement;
+      if (chat) {
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }, 0);
+  }
 
   async updateUsers() {
     try {
@@ -159,7 +167,6 @@ export class DirectmessagesComponent implements OnInit {
   }
 
   isUser(message: any) {
-    console.log(message.from, this.currentUser.id);
     return message.from === this.currentUser.id
 
   }

@@ -48,7 +48,6 @@ export class ContactbarComponent {
         id: doc.id,
         ...doc.data()
       }));
-      console.log(this.users);
     } catch (error) {
       console.error("Error loading users:", error);
     }
@@ -58,8 +57,6 @@ export class ContactbarComponent {
     const channelCollection = collection(this.firestore, 'channels');
     const channelSnapshot = await getDocs(channelCollection);
     this.channels = channelSnapshot.docs.map(doc => doc.data());
-    console.log(this.channels);
-
   }
 
   setcurrentUser() {

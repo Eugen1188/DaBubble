@@ -114,11 +114,6 @@ export class UserService {
     //this.indexSource.next(reciever);
     this.currentReciever = reciever;
     this.currentUser = user;
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-    localStorage.setItem(
-      'currentReceiver',
-      JSON.stringify(this.currentReciever)
-    );
   }
 
   loadComponent(component: string) {

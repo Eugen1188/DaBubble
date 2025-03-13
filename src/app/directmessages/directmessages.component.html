@@ -15,23 +15,23 @@
         <input type="text" placeholder="An: #Channel, oder @jemand oder E-Mail-Adresse">
     </div>
 
-    <div *ngIf="isChat" class="chat-content">
+    <div id="chat" *ngIf="isChat" class="chat-content">
         <div *ngFor="let message of currentMessages; let i=index" [ngClass]="{'change': isUser(message)}">
             <div class="divider" *ngIf="isNewDay(message, currentMessages[i - 1])">
                 <div>
                     <p>{{isToday(message.time)? 'Heute' : (message.time | date:'EEEE, d MMMM')}}</p>
                 </div>
             </div>
-            <div class="messagerow">
+            <div [ngClass]="{'reverse': isUser(message)}" class="messagerow">
                 <div class="image">
                     <img [src]="message.photo" alt="">
                 </div>
-                <div class="messageContainer">
-                    <div class="messageData">
+                <div [ngClass]="{'messageReverse': isUser(message)}" class="messageContainer">
+                    <div [ngClass]="{'reverse': isUser(message)}" class="messageData">
                         <span>{{message.name}}</span>
                         <p>{{message.time | date:'HH:mm'}} Uhr</p>
                     </div>
-                    <div class="messageBubble">
+                    <div [ngClass]="{'bubbleReverse': isUser(message)}" class="messageBubble">
                         <span>{{message.content}}</span>
                     </div>
                     <div></div>
