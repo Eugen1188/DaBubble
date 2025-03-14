@@ -212,7 +212,7 @@ li {
 
   &:hover {
     .reaction-bar {
-      animation: shake 0.4s forwards;
+      animation: slide-in-l-r 0.125s forwards;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -227,30 +227,6 @@ li {
     .message-main {
       background-color: white;
     }
-  }
-}
-
-button {
-  border: none;
-  outline: none;
-  background-color: unset;
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(5px);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  50% {
-    transform: translateX(5px);
-  }
-  75% {
-    transform: translateX(-5px);
-  }
-  100% {
-    transform: translateX(0);
   }
 }
 
@@ -274,6 +250,7 @@ button {
 
 .message.reverse {
   .reaction-bar {
+    animation: slide-in-r-l 0.125s forwards;
     left: 20px;
   }
   .message-footer,
@@ -309,6 +286,39 @@ button {
 
 .gap-20 {
   gap: 20px;
+}
+button {
+  border: none;
+  outline: none;
+  background-color: unset;
+}
+
+@keyframes slide-in-r-l {
+  0% {
+    transform: translate(10px, 10px);
+  }
+
+  50% {
+    transform: translate(5px, 5px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes slide-in-l-r {
+  0% {
+    transform: translate(-10px, 10px); /* X: 100px, Y: 10px */
+  }
+
+  50% {
+    transform: translate(-5px, 5px); /* X: 50px, Y: 5px */
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .filter-hover-purple-3 {
