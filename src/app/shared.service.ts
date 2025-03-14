@@ -1,13 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.class';
-import { Channel } from '../models/channels.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Firestore, onSnapshot } from '@angular/fire/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
 import { ChatContentComponent } from './chat-content/chat-content.component';
-import { Message } from '../models/message.class';
 import { FireServiceService } from './fire-service.service';
 @Injectable({
   providedIn: 'root',

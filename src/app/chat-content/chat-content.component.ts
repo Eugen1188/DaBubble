@@ -47,10 +47,12 @@ export class ChatContentComponent implements OnInit {
   input: string = '';
 
   async ngOnInit() {
-    this.scrollToBottom();
-    this.channels = await this.fireService.getChannels();
-    this.currentChannel = this.channels[0];
-    this.getMessages();
+    if (this.userService.auth.currentUser) {
+      this.scrollToBottom();
+      this.channels = await this.fireService.getChannels();
+      this.currentChannel = this.channels[0];
+      this.getMessages();
+    }
   }
 
   getMessages(): void {
