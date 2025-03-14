@@ -87,10 +87,24 @@ export class ChatContentComponent implements OnInit {
     return lastMessageDate !== todayDate;
   }
 
-  isToday(date: string) {
-    const today = new Date().toDateString();
-    const messageDate = new Date(date);
-    return today === messageDate.toDateString();
+  isToday(date: any): boolean {
+    if (!date) return false;
+    let today = new Date().toISOString().split('T')[0];
+    let messageDate = new Date(date).toISOString().split('T')[0];
+    return today === messageDate;
+  }
+
+  isFirstMessageOfDay(index: number): boolean {
+    if (index === 0) return true; // Die erste Nachricht in der Liste bekommt immer ein Datum
+
+    const currentMessageDate = new Date(this.messages[index].date)
+      .toISOString()
+      .split('T')[0];
+    const previousMessageDate = new Date(this.messages[index - 1].date)
+      .toISOString()
+      .split('T')[0];
+
+    return currentMessageDate !== previousMessageDate; // True, wenn der Tag sich geändert hat
   }
 
   async newMessage() {
