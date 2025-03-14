@@ -120,9 +120,15 @@ main {
 
   .hover-filter {
     transition: all 0.125s ease-in-out;
+    padding: 8px;
+    border-radius: 50%;
+
     &:hover {
-      filter: brightness(0) saturate(100%) invert(32%) sepia(65%)
-        saturate(4488%) hue-rotate(231deg) brightness(99%) contrast(91%);
+      background-color: var(--bg-color);
+      img {
+        filter: brightness(0) saturate(100%) invert(32%) sepia(65%)
+          saturate(4488%) hue-rotate(231deg) brightness(99%) contrast(91%);
+      }
     }
   }
 
@@ -309,11 +315,11 @@ button {
 
 @keyframes slide-in-l-r {
   0% {
-    transform: translate(-10px, 10px); /* X: 100px, Y: 10px */
+    transform: translate(-10px, 10px);
   }
 
   50% {
-    transform: translate(-5px, 5px); /* X: 50px, Y: 5px */
+    transform: translate(-5px, 5px);
   }
 
   100% {

@@ -74,10 +74,14 @@
 
                 <div class="action-container">
                     <div class="gap-10">
-                        <mat-icon class="hover-filter">sentiment_satisfied</mat-icon>
-                        <mat-icon class="hover-filter">alternate_email</mat-icon>
+                        <button class="hover-filter">
+                            <mat-icon>sentiment_satisfied</mat-icon>
+                        </button>
+                        <button class="hover-filter">
+                            <mat-icon>alternate_email</mat-icon>
+                        </button>
                     </div>
-                    <button [disabled]="loading" (click)="newMessage()" mat-button>
+                    <button [disabled]="loading" (click)="newMessage()">
                         <mat-icon class="filter-purple">send</mat-icon>
                     </button>
                 </div>
