@@ -48,7 +48,11 @@
                         <button *ngIf="message.name == this.userService.auth.currentUser?.displayName"
                             class="hover-to-dark-purple">
                             <mat-icon>more_vert</mat-icon>
+                            <div class="menu">
+                                <button>Nachricht bearbeiten</button>
+                            </div>
                         </button>
+
                     </div>
                     <img [src]=" message.avatar " alt=" Avatar" />
 
