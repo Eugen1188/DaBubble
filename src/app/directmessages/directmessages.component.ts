@@ -61,9 +61,6 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
     console.log('start');
     console.log(this.currentReciever);
     console.log(this.currentUser);
-
-
-
     if (this.userService.user != null && this.userService.currentReciever != null) {
       this.setCurrentReciever();
       this.loadMessages();
@@ -90,9 +87,9 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
 
 
   async sendMessage() {
-    if (this.message === '' || !this.currentReciever || !this.currentUser ) { return };
+    if (this.message === '' || !this.currentReciever || !this.currentUser) { return };
     const message = new DirectMessage(this.currentUser.fullname, this.currentUser.profilephoto, this.message, this.currentUser.id, this.currentReciever.id);
-   
+
     const messageData = this.createMessageData(message);
     if (this.currentReciever.id !== this.currentUser.id) {
       this.currentReciever.messages.push(messageData);
@@ -198,6 +195,8 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
   checkMessages() {
     if (this.currentMessages.length === 0) {
       this.isEmpty = true;
+    } else {
+      this.isEmpty = false;
     }
   }
 
