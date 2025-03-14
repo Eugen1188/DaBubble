@@ -96,11 +96,7 @@ export class ChatContentComponent implements OnInit {
 
   isFirstMessageOfDay(index: number): boolean {
     if (index === 0) return true;
-
-    return (
-      !this.isToday(this.messages[index - 1].date) ||
-      this.messages[index].date !== this.messages[index - 1].date
-    );
+    return !this.isToday(this.messages[index - 1].date);
   }
 
   async newMessage() {
