@@ -90,8 +90,9 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
 
 
   async sendMessage() {
+    if (this.message === '' || !this.currentReciever || !this.currentUser ) { return };
     const message = new DirectMessage(this.currentUser.fullname, this.currentUser.profilephoto, this.message, this.currentUser.id, this.currentReciever.id);
-    if (this.message === '') { return };
+   
     const messageData = this.createMessageData(message);
     if (this.currentReciever.id !== this.currentUser.id) {
       this.currentReciever.messages.push(messageData);
