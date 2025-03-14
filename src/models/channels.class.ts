@@ -1,6 +1,6 @@
 export class Channel {
   name: string;
-  member: string;
+  member: string[];
   description: string;
   messages: string[];
 

@@ -27,7 +27,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './main-chat.component.html',
   styleUrl: './main-chat.component.scss',
 })
-export class MainChatComponent {
+export class MainChatComponent implements OnInit {
   chatmodule = inject(UserService);
   @ViewChild('drawer') drawer!: MatDrawer;
   showFiller = true;
@@ -35,19 +35,15 @@ export class MainChatComponent {
   private componentSubscription: Subscription | null = null;
   private threadSubscription!: Subscription;
 
-  constructor() {
-    this.chatmodule.chatmoduleenabled = true;
-    this.chatmodule.accountcreation = false;
-  }
-
   ngOnInit(): void {
+    this.chatmodule.dashboard = true;
+    this.chatmodule.login = false;
     this.componentSubscription = this.chatmodule.component$.subscribe(
       (component) => {
         this.currentComponent = component;
         console.log('Aktuelle Komponente:', component);
       }
     );
-
     this.threadSubscription = this.chatmodule.threadToggle$.subscribe(() => {
       this.toggleThread();
     });

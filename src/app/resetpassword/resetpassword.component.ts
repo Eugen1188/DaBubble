@@ -34,7 +34,6 @@ export class ResetpasswordComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private afApp: FirebaseApp
   ) {
-    this.shared.accountcreation = true;
   }
 
   ngOnInit() {

@@ -12,8 +12,5 @@ import { UserService } from '../shared.service';
 })
 export class MaincomponentComponent {
   chatmoduleenabled = inject(UserService);
-  constructor() {
-    this.chatmoduleenabled.accountcreation = true;
-    this.chatmoduleenabled.chatmoduleenabled = false;
-  }
+
 }

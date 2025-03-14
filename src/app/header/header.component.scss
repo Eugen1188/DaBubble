@@ -5,18 +5,23 @@
   align-items: center;
   max-width: 1920px;
   width: 100%;
-  @media (max-width: 1204px) {
-    flex-direction: column;
-    justify-content: center;
-    gap: 25px;
-  }
-  > div:nth-child(1) {
-    width: 30%;
-    @media (max-width: 1204px) {
-      width: 100%;
-      display: flex;
-      justify-content: center;
+  >div:nth-child(1){
+    width: 40%;
+    @media (max-width: 500px) {
+      width: unset;
     }
+  }
+  @media (max-width: 1204px) {
+    width: 100%;
+    justify-content: space-between;
+  }
+  @media (max-width: 492px) {
+    flex-direction: column;
+  }
+  @media (max-width: 1204px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   img {
@@ -32,6 +37,9 @@
   justify-content: space-evenly;
   align-items: flex-end;
   flex-direction: column;
+  @media (max-width: 400px) {
+    width: unset;
+  }
   @media (max-width: 1204px) {
     height: unset;
   }
@@ -61,18 +69,33 @@
   display: none !important;
 }
 
+.d-none1 {
+  display: flex;
+  @media (max-width: 1206px) {
+    display: none !important;
+  }
+}
+
 .user-menu {
   width: 50%;
   height: 70px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  @media (max-width: 696px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   > div:nth-child(1) {
     height: 70px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 82%;
+    @media (max-width: 492px) {
+      justify-content: center;
+    }
     > img:nth-child(2) {
       margin-left: 5%;
     }
@@ -81,6 +104,9 @@
       font-weight: 700;
       font-size: 32px;
       color: #000000;
+      @media (max-width: 1204px) {
+        display: none;
+      }
     }
   }
 }
@@ -93,7 +119,11 @@
   background-position: 99%;
   padding: 17.5px 45px 17.5px 45px;
   background-color: #ffff;
-  background-image: url(/img/icons.png);
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 1204px) {
+    display: none;
+  }
   > input {
     border: none;
     outline: none;
@@ -103,5 +133,10 @@
     &:hover {
       outline: none;
     }
+  }
+  > button {
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 }
