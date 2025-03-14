@@ -3,13 +3,7 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channels.class';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import {
-  Firestore,
-  collection,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-} from '@angular/fire/firestore';
+import { Firestore, onSnapshot } from '@angular/fire/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
 import { ChatContentComponent } from './chat-content/chat-content.component';
@@ -19,14 +13,14 @@ import { FireServiceService } from './fire-service.service';
   providedIn: 'root',
 })
 export class UserService {
+  dashboard = false;
   constructor(private router: Router) {
     this.setCurrentUser();
   }
   auth: Auth = inject(Auth);
   firestore: Firestore = inject(Firestore);
   fireService: FireServiceService = inject(FireServiceService);
-  chatmoduleenabled = false;
-  accountcreation = false;
+  login = false;
   user: any = new User();
   public users: any[] = [];
   private indexSource = new BehaviorSubject<number>(-1);
