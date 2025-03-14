@@ -12,7 +12,7 @@
     </div>
     <div *ngIf="!isChat" class="textField">
         <span class="newText">Neue Nachricht</span>
-        <input type="text" placeholder="An: #Channel, oder @jemand oder E-Mail-Adresse">
+        <input [(ngModel)]="input" (input)="getCurrentChat()"  type="text" placeholder="An: #Channel, oder @jemand oder E-Mail-Adresse">
     </div>
 
     <div id="chat" *ngIf="isChat" class="chat-content">
@@ -53,7 +53,9 @@
                     besprechen.</p>
             </div>
         </div>
+        <div class="lists"></div>
     </div>
+  
     <div class="textContainer">
         <div>
             <textarea [(ngModel)]="message" name="" id=""

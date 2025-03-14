@@ -32,7 +32,8 @@ export class UserService {
   currentReciever: any;
   currentUser: any;
   component: string = '';
-
+  private startLoadingChat = new Subject<void>();
+  startLoadingChat$ = this.startLoadingChat.asObservable();
   channels: any = [];
   currentChannel: any;
 
@@ -97,20 +98,20 @@ export class UserService {
         if (docSnap.exists()) {
           this.messages = docSnap
             .data()
-            ['messages'].map((m: any) => new Message(m));
+          ['messages'].map((m: any) => new Message(m));
         }
       }
     );
   }
 
   getReciepent(reciever: any, user: any) {
-    //this.indexSource.next(reciever);
     this.currentReciever = reciever;
     this.currentUser = user;
+    this.startLoadingChat.next();
   }
 
   loadComponent(component: string) {
-    this.currentComponent.next(null); 
+    //this.currentComponent.next(null);
     setTimeout(() => {
       if (component === 'chat') {
         this.currentComponent.next(DirectmessagesComponent);
