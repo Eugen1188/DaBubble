@@ -31,6 +31,23 @@
                 </li>
 
                 <li class="message" [ngClass]="{ 'reverse' : message.name == this.userService.user?.displayName}">
+                    <div class="reaction-bar">
+                        <button>
+                            <img src="/img/reaction-bar-icons/checked.png" alt="">
+                        </button>
+                        <button>
+                            <img src="/img/reaction-bar-icons/thumps_up.png" alt="">
+                        </button>
+                        <button>
+                            <img src="/img/reaction-bar-icons/add_reaction.png" alt="">
+                        </button>
+                        <button>
+                            <img src="/img/reaction-bar-icons/comment.png" alt="">
+                        </button>
+                        <button>
+                            <img src="/img/reaction-bar-icons/more_vert.png" alt="">
+                        </button>
+                    </div>
                     <img [src]=" message.avatar " alt="Avatar" />
 
                     <div class="content-container">
