@@ -41,9 +41,7 @@ export class ChatContentComponent implements OnInit {
 
   unsubMessages!: () => void;
 
-  currentMessage: any = new Message();
   messages: Message[] = [];
-
   input: string = '';
 
   async ngOnInit() {
@@ -74,7 +72,7 @@ export class ChatContentComponent implements OnInit {
       message: this.input || '',
       avatar: this.userService.user?.photoURL || '',
       date: new Date().toISOString().split('T')[0],
-      name: this.userService?.user?.displayName || 'Unbekannt',
+      name: this.userService.user?.displayName || 'Unbekannt',
       newDay: this.isNewDay(),
       time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
     };
@@ -96,14 +94,15 @@ export class ChatContentComponent implements OnInit {
   }
 
   async newMessage() {
-    this.currentMessage = new Message(this.buildMessageObject());
+    this.loading = true;
     await updateDoc(
       this.fireService.getDocRef('channels', this.currentChannel.id),
-      { messages: arrayUnion(this.currentMessage.toJSON()) }
+      { messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()) }
     )
       .then(() => {
         this.loading = false;
         this.scrollToBottom();
+        this.input = '';
       })
       .catch((err) => console.error(err));
   }
