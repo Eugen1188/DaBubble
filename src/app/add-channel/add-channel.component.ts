@@ -4,7 +4,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, addDoc } from '@angular/fire/firestore';
 import { UserService } from '../shared.service';
 import { getAuth } from 'firebase/auth';
 import { User } from '../../models/user.class';
@@ -127,19 +127,32 @@ export class AddChannelComponent implements OnInit {
     console.log(this.channelmodule.channels);
   }
 
-  addChannel() {
-  console.log('channel erstellt')
-
-  }
-
-  newChannel() {
+async addChannel() {
+  try {
     const newChannel: Channel = {
       name: this.channelName,
       description: this.channelDescription,
       member: this.selectedUsers,
       messages: [],
     };
+    const channelsCollection = collection(this.firestore, 'channels');
+    await addDoc(channelsCollection, {
+      name: newChannel.name,
+      description: newChannel.description,
+      member: newChannel.member,
+      messages: newChannel.messages, 
+    });
+
+    console.log('Channel erstellt');
+    this.channelName = '';
+    this.channelDescription = '';
+    this.selectedUsers = [];
+    this.selectChannelMember = false;
+
+  } catch (error) {
+    console.error('Fehler beim Erstellen des Channels:', error);
   }
+}
 
   setChannelMember(value: boolean, setHeight: string) {
     const heightElement = document.getElementById('add-channel-cont') as HTMLElement;
