@@ -16,12 +16,12 @@ export class FireServiceService {
 
   getDocRef(ref: string, id: string) {
     if (ref && id) return doc(this.firestore, ref, id);
-    return null;
+    return;
   }
 
   getCollectionRef(ref: string) {
     if (ref) return collection(this.firestore, ref);
-    else return null;
+    else return;
   }
 
   async updateOnlineStatus(currentUser: any) {
