@@ -14,8 +14,7 @@ import { updateDoc, arrayUnion, onSnapshot } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { error, log } from 'node:console';
-import { User } from '../../models/user.class';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-content',
@@ -34,6 +33,7 @@ export class ChatContentComponent implements OnInit {
 
   fireService: FireServiceService = inject(FireServiceService);
   userService: UserService = inject(UserService);
+  router: Router = inject(Router);
 
   loading: boolean = false;
   channels: any = [];
@@ -47,7 +47,8 @@ export class ChatContentComponent implements OnInit {
   input: string = '';
 
   async ngOnInit() {
-    if (this.userService.auth.currentUser) {
+    if (!this.userService.auth.currentUser) this.router.navigate(['/']);
+    else {
       this.scrollToBottom();
       this.channels = await this.fireService.getChannels();
       this.currentChannel = this.channels[0];
