@@ -47,7 +47,7 @@ export class ChatContentComponent implements OnInit {
   input: string = '';
 
   async ngOnInit() {
-    if (!this.userService.auth.currentUser) this.router.navigate(['/']);
+    if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
     else {
       this.scrollToBottom();
       this.channels = await this.fireService.getChannels();
