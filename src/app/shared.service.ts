@@ -115,7 +115,7 @@ export class UserService {
   }
 
   loadComponent(component: string) {
-    this.currentComponent.next(null); // Setze kurzzeitig null
+    this.currentComponent.next(null); 
     setTimeout(() => {
       if (component === 'chat') {
         this.currentComponent.next(DirectmessagesComponent);
