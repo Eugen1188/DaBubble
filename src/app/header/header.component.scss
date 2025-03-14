@@ -7,6 +7,9 @@
   width: 100%;
   >div:nth-child(1){
     width: 40%;
+    @media (max-width: 500px) {
+      width: unset;
+    }
   }
   @media (max-width: 1204px) {
     width: 100%;
