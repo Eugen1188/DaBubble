@@ -75,7 +75,7 @@ export class UserService {
   getChannels() {
     this.channels = [];
     this.unsubChannels = onSnapshot(
-      this.fireService.getCollectionRef('channels'),
+      this.fireService.getCollectionRef('channels')!,
       (colSnap) => {
         this.channels = colSnap.docs.map((colSnap) => ({
           key: colSnap.id,

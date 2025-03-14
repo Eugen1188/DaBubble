@@ -55,16 +55,16 @@ export class ChatContentComponent implements OnInit {
   }
 
   getMessages(): void {
-    this.unsubMessages = onSnapshot(
-      this.fireService.getDocRef('channels', this.currentChannel.id),
-      (docSnap) => {
+    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    if (docRef) {
+      this.unsubMessages = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
           this.messages = docSnap
             .data()
             ['messages'].map((m: Message) => new Message(m));
         } else return;
-      }
-    );
+      });
+    }
   }
 
   buildMessageObject(): {} {
@@ -101,16 +101,18 @@ export class ChatContentComponent implements OnInit {
 
   async newMessage() {
     this.loading = true;
-    await updateDoc(
-      this.fireService.getDocRef('channels', this.currentChannel.id),
-      { messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()) }
-    )
-      .then(() => {
-        this.loading = false;
-        this.scrollToBottom();
-        this.input = '';
+    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    if (docRef) {
+      await updateDoc(docRef, {
+        messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()),
       })
-      .catch((err) => console.error(err));
+        .then(() => {
+          this.loading = false;
+          this.scrollToBottom();
+          this.input = '';
+        })
+        .catch((err) => console.error(err));
+    }
   }
 
   scrollToBottom() {

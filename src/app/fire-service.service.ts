@@ -15,11 +15,13 @@ export class FireServiceService {
   firestore: Firestore = inject(Firestore);
 
   getDocRef(ref: string, id: string) {
-    return doc(this.firestore, ref, id);
+    if (ref && id) return doc(this.firestore, ref, id);
+    return null;
   }
 
   getCollectionRef(ref: string) {
-    return collection(this.firestore, ref);
+    if (ref) return collection(this.firestore, ref);
+    else return null;
   }
 
   async updateOnlineStatus(currentUser: any) {
