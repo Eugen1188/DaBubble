@@ -1,5 +1,18 @@
-import { Component, OnInit, Inject, PLATFORM_ID, NgModule, inject } from '@angular/core';
-import { CommonModule, isPlatformBrowser, NgClass, NgFor, NgIf } from '@angular/common';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  NgModule,
+  inject,
+} from '@angular/core';
+import {
+  CommonModule,
+  isPlatformBrowser,
+  NgClass,
+  NgFor,
+  NgIf,
+} from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
@@ -33,9 +46,11 @@ export class AddChannelComponent implements OnInit {
   channelmodule = inject(UserService);
   channel = new Channel();
   channels: any = [];
-  
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, public firestore: Firestore) {
-  }
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public firestore: Firestore
+  ) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -55,10 +70,14 @@ export class AddChannelComponent implements OnInit {
   }
 
   filterUsers() {
-    let filter = document.getElementById('user-search-bar') as HTMLInputElement | null;
+    let filter = document.getElementById(
+      'user-search-bar'
+    ) as HTMLInputElement | null;
     if (filter) {
       const filterValue = filter.value.toLowerCase();
-      this.filteredUsers = this.users.filter(user => user.fullname.toLowerCase().includes(filterValue));
+      this.filteredUsers = this.users.filter((user) =>
+        user.fullname.toLowerCase().includes(filterValue)
+      );
     } else {
       this.filteredUsers = this.users;
     }
@@ -68,9 +87,9 @@ export class AddChannelComponent implements OnInit {
     try {
       const usersCollection = collection(this.firestore, 'users');
       const querySnapshot = await getDocs(usersCollection);
-      this.users = querySnapshot.docs.map(doc => doc.data());
+      this.users = querySnapshot.docs.map((doc) => doc.data());
     } catch (error) {
-      console.error("Fehler beim Laden der Benutzer:", error);
+      console.error('Fehler beim Laden der Benutzer:', error);
     }
   }
   async loadChannel() {
@@ -86,12 +105,12 @@ export class AddChannelComponent implements OnInit {
 
   removeUserFromBar(index: number) {
     this.users.splice(index, 1);
-    this.filterUsers()
+    this.filterUsers();
     console.log(this.users);
 
     console.log(this.filteredUsers);
   }
- 
+
   removeSelectedUser(index: number) {
     this.addUserToBar(index);
     this.selectedUsers.splice(index, 1);
@@ -99,14 +118,15 @@ export class AddChannelComponent implements OnInit {
 
   addUserToBar(index: number) {
     this.users.push(this.selectedUsers[index]);
-    this.filterUsers()
+    this.filterUsers();
     console.log(this.users);
     console.log(this.filteredUsers);
-
   }
 
   refreshBar() {
-    const refresh = document.getElementById('user-search-bar') as HTMLInputElement | null;
+    const refresh = document.getElementById(
+      'user-search-bar'
+    ) as HTMLInputElement | null;
     if (refresh) {
       console.log('refresh');
       refresh.value = '';
@@ -119,12 +139,12 @@ export class AddChannelComponent implements OnInit {
 
   onSubmit() {
     console.log('submit');
-    if(!this.selectChannelMember) {
+    if (!this.selectChannelMember) {
       this.addChannel();
       console.log('channel erstellt');
     }
     this.selectChannelMember = true;
-    console.log(this.channelmodule.channels);
+    // console.log(this.channelmodule.channels);
   }
 
 async addChannel() {
@@ -155,7 +175,9 @@ async addChannel() {
 }
 
   setChannelMember(value: boolean, setHeight: string) {
-    const heightElement = document.getElementById('add-channel-cont') as HTMLElement;
+    const heightElement = document.getElementById(
+      'add-channel-cont'
+    ) as HTMLElement;
     this.chooseMember = value;
     if (heightElement) {
       heightElement.style.height = setHeight;

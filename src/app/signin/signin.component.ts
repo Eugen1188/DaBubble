@@ -1,7 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
-import { GoogleAuthProvider, Auth, onAuthStateChanged } from '@angular/fire/auth';
+import {
+  GoogleAuthProvider,
+  Auth,
+  onAuthStateChanged,
+} from '@angular/fire/auth';
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -13,22 +17,24 @@ import { UserService } from '../shared.service';
 import { FireServiceService } from '../fire-service.service';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 
-
 @Component({
   selector: 'app-signin',
   imports: [RouterLink, MatDividerModule, FormsModule],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit {
   disabled = true;
   googleAuthProvider = new GoogleAuthProvider();
   shareddata = inject(UserService);
   auth = inject(Auth);
   user = new User();
   firestore = inject(Firestore);
-  fireService = inject(FireServiceService)
-  constructor(private router: Router) { }
+  fireService = inject(FireServiceService);
+  ngOnInit(): void {
+    this.shareddata.login = true;
+  }
+  constructor(private router: Router) {}
 
   async signin() {
     try {
@@ -39,7 +45,7 @@ export class SigninComponent {
       );
       await this.setOnlineStatus();
       this.shareddata.redirectiontodashboard();
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async signinwithgoogle() {
@@ -47,16 +53,12 @@ export class SigninComponent {
       await signInWithPopup(this.auth, this.googleAuthProvider);
       await this.setOnlineStatus();
       this.shareddata.redirectiontodashboard();
-
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async setOnlineStatus() {
-        const currentUser = this.shareddata.getUser();
-        currentUser.online = true;
-        await this.fireService.updateOnlineStatus(currentUser);
-      } 
-  
+    const currentUser = this.shareddata.getUser();
+    currentUser.online = true;
+    await this.fireService.updateOnlineStatus(currentUser);
   }
-
-
+}

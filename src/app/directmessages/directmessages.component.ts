@@ -1,11 +1,11 @@
-import { Component, inject, Injectable, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, Injectable, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { UserService } from '../shared.service';
 import { Firestore, updateDoc, doc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DirectMessage } from '../directmessage.class';
 import { FireServiceService } from '../fire-service.service';
-
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ import { FireServiceService } from '../fire-service.service';
   templateUrl: './directmessages.component.html',
   styleUrl: './directmessages.component.scss'
 })
-export class DirectmessagesComponent implements OnInit {
+export class DirectmessagesComponent implements OnInit, OnDestroy {
   @ViewChild('chat') chatContentRef!: ElementRef;
   userService = inject(UserService);
   fireService = inject(FireServiceService);
@@ -27,27 +27,40 @@ export class DirectmessagesComponent implements OnInit {
   public currentReciever: any = null;
   public currentUser: any = null;
   message: string = '';
+  input: string = '';
   userID: string = '';
   currentMessages: any[] = [];
   firestore = inject(Firestore);
   isEmpty: boolean = false;
   isYou: boolean = false;
   isChat: boolean = false;
+  private subscription?: Subscription;
   constructor() {
-  
+
   }
   ngAfterViewInit() {
-    // Stelle sicher, dass das Element existiert
+
     if (this.chatContentRef) {
       this.scrollToBottom();
     }
   }
   async ngOnInit() {
-    this.startChat();
-    
+    //this.startChat();
+    this.subscription = this.userService.startLoadingChat$.subscribe(() => {
+      this.startChat();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   startChat() {
+    console.log('start');
+    console.log(this.currentReciever);
+    console.log(this.currentUser);
     if (this.userService.user != null && this.userService.currentReciever != null) {
       this.setCurrentReciever();
       this.loadMessages();
@@ -74,8 +87,9 @@ export class DirectmessagesComponent implements OnInit {
 
 
   async sendMessage() {
+    if (this.message === '' || !this.currentReciever || !this.currentUser) { return };
     const message = new DirectMessage(this.currentUser.fullname, this.currentUser.profilephoto, this.message, this.currentUser.id, this.currentReciever.id);
-    if (this.message===''){return};
+
     const messageData = this.createMessageData(message);
     if (this.currentReciever.id !== this.currentUser.id) {
       this.currentReciever.messages.push(messageData);
@@ -181,6 +195,8 @@ export class DirectmessagesComponent implements OnInit {
   checkMessages() {
     if (this.currentMessages.length === 0) {
       this.isEmpty = true;
+    } else {
+      this.isEmpty = false;
     }
   }
 
@@ -190,5 +206,18 @@ export class DirectmessagesComponent implements OnInit {
     } else {
       this.isYou = false;
     }
+  }
+
+
+  getCurrentChat() {
+    console.log(this.input);
+    if (this.input.includes('#')) {
+      console.log('Channel laden');
+
+    } else if (this.input.includes('@')) {
+      console.log('Chat laden');
+
+    }
+
   }
 }

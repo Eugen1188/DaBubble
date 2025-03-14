@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -18,7 +24,7 @@ import { UserService } from '../shared.service';
   templateUrl: './avatarselection.component.html',
   styleUrls: ['./avatarselection.component.scss'],
 })
-export class AvatarselectionComponent {
+export class AvatarselectionComponent implements OnInit {
   shareddata = inject(UserService);
   auth = getAuth();
   user: User;
@@ -27,6 +33,10 @@ export class AvatarselectionComponent {
   currentUser = this.auth.currentUser;
   newPassword: string;
   @ViewChild('loginbutton') loginbutton!: ElementRef<HTMLButtonElement>;
+
+  ngOnInit(): void {
+    this.shareddata.login = false;
+  }
 
   constructor(public firestore: Firestore, private userService: UserService) {
     this.user = this.userService.getUser();

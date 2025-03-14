@@ -12,6 +12,8 @@ import { ContactbarComponent } from './contactbar/contactbar.component';
 import { AddChannelComponent } from './add-channel/add-channel.component';
 import { ThreadComponent } from './thread/thread.component';
 import { DirectmessagesComponent } from './directmessages/directmessages.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import { DataprotectionComponent } from './dataprotection/dataprotection.component';
 
 
 
@@ -29,4 +31,7 @@ export const routes: Routes = [
   { path: 'add-channel', component: AddChannelComponent },
   { path: 'thread', component: ThreadComponent },
   { path: 'direct', component: DirectmessagesComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'Dataprotection', component: DataprotectionComponent },
+
 ];

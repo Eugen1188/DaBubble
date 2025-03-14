@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterLink } from '@angular/router';
@@ -14,17 +14,15 @@ import { UserService } from '../shared.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   sharedservice = inject(UserService);
   Auth = inject(Auth);
   user = new User();
   checked = false;
-  accountcreationenabled = inject(UserService);
-
-  constructor(public firestore: Firestore) {
-    this.accountcreationenabled.chatmoduleenabled = false;
-    this.accountcreationenabled.accountcreation = true;
+  ngOnInit(): void {
+    this.sharedservice.login = false;
   }
+  constructor(public firestore: Firestore) {}
 
   async onSubmit(useraccount: NgForm) {
     if (useraccount.valid) {

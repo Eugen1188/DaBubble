@@ -5,6 +5,12 @@
   align-items: center;
   max-width: 1920px;
   width: 100%;
+  >div:nth-child(1){
+    width: 40%;
+    @media (max-width: 500px) {
+      width: unset;
+    }
+  }
   @media (max-width: 1204px) {
     width: 100%;
     justify-content: space-between;
