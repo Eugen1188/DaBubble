@@ -17,11 +17,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Firestore, collection, getDocs, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, addDoc, updateDoc, doc } from '@angular/fire/firestore';
 import { UserService } from '../shared.service';
 import { getAuth } from 'firebase/auth';
 import { User } from '../../models/user.class';
 import { Channel } from '../../models/channels.class';
+import { FireServiceService } from '../fire-service.service';
 
 @Component({
   selector: 'app-add-channel',
@@ -44,6 +45,7 @@ export class AddChannelComponent implements OnInit {
   filteredUsers: any[] = [];
   showUserBar: boolean = false;
   channelmodule = inject(UserService);
+  fireService = inject(FireServiceService);
   channel = new Channel();
   channels: any = [];
 
@@ -135,12 +137,15 @@ export class AddChannelComponent implements OnInit {
 
   closeScreen() {
     console.log('close window');
+    console.log(this.users);
+    console.log(this.channelmodule.channels[0].data.member);
   }
 
   onSubmit() {
     console.log('submit');
     if (!this.selectChannelMember) {
-      this.addChannel();
+      // this.addChannel();
+      // this.pushAllUsers();
       console.log('channel erstellt');
     }
     this.selectChannelMember = true;
@@ -162,17 +167,34 @@ async addChannel() {
       member: newChannel.member,
       messages: newChannel.messages, 
     });
-
-    console.log('Channel erstellt');
     this.channelName = '';
     this.channelDescription = '';
     this.selectedUsers = [];
-    this.selectChannelMember = false;
-
   } catch (error) {
     console.error('Fehler beim Erstellen des Channels:', error);
   }
 }
+
+// async pushAllUsers() {
+//   try {
+//     const allUser = this.users
+//     const channel = this.channelmodule.channels[0];
+//     if (channel) {
+//       const channelRef = doc(this.firestore, 'channels', channel.key);
+//       const updatedMembers = [...new Set([...channel.data.member, ...allUser])]; // Doppelte Einträge vermeiden
+//       await updateDoc(channelRef, {
+//         member: updatedMembers,
+//       });
+//       console.log('Alle Benutzer wurden dem Channel "DaBubble" hinzugefügt.');
+//     } else {
+//       console.error('Channel "DaBubble" nicht gefunden.');
+//     }
+//   } catch (error) {
+//     console.error('Fehler beim Hinzufügen der Benutzer zum Channel:', error);
+//   }
+//   console.log(this.channelmodule.channels[0].data.member);
+// }
+
 
   setChannelMember(value: boolean, setHeight: string) {
     const heightElement = document.getElementById(
