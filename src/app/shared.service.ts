@@ -68,7 +68,7 @@ export class UserService {
         this.user = user;
         console.log('User is still logged in:', user);
       } else {
-        this.user = null;
+        this.user = new User(null);
         console.log('User is logged out');
       }
     });
@@ -84,22 +84,6 @@ export class UserService {
           data: colSnap.data(),
         }));
         this.currentChannel = this.channels[0];
-        console.log(this.currentChannel);
-        this.getMessages();
-      }
-    );
-  }
-
-  getMessages() {
-    this.currentChannel = this.channels[0];
-    this.unsubMessages = onSnapshot(
-      this.fireService.getDocRef('channels', this.currentChannel.key),
-      (docSnap) => {
-        if (docSnap.exists()) {
-          this.messages = docSnap
-            .data()
-          ['messages'].map((m: any) => new Message(m));
-        }
       }
     );
   }

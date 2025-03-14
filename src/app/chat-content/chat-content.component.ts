@@ -10,10 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-import { updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { updateDoc, arrayUnion, onSnapshot } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { error, log } from 'node:console';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-chat-content',
@@ -34,14 +36,34 @@ export class ChatContentComponent implements OnInit {
   userService: UserService = inject(UserService);
 
   loading: boolean = false;
+  channels: any = [];
+  currentChannel: any = {};
+
+  unsubMessages!: () => void;
 
   currentMessage: any = new Message();
+  messages: Message[] = [];
 
   input: string = '';
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.scrollToBottom();
-    this.userService.getChannels();
+    this.channels = await this.fireService.getChannels();
+    this.currentChannel = this.channels[0];
+    this.getMessages();
+  }
+
+  getMessages(): void {
+    this.unsubMessages = onSnapshot(
+      this.fireService.getDocRef('channels', this.currentChannel.id),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          this.messages = docSnap
+            .data()
+            ['messages'].map((m: Message) => new Message(m));
+        } else return;
+      }
+    );
   }
 
   buildMessageObject(): {} {
@@ -56,9 +78,8 @@ export class ChatContentComponent implements OnInit {
   }
 
   isNewDay(): boolean {
-    if (this.userService.messages.length === 0) return true;
-    let lastMessage =
-      this.userService.messages[this.userService.messages.length - 1];
+    if (this.messages.length === 0) return true;
+    let lastMessage = this.messages[this.messages.length - 1];
     let lastMessageDate = lastMessage.date;
     let todayDate = new Date().toISOString().split('T')[0];
 
@@ -75,10 +96,7 @@ export class ChatContentComponent implements OnInit {
     this.currentMessage = new Message(this.buildMessageObject());
     if (this.userService.user) {
       await updateDoc(
-        this.fireService.getDocRef(
-          'channels',
-          this.userService.currentChannel.key
-        ),
+        this.fireService.getDocRef('channels', this.currentChannel.id),
         { messages: arrayUnion(this.currentMessage.toJSON()) }
       )
         .then(() => {

@@ -2,18 +2,20 @@
     <div class="card">
         <section class="card-header">
             <div class="align-center">
-                # {{ this.userService.currentChannel?.data.name }}
+                # {{ this.currentChannel?.name }}
                 <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
             </div>
             <div class="align-center gap-10">
                 <div class="avatar-container">
-                    <ng-container *ngFor="let member of this.userService.currentChannel?.data.member">
+                    <ng-container *ngFor="let member of this.currentChannel?.member">
                         <img class="avatar" src="img/avatars/avatar_1.png" alt="Name" />
                         <!-- <img class="avatar" src="img/avatars/avatar_2.png" alt="Name" />
                         <img class="avatar" src="img/avatars/avatar_3.png" alt="Name" /> -->
                     </ng-container>
                 </div>
-                {{ this.userService.currentChannel?.data.member.length }}
+                <!-- {{ this.currentChannel?.member.length }}
+                   -->
+                3
                 <button mat-mini-fab>
                     <mat-icon>person_add</mat-icon>
                 </button>
@@ -21,7 +23,7 @@
         </section>
 
         <ul class="chat-content gap-10" #chatContent>
-            <ng-container *ngFor="let message of this.userService.messages; index as i">
+            <ng-container *ngFor="let message of this.messages; index as i">
                 <li *ngIf="message.newDay === true">
                     <div class="date-container">
                         <span class="date">{{ isToday(message.date)? 'Heute' : (message.date) }}</span>
