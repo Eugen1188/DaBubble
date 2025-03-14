@@ -57,9 +57,6 @@ export class ContactbarComponent {
     }
   }
 
-  setcurrentUser() {
-
-  }
 
   openPersonalChat(index: any) {
     if (this.userService.user.uid) {
