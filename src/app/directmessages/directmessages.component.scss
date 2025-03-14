@@ -1,8 +1,8 @@
 section {
     width: calc(100% - 100px);
-    height: 100vh;
+    height: 1000px;
    margin-left: 50px;
-    max-height: 940px;
+  
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -405,6 +405,10 @@ button {
 
 .lists{
     position: absolute;
+    bottom: 0;
+    border: solid;
     width: 100%;
     max-width: 350px;
+    height: 467px;
+    display:none ;
 }
