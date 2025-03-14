@@ -30,7 +30,8 @@
                     </div>
                 </li>
 
-                <li class="message" [ngClass]="{ 'reverse' : message.name == this.userService.user?.displayName}">
+                <li class="message"
+                    [ngClass]="{ 'reverse' : message.name == this.userService.auth.currentUser?.displayName}">
                     <div class="reaction-bar">
                         <button>
                             <img src="/img/reaction-bar-icons/checked.png" alt="">
@@ -44,7 +45,8 @@
                         <button class="hover-to-dark-purple">
                             <img src="/img/reaction-bar-icons/comment.png" alt="">
                         </button>
-                        <button class="hover-to-dark-purple">
+                        <button *ngIf="message.name == this.userService.auth.currentUser?.displayName"
+                            class="hover-to-dark-purple">
                             <mat-icon>more_vert</mat-icon>
                         </button>
                     </div>
