@@ -94,9 +94,9 @@ export class ChatContentComponent implements OnInit {
     return today === messageDate;
   }
 
-  isFirstMessageOfDay(index: number): boolean {
+  isFirstMessageOfDay(index: number, messageDate: boolean): boolean {
     if (index === 0) return true;
-    return !this.isToday(this.messages[index - 1].date);
+    return !this.isToday(messageDate);
   }
 
   async newMessage() {
