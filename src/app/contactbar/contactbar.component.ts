@@ -58,6 +58,7 @@ export class ContactbarComponent {
       this.currentUser = this.users.find((user) => this.userID === user.id);
     } else {
       console.log('users wurde nicht richtig geladen');
+      console.log('user wurde nicht richtig geladen');
     }
   }
 
