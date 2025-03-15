@@ -37,12 +37,15 @@ export class ChatContentComponent implements OnInit {
 
   loading: boolean = false;
   menuOpen: boolean = false;
+  isEditing: boolean = false;
   channels: any = [];
   currentChannel: any = {};
 
+  editingMessageId: any = '';
+
   unsubMessages!: () => void;
 
-  messages: Message[] = [];
+  messages: any[] = [];
   input: string = '';
 
   async ngOnInit() {
@@ -52,6 +55,7 @@ export class ChatContentComponent implements OnInit {
       this.channels = await this.fireService.getChannels();
       this.currentChannel = this.channels[0];
       this.getMessages();
+      console.log(this.messages);
     }
   }
 
@@ -124,10 +128,15 @@ export class ChatContentComponent implements OnInit {
     this.menuOpen = !this.menuOpen;
   }
 
-  editMessage(m: any, i: number) {
+  editMessage(message: any, i: any) {
     this.menuOpen = false;
-    console.log(m, i);
+    // this.editingMessageId = i;
+    this.input = message.message;
+    console.log(i);
+    console.log(message);
   }
+
+  updateMessage(currentMessage: Message) {}
 
   toggle() {
     this.userService.toggleThread();
