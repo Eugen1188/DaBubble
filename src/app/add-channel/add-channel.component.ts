@@ -48,6 +48,9 @@ export class AddChannelComponent implements OnInit {
   fireService = inject(FireServiceService);
   channel = new Channel();
   channels: any = [];
+  addNewChannel:boolean = true;
+  addUser:boolean = false;
+  allUser:boolean = true;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -96,7 +99,6 @@ export class AddChannelComponent implements OnInit {
   }
   async loadChannel() {
     this.channels = this.channelmodule.getChannels();
-    console.log(this.channels);
   }
 
   addUserToSelection(index: number) {
@@ -142,11 +144,17 @@ export class AddChannelComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submit');
-    if (!this.selectChannelMember) {
+    if (!this.selectChannelMember && this.addNewChannel) {
       // this.addChannel();
       // this.pushAllUsers();
       console.log('channel erstellt');
+      this.addNewChannel = false;
+      this.addUser = true;
+    }  
+    if (!this.selectChannelMember && this.addUser) {
+      this.addUserToChannel()
+      this.addNewChannel = true;
+      this.addUser = false;
     }
     this.selectChannelMember = true;
     // console.log(this.channelmodule.channels);
@@ -175,6 +183,10 @@ async addChannel() {
   }
 }
 
+async addUserToChannel() {
+  console.log(this.user);
+}
+
 // async pushAllUsers() {
 //   try {
 //     const allUser = this.users
@@ -194,7 +206,6 @@ async addChannel() {
 //   }
 //   console.log(this.channelmodule.channels[0].data.member);
 // }
-
 
   setChannelMember(value: boolean, setHeight: string) {
     const heightElement = document.getElementById(

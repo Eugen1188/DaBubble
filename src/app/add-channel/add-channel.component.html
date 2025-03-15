@@ -42,10 +42,11 @@
           (blur)="shrinkTextarea($event)"
           (focus)="expandTextarea($event)"
         ></textarea>
-        <button [disabled]="!channelForm.valid">Erstellen</button>
+        <button [disabled]="!channelForm.valid" *ngIf="addNewChannel">Erstellen</button>
+        <button [ngClass]="{ 'd-none': !addUser }" (click)="addUserToChannel()">Erstellennn</button>
+ 
       </form>
     </div>
-
     <div *ngIf="selectChannelMember" class="select-member-cont">
       <div class="add-channel-user-header">
         <div class="headline-channel-add-user">Leute hinzufügen</div>
