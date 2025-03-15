@@ -20,7 +20,7 @@
         </section>
 
         <ul class="chat-content gap-10" #chatContent>
-            <ng-container *ngFor="let message of this.messages; index as i">
+            <ng-container *ngFor="let message of this.messages; index as i;">
                 <li *ngIf="message.newDay">
                     <div class="date-container">
                         <span class="date">{{ isToday(message.date) ? 'Heute' : message.date }}</span>
@@ -49,12 +49,12 @@
                         </button>
                         <div *ngIf="menuOpen && message.name == this.userService.auth.currentUser?.displayName"
                             class="menu">
-                            <button (click)="editMessage(this.messages[i], i)">Nachricht bearbeiten</button>
+                            <button (click)="editMessage(message, i)">Nachricht bearbeiten</button>
                         </div>
                     </div>
                     <img [src]=" message.avatar " alt=" Avatar" />
 
-                    <div class="content-container">
+                    <div *ngIf="!(isEditing && editingMessageId === i)" class=" content-container">
                         <div class="message-header gap-20">
                             <b class="font-size-18">{{ message.name }}</b>
                             <span class="font-size-14">{{ message.time }} Uhr</span>
@@ -69,8 +69,8 @@
                         </div>
                     </div>
 
-                    <div *ngIf="isEditing" class="input-container full-width">
-                        <textarea [(ngModel)]="input" rows="4"></textarea>
+                    <div *ngIf="isEditing  && editingMessageId === i" class="input-container full-width">
+                        <textarea [(ngModel)]="inputEdit" rows="4"></textarea>
 
                         <div class="action-container">
                             <button class="hover-to-dark-purple">

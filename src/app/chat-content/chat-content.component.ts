@@ -52,19 +52,11 @@ export class ChatContentComponent implements OnInit {
 
   messages: any[] = [];
   input: string = '';
-constructor(){
-  this.startChannel();
-}
-   async ngOnInit() {
-    if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
-    else {
-      this.scrollToBottom();
-      this.channels = await this.fireService.getChannels();
-      this.currentChannel = this.channels[0];
-      this.getMessages();
-      console.log(this.messages);
-    }
+  inputEdit: string = '';
 
+  async ngOnInit() {
+    if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
+    this.startChannel();
     this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
       this.startChannel();
     });
@@ -83,6 +75,8 @@ constructor(){
       this.userService.currentChannel != null
     ) {
       this.setCurrentChannel();
+      this.getMessages();
+      this.scrollToBottom();
       console.log(this.currentChannel);
       console.log(this.currentUser);
     } else {
@@ -164,15 +158,21 @@ constructor(){
     this.menuOpen = !this.menuOpen;
   }
 
-  editMessage(message: any, i: any) {
+  editMessage(message: any, index: number) {
+    console.log('Bearbeitung gestartet für Nachricht:', message);
+    console.log('Index der Nachricht:', index);
     this.menuOpen = false;
-    // this.editingMessageId = i;
-    this.input = message.message;
-    console.log(i);
-    console.log(message);
+
+    this.isEditing = true;
+    this.editingMessageId = index;
+    this.inputEdit = message.message;
   }
 
-  updateMessage(currentMessage: Message) {}
+  updateMessage(message: any) {
+    console.log('Nachricht aktualisiert:', message);
+    this.isEditing = false;
+    this.editingMessageId = null;
+  }
 
   toggle() {
     this.userService.toggleThread();

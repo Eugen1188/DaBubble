@@ -66,7 +66,7 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
       this.isChat = true;
     } else {
       this.isChat === false
-      console.log('keine User oder Reciever im Chat');
+      console.log('Chat muss per click initialisiert werden');
     }
 
 
