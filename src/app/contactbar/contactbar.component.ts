@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { Injectable } from '@angular/core';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 
@@ -25,9 +24,8 @@ export class ContactbarComponent {
   firestore = inject(Firestore);
   firestoreService = inject(FireServiceService);
   currentUser: any;
-  currentReciever: any;
+  currentReceiver: any;
   userID: string = '';
-
   currentChannel: any;
 
   ngOnInit() {
@@ -54,7 +52,7 @@ export class ContactbarComponent {
   }
 
   findCurrentUser() {
-    if (this.userService.user.uid) {
+    if (this.userService.user?.uid) {
       this.userID = this.userService.user.uid;
       this.currentUser = this.users.find((user) => this.userID === user.id);
     } else {
@@ -68,8 +66,8 @@ export class ContactbarComponent {
   }
 
   openPersonalChat(index: any) {
-    this.currentReciever = this.users[index];
-    this.userService.getReciepent(this.currentReciever, this.currentUser);
+    this.currentReceiver = this.users[index];
+    this.userService.getReciepent(this.currentReceiver, this.currentUser);
   }
 
   toggleActive() {

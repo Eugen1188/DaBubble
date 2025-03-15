@@ -236,6 +236,12 @@ li {
   }
 }
 
+.edit-input {
+  textarea {
+    background-color: transparent;
+  }
+}
+
 .bg-purple {
   background-color: var(--bg-color);
 }

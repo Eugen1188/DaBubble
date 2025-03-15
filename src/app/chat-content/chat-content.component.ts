@@ -11,7 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-import { updateDoc, arrayUnion, onSnapshot } from '@angular/fire/firestore';
+import {
+  updateDoc,
+  arrayUnion,
+  onSnapshot,
+  collection,
+  doc,
+} from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -52,12 +58,20 @@ export class ChatContentComponent implements OnInit {
 
   messages: any[] = [];
   input: string = '';
+<<<<<<< HEAD
 constructor(){
   this.startChannel();
 }
   async ngOnInit() {
    
     // if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
+=======
+  inputEdit: string = '';
+
+  async ngOnInit() {
+    if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
+    this.startChannel();
+>>>>>>> e1039fe7646b1717091fd40b9ea52194a77556f2
     this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
       this.startChannel();
     });
@@ -71,15 +85,13 @@ constructor(){
 
   startChannel() {
     console.log('start');
-    // this.scrollToBottom();
-    // this.getMessages();
-
     if (
       this.userService.user != null &&
       this.userService.currentChannel != null
     ) {
       this.setCurrentChannel();
       this.getMessages();
+      this.scrollToBottom();
       console.log(this.currentChannel);
       console.log(this.currentUser);
     } else {
@@ -93,7 +105,7 @@ constructor(){
   }
 
   getMessages(): void {
-    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    let docRef = this.getDocRef('channels', this.currentChannel.id);
     if (docRef) {
       this.unsubMessages = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
@@ -134,7 +146,7 @@ constructor(){
 
   async newMessage() {
     this.loading = true;
-    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    let docRef = this.getDocRef('channels', this.currentChannel.id);
     if (docRef) {
       await updateDoc(docRef, {
         messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()),
@@ -161,17 +173,31 @@ constructor(){
     this.menuOpen = !this.menuOpen;
   }
 
-  editMessage(message: Message, index: number) {
+  editMessage(message: any, index: number) {
+    console.log('Bearbeitung gestartet für Nachricht:', message);
+    console.log('Index der Nachricht:', index);
     this.menuOpen = false;
+
     this.isEditing = true;
-    this.editingMessageId = index; //
-    this.input = message.message;
-    console.log('Bearbeite Nachricht:', message, 'Index:', index);
+    this.editingMessageId = index;
+    this.inputEdit = message.message;
   }
 
-  updateMessage(currentMessage: Message) {}
+  updateMessage(message: any) {
+    console.log('Nachricht aktualisiert:', message);
+    this.isEditing = false;
+    this.editingMessageId = null;
+  }
 
   toggle() {
     this.userService.toggleThread();
+  }
+
+  getDocRef(ref: string, id: string) {
+    return ref && id ? doc(this.userService.firestore, ref, id) : null;
+  }
+
+  getCollectionRef(ref: string) {
+    return ref ? collection(this.userService.firestore, ref) : null;
   }
 }
