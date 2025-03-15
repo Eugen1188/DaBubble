@@ -24,7 +24,7 @@
             </div>
             <div [ngClass]="{'show':isActive()}"  class="channellist">
                 <div class="channelrow" *ngFor="let channel of channels let index = index">
-                    <div (click)="openWindow('channel')">
+                    <div (click)="openWindow('channel'); openChannel(index)">
                         <img src="/img/tag.svg" alt="">
                         <span>{{channel.name}}</span>
                     </div>

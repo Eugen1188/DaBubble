@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Component, inject } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
-import { getAuth } from '@angular/fire/auth';
+
 
 @Injectable({
   providedIn: 'root',
@@ -32,12 +32,13 @@ export class ContactbarComponent {
   currentUser: any;
   currentReciever: any;
   userID: string = '';
-  auth = getAuth();
+
+  currentChannel: any;
 
   async ngOnInit() {
     await this.loadUsers();
     await this.loadChannels();
-
+    this.findCurrentUser();
 
   }
 
@@ -57,20 +58,28 @@ export class ContactbarComponent {
     }
   }
 
-
-  openPersonalChat(index: any) {
+  findCurrentUser() {
     if (this.userService.user.uid) {
-      this.userID = this.userService.user.uid
-
+      this.userID = this.userService.user.uid;
       this.currentUser = this.users.find(user => this.userID === user.id);
-      this.currentReciever = this.users[index]
-      this.userService.getReciepent(this.currentReciever, this.currentUser);
     } else {
       console.log('users wurde nicht richtig geladen');
 
     }
+  }
+
+
+  openChannel(index: any) {
+    this.currentChannel = this.channels[index];
+    this.userService.getChannel(this.currentChannel, this.currentUser);
+  }
+
+  openPersonalChat(index: any) {
+    this.currentReciever = this.users[index]
+    this.userService.getReciepent(this.currentReciever, this.currentUser);
 
   }
+
 
   toggleActive() {
     this.active = !this.active;

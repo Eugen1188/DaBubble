@@ -32,6 +32,8 @@ export class UserService {
   component: string = '';
   private startLoadingChat = new Subject<void>();
   startLoadingChat$ = this.startLoadingChat.asObservable();
+  private startLoadingChannel = new Subject<void>();
+  startLoadingChannel$ = this.startLoadingChannel.asObservable();
   channels: any = [];
   currentChannel: any;
 
@@ -91,6 +93,14 @@ export class UserService {
     this.currentUser = user;
     this.startLoadingChat.next();
   }
+
+
+  getChannel(channel: any, user: any) {
+    this.currentChannel = channel;
+    this.currentUser = user;    
+    this.startLoadingChannel.next();
+  }
+
 
   loadComponent(component: string) {
     //this.currentComponent.next(null);

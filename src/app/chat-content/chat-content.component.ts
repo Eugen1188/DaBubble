@@ -5,6 +5,7 @@ import {
   inject,
   OnInit,
   ViewChild,
+  Injectable,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +16,11 @@ import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-chat-content',
   imports: [
@@ -30,7 +35,7 @@ import { Router } from '@angular/router';
 })
 export class ChatContentComponent implements OnInit {
   @ViewChild('chatContent') chatContentRef!: ElementRef;
-
+  private subscription?: Subscription;
   fireService: FireServiceService = inject(FireServiceService);
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
@@ -40,7 +45,7 @@ export class ChatContentComponent implements OnInit {
   isEditing: boolean = false;
   channels: any = [];
   currentChannel: any = {};
-
+  currentUser: any;
   editingMessageId: any = '';
 
   unsubMessages!: () => void;
@@ -57,6 +62,35 @@ export class ChatContentComponent implements OnInit {
       this.getMessages();
       console.log(this.messages);
     }
+
+    this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
+      this.startChannel();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  startChannel() {
+    console.log('start');
+    if (
+      this.userService.user != null &&
+      this.userService.currentChannel != null
+    ) {
+      this.setCurrentChannel();
+      console.log(this.currentChannel);
+      console.log(this.currentUser);
+    } else {
+      console.log('keine User oder Channel');
+    }
+  }
+
+  setCurrentChannel() {
+    this.currentChannel = this.userService.currentChannel;
+    this.currentUser = this.userService.currentUser;
   }
 
   getMessages(): void {
