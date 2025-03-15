@@ -30,7 +30,7 @@ import { FireServiceService } from '../fire-service.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @ViewChild(MatMenuTrigger) menuTriggerRef!: MatMenuTrigger;
   showmodifycontent = false;
   displayName: string | null = null;
@@ -50,21 +50,12 @@ export class HeaderComponent implements OnInit {
     this.showmodifycontent = false;
   }
 
-  ngOnInit() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.user = user;
-        this.displayName = user.displayName;
-      }
-    });
-  }
-
-  async signOut() { 
+  async signOut() {
     const currentUser = this.shareddata.getUser();
     currentUser.online = false;
     await this.fireService.updateOnlineStatus(currentUser);
     await signOut(this.auth);
-   
+
     this.chatmoduleenabled.redirectiontologinpage();
   }
 }

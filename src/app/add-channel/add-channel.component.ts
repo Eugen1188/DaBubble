@@ -17,7 +17,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import * as AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Firestore, collection, getDocs, addDoc, updateDoc, doc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+} from '@angular/fire/firestore';
 import { UserService } from '../shared.service';
 import { getAuth } from 'firebase/auth';
 import { User } from '../../models/user.class';
@@ -94,9 +101,11 @@ export class AddChannelComponent implements OnInit {
       const querySnapshot = await getDocs(usersCollection);
       this.users = querySnapshot.docs.map((doc) => doc.data());
     } catch (error) {
-      console.error('Fehler beim Laden der Benutzer:', error);
+      console.error('Error loading users:', error);
+      this.users = []; // Default to empty array if there's an error
     }
   }
+
   async loadChannel() {
     this.channels = this.channelmodule.getChannels();
   }
@@ -111,7 +120,6 @@ export class AddChannelComponent implements OnInit {
     this.users.splice(index, 1);
     this.filterUsers();
     console.log(this.users);
-
     console.log(this.filteredUsers);
   }
 
@@ -139,8 +147,23 @@ export class AddChannelComponent implements OnInit {
 
   closeScreen() {
     console.log('close window');
-    console.log(this.users);
-    console.log(this.channelmodule.channels[0].data.member);
+
+    // Reset form fields
+    this.channelName = ''; // Clear channel name input
+    this.channelDescription = ''; // Clear channel description input
+
+    // Clear selected users
+    this.selectedUsers = [];
+
+    // Reset user bar visibility
+    this.showUserBar = false;
+
+    // Log current state (for debugging)
+    console.log('Users:', this.users);
+    console.log(
+      'Channel Members:',
+      this.channelmodule.channels[0]?.data?.member
+    );
   }
 
   onSubmit() {
@@ -152,7 +175,7 @@ export class AddChannelComponent implements OnInit {
       this.addUser = true;
     }  
     if (!this.selectChannelMember && this.addUser) {
-      this.addUserToChannel()
+      // this.addUserToChannel()
       this.addNewChannel = true;
       this.addUser = false;
     }
@@ -183,10 +206,6 @@ async addChannel() {
   }
 }
 
-async addUserToChannel() {
-  console.log(this.user);
-}
-
 // async pushAllUsers() {
 //   try {
 //     const allUser = this.users
@@ -206,6 +225,7 @@ async addUserToChannel() {
 //   }
 //   console.log(this.channelmodule.channels[0].data.member);
 // }
+
 
   setChannelMember(value: boolean, setHeight: string) {
     const heightElement = document.getElementById(

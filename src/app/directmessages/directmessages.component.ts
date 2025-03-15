@@ -36,7 +36,7 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
   isChat: boolean = false;
   private subscription?: Subscription;
   constructor() {
-
+    this.startChat() 
   }
   ngAfterViewInit() {
 
@@ -44,7 +44,7 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
       this.scrollToBottom();
     }
   }
-  async ngOnInit() {
+  ngOnInit() {
     //this.startChat();
     this.subscription = this.userService.startLoadingChat$.subscribe(() => {
       this.startChat();
@@ -59,8 +59,6 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
 
   startChat() {
     console.log('start');
-    console.log(this.currentReciever);
-    console.log(this.currentUser);
     if (this.userService.user != null && this.userService.currentReciever != null) {
       this.setCurrentReciever();
       this.loadMessages();
@@ -68,7 +66,7 @@ export class DirectmessagesComponent implements OnInit, OnDestroy {
       this.isChat = true;
     } else {
       this.isChat === false
-      console.log('keine User oder Reciever');
+      console.log('Chat muss per click initialisiert werden');
     }
 
 
