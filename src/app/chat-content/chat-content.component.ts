@@ -5,7 +5,7 @@ import {
   inject,
   OnInit,
   ViewChild,
-  Injectable
+  Injectable,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,9 +19,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 @Component({
   selector: 'app-chat-content',
   imports: [
@@ -43,12 +42,15 @@ export class ChatContentComponent implements OnInit {
 
   loading: boolean = false;
   menuOpen: boolean = false;
+  isEditing: boolean = false;
   channels: any = [];
   currentChannel: any = {};
   currentUser: any;
+  editingMessageId: any = '';
+
   unsubMessages!: () => void;
 
-  messages: Message[] = [];
+  messages: any[] = [];
   input: string = '';
 constructor(){
   this.startChannel();
@@ -60,13 +62,12 @@ constructor(){
       this.channels = await this.fireService.getChannels();
       this.currentChannel = this.channels[0];
       this.getMessages();
+      console.log(this.messages);
     }
 
     this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
       this.startChannel();
     });
-
-
   }
 
   ngOnDestroy() {
@@ -77,22 +78,22 @@ constructor(){
 
   startChannel() {
     console.log('start');
-    if (this.userService.user != null && this.userService.currentChannel != null) {
-    this.setCurrentChannel();
-    console.log(this.currentChannel);
-    console.log(this.currentUser);
-    
-    }else{
+    if (
+      this.userService.user != null &&
+      this.userService.currentChannel != null
+    ) {
+      this.setCurrentChannel();
+      console.log(this.currentChannel);
+      console.log(this.currentUser);
+    } else {
       console.log('keine User oder Channel');
     }
   }
-
 
   setCurrentChannel() {
     this.currentChannel = this.userService.currentChannel;
     this.currentUser = this.userService.currentUser;
   }
-
 
   getMessages(): void {
     let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
@@ -101,7 +102,7 @@ constructor(){
         if (docSnap.exists()) {
           this.messages = docSnap
             .data()
-          ['messages'].map((m: Message) => new Message(m));
+            ['messages'].map((m: Message) => new Message(m));
         } else return;
       });
     }
@@ -163,10 +164,15 @@ constructor(){
     this.menuOpen = !this.menuOpen;
   }
 
-  editMessage(m: any, i: number) {
+  editMessage(message: any, i: any) {
     this.menuOpen = false;
-    console.log(m, i);
+    // this.editingMessageId = i;
+    this.input = message.message;
+    console.log(i);
+    console.log(message);
   }
+
+  updateMessage(currentMessage: Message) {}
 
   toggle() {
     this.userService.toggleThread();
