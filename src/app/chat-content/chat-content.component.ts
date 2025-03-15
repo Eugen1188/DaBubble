@@ -11,7 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Message } from '../../models/message.class';
-import { updateDoc, arrayUnion, onSnapshot } from '@angular/fire/firestore';
+import {
+  updateDoc,
+  arrayUnion,
+  onSnapshot,
+  collection,
+  doc,
+} from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -90,7 +96,7 @@ export class ChatContentComponent implements OnInit {
   }
 
   getMessages(): void {
-    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    let docRef = this.getDocRef('channels', this.currentChannel.id);
     if (docRef) {
       this.unsubMessages = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
@@ -131,7 +137,7 @@ export class ChatContentComponent implements OnInit {
 
   async newMessage() {
     this.loading = true;
-    let docRef = this.fireService.getDocRef('channels', this.currentChannel.id);
+    let docRef = this.getDocRef('channels', this.currentChannel.id);
     if (docRef) {
       await updateDoc(docRef, {
         messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()),
@@ -176,5 +182,13 @@ export class ChatContentComponent implements OnInit {
 
   toggle() {
     this.userService.toggleThread();
+  }
+
+  getDocRef(ref: string, id: string) {
+    return ref && id ? doc(this.userService.firestore, ref, id) : null;
+  }
+
+  getCollectionRef(ref: string) {
+    return ref ? collection(this.userService.firestore, ref) : null;
   }
 }
