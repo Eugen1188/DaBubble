@@ -90,14 +90,13 @@ export class ChatContentComponent implements OnInit {
 
   isToday(date: any): boolean {
     if (!date) return false;
-    let today = new Date().toISOString().split('T')[0];
-    let messageDate = new Date(date).toISOString().split('T')[0];
+    const today = new Date().setHours(0, 0, 0, 0);
+    const messageDate = new Date(date).setHours(0, 0, 0, 0);
     return today === messageDate;
   }
 
-  isFirstMessageOfDay(index: number, messageDate: boolean): boolean {
-    if (index === 0) return true;
-    return !this.isToday(messageDate);
+  isFirstMessageOfDay(message: any): boolean {
+    return message?.newDay ?? false;
   }
 
   async newMessage() {
