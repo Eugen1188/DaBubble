@@ -181,14 +181,12 @@ export class AddChannelComponent implements OnInit {
         name: this.channelName,
         description: this.channelDescription,
         member: this.selectedUsers,
-        messages: [],
       };
       const channelsCollection = collection(this.firestore, 'channels');
       await addDoc(channelsCollection, {
         name: newChannel.name,
         description: newChannel.description,
         member: newChannel.member,
-        messages: newChannel.messages,
       });
       this.channelName = '';
       this.channelDescription = '';

@@ -120,16 +120,17 @@ export class ChatContentComponent implements OnInit {
 
     if (messagesCollectionRef) {
       this.loading = true;
-      await addDoc(
-        messagesCollectionRef,
-        new Message(this.buildMessageObject()).toJSON()
-      )
-        .then(() => {
-          this.loading = false;
-          this.scrollToBottom();
-          this.input = '';
-        })
-        .catch((err) => console.error(err));
+      try {
+        await addDoc(
+          messagesCollectionRef,
+          new Message(this.buildMessageObject()).toJSON()
+        );
+        this.loading = false;
+        this.scrollToBottom();
+        this.input = '';
+      } catch (err) {
+        console.error('Fehler beim Senden der Nachricht:', err);
+      }
     }
   }
 
