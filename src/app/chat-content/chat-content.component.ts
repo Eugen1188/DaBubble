@@ -105,16 +105,18 @@ constructor(){
   }
 
   getMessages(): void {
-    let docRef = this.getDocRef('channels', this.currentChannel.id);
-    if (docRef) {
-      this.unsubMessages = onSnapshot(docRef, (docSnap) => {
-        if (docSnap.exists()) {
-          this.messages = docSnap
-            .data()
-            ['messages'].map((m: Message) => new Message(m));
-        } else return;
-      });
-    }
+    //this.currentChannel.message.forEach(m => this.messages.map(m))
+    // };
+    // let docRef = this.getDocRef('channels', this.currentChannel.id);
+    // if (docRef) {
+    //   this.unsubMessages = onSnapshot(docRef, (docSnap) => {
+    //     if (docSnap.exists()) {
+    //       this.messages = docSnap
+    //         .data()
+    //         ['messages'].map((m: Message) => new Message(m));
+    //     } else return;
+    //   });
+    // }
   }
 
   buildMessageObject(): {} {
