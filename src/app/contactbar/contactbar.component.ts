@@ -28,9 +28,9 @@ export class ContactbarComponent {
   userID: string = '';
   currentChannel: any;
 
-  ngOnInit() {
-    this.loadUsers();
-    this.loadChannels();
+  async ngOnInit() {
+    await this.loadUsers();
+    await this.loadChannels();
 
     this.findCurrentUser();
   }
