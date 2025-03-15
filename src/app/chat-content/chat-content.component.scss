@@ -162,28 +162,26 @@ li {
     width: max-content;
 
     > button {
-      cursor: pointer;
       padding: 10px;
       border-radius: 50%;
       position: relative;
-      .menu {
-        position: absolute;
-        left: 30px;
-        top: 20px;
-        border-radius: 0 30px 30px 30px;
+    }
+    .menu {
+      position: absolute;
+      left: 243px;
+      top: 20px;
+      border-radius: 0 30px 30px 30px;
+      padding: 10px 20px;
+      background-color: white;
+      button {
         padding: 10px 20px;
-        background-color: white;
-
-        button {
-          white-space: nowrap;
-          padding: 10px 20px;
-          border-radius: 25px;
-          transition: all, 0.125s ease-in-out;
-          font-size: 24px;
-          &:hover {
-            background-color: var(--bg-color);
-          }
-        }
+        border-radius: 25px;
+        font-size: 24px;
+      }
+      &:hover button {
+        background-color: var(--bg-color);
+        cursor: pointer;
+        scale: 1.02;
       }
     }
   }
@@ -220,11 +218,6 @@ li {
       flex-direction: row;
       align-items: center;
       gap: 8px;
-      button {
-        &:hover {
-          background-color: var(--bg-color);
-        }
-      }
     }
     background-color: var(--bg-color);
     .message-main {
@@ -294,6 +287,9 @@ button {
   border: none;
   outline: none;
   background-color: unset;
+  white-space: nowrap;
+  transition: all, 0.125s ease-in-out;
+  cursor: pointer;
 
   &:disabled {
     mat-icon {

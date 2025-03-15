@@ -36,6 +36,7 @@ export class ChatContentComponent implements OnInit {
   router: Router = inject(Router);
 
   loading: boolean = false;
+  menuOpen: boolean = false;
   channels: any = [];
   currentChannel: any = {};
 
@@ -124,7 +125,12 @@ export class ChatContentComponent implements OnInit {
     }, 0);
   }
 
+  toogleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
   editMessage(m: any, i: number) {
+    this.menuOpen = false;
     console.log(m, i);
   }
 

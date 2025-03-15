@@ -46,13 +46,14 @@
                             <img src="/img/reaction-bar-icons/comment.png" alt="">
                         </button>
                         <button *ngIf="message.name == this.userService.auth.currentUser?.displayName"
-                            class="hover-to-dark-purple">
+                            class="hover-to-dark-purple" (click)="toogleMenu()">
                             <mat-icon>more_vert</mat-icon>
-                            <div class="menu">
-                                <button>Nachricht bearbeiten</button>
-                            </div>
-                        </button>
 
+                        </button>
+                        <div *ngIf="menuOpen && message.name == this.userService.auth.currentUser?.displayName"
+                            class="menu">
+                            <button (click)="editMessage(message,i)">Nachricht bearbeiten</button>
+                        </div>
                     </div>
                     <img [src]=" message.avatar " alt=" Avatar" />
 
