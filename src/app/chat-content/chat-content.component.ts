@@ -170,7 +170,6 @@ export class ChatContentComponent implements OnInit {
 
   updateMessage(message: any) {
     console.log('Nachricht aktualisiert:', message);
-
     this.isEditing = false;
     this.editingMessageId = null;
   }
