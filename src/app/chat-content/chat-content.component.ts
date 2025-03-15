@@ -54,6 +54,7 @@ export class ChatContentComponent implements OnInit {
   input: string = '';
 
   async ngOnInit() {
+    this.startChannel();
     // if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
     this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
       this.startChannel();
