@@ -29,7 +29,7 @@
 
                 <li class="message"
                     [ngClass]="{ 'reverse' : message.name == this.userService.auth.currentUser?.displayName}">
-                    <div class="reaction-bar">
+                    <div *ngIf="!isEditing" class="reaction-bar">
                         <button>
                             <img src="/img/reaction-bar-icons/checked.png" alt="">
                         </button>

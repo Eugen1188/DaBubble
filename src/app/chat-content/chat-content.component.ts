@@ -17,12 +17,14 @@ import {
   onSnapshot,
   collection,
   doc,
+  addDoc,
 } from '@angular/fire/firestore';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -96,29 +98,68 @@ export class ChatContentComponent implements OnInit {
   }
 
   getMessages(): void {
-    //this.currentChannel.message.forEach(m => this.messages.map(m))
-    // };
-    // let docRef = this.getDocRef('channels', this.currentChannel.id);
-    // if (docRef) {
-    //   this.unsubMessages = onSnapshot(docRef, (docSnap) => {
-    //     if (docSnap.exists()) {
-    //       this.messages = docSnap
-    //         .data()
-    //         ['messages'].map((m: Message) => new Message(m));
-    //     } else return;
-    //   });
-    // }
+    let messagesRef = this.getCollectionRef(
+      `channels/${this.currentChannel.id}/messages`
+    );
+    if (messagesRef) {
+      this.unsubMessages = onSnapshot(messagesRef, (snapshot) => {
+        this.messages = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log(this.messages);
+      });
+    }
+    return;
   }
 
-  buildMessageObject(): {} {
-    return {
-      message: this.input || '',
-      avatar: this.userService.user?.photoURL || '',
-      date: new Date().toISOString().split('T')[0],
-      name: this.userService.user?.displayName || 'Unbekannt',
-      newDay: this.isNewDay(),
-      time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
-    };
+  async newMessage() {
+    let messagesCollectionRef = this.getCollectionRef(
+      `channels/${this.currentChannel.id}/messages`
+    );
+
+    if (messagesCollectionRef) {
+      this.loading = true;
+      await addDoc(
+        messagesCollectionRef,
+        new Message(this.buildMessageObject()).toJSON()
+      )
+        .then(() => {
+          this.loading = false;
+          this.scrollToBottom();
+          this.input = '';
+        })
+        .catch((err) => console.error(err));
+    }
+  }
+
+  editMessage(message: any, index: number) {
+    this.menuOpen = false;
+    this.isEditing = true;
+    this.editingMessageId = index;
+    this.inputEdit = message.message;
+  }
+
+  async updateMessage(message: any) {
+    let messageRef = this.getDocRef(
+      `channels/${this.currentChannel.id}/messages`,
+      message.id
+    );
+
+    if (messageRef) {
+      this.isEditing = false;
+      this.editingMessageId = null;
+
+      try {
+        await updateDoc(messageRef, {
+          message: this.inputEdit,
+        });
+        console.log('Nachricht erfolgreich aktualisiert');
+        this.inputEdit = '';
+      } catch (error) {
+        console.error('Fehler beim Aktualisieren der Nachricht:', error);
+      }
+    }
   }
 
   isNewDay(): boolean {
@@ -137,20 +178,15 @@ export class ChatContentComponent implements OnInit {
     return today === messageDate;
   }
 
-  async newMessage() {
-    this.loading = true;
-    let docRef = this.getDocRef('channels', this.currentChannel.id);
-    if (docRef) {
-      await updateDoc(docRef, {
-        messages: arrayUnion(new Message(this.buildMessageObject()).toJSON()),
-      })
-        .then(() => {
-          this.loading = false;
-          this.scrollToBottom();
-          this.input = '';
-        })
-        .catch((err) => console.error(err));
-    }
+  buildMessageObject(): {} {
+    return {
+      message: this.input || '',
+      avatar: this.userService.user?.photoURL || '',
+      date: new Date().toISOString().split('T')[0],
+      name: this.userService.user?.displayName || 'Unbekannt',
+      newDay: this.isNewDay(),
+      time: (new Date().getHours() + ':' + new Date().getMinutes()).toString(),
+    };
   }
 
   scrollToBottom() {
@@ -164,22 +200,6 @@ export class ChatContentComponent implements OnInit {
 
   toogleMenu() {
     this.menuOpen = !this.menuOpen;
-  }
-
-  editMessage(message: any, index: number) {
-    console.log('Bearbeitung gestartet für Nachricht:', message);
-    console.log('Index der Nachricht:', index);
-    this.menuOpen = false;
-
-    this.isEditing = true;
-    this.editingMessageId = index;
-    this.inputEdit = message.message;
-  }
-
-  updateMessage(message: any) {
-    console.log('Nachricht aktualisiert:', message);
-    this.isEditing = false;
-    this.editingMessageId = null;
   }
 
   toggle() {

@@ -1,4 +1,4 @@
-import { Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 import { MainChatComponent } from './main-chat/main-chat.component';
@@ -15,13 +15,11 @@ import { DirectmessagesComponent } from './directmessages/directmessages.compone
 import { ImprintComponent } from './imprint/imprint.component';
 import { DataprotectionComponent } from './dataprotection/dataprotection.component';
 
-
-
 export const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'main', component: MaincomponentComponent },
   { path: 'signin', component: SigninComponent },
-  // { path: 'chat', component: MainChatComponent },
+  { path: 'chat', component: MainChatComponent },
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
@@ -33,5 +31,4 @@ export const routes: Routes = [
   { path: 'direct', component: DirectmessagesComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'Dataprotection', component: DataprotectionComponent },
-
 ];

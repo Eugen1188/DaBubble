@@ -11,11 +11,7 @@ import {
   providedIn: 'root',
 })
 export class FireServiceService {
-
-  constructor(private firestore: Firestore) {
-
-  }
-
+  constructor(private firestore: Firestore) {}
 
   getDocRef(ref: string, id: string) {
     return ref && id ? doc(this.firestore, ref, id) : null;
