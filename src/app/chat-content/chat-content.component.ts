@@ -52,9 +52,11 @@ export class ChatContentComponent implements OnInit {
 
   messages: any[] = [];
   input: string = '';
-
+constructor(){
+  this.startChannel();
+}
   async ngOnInit() {
-    this.startChannel();
+   
     // if (!this.userService.auth.currentUser) this.router.navigate(['/main']);
     this.subscription = this.userService.startLoadingChannel$.subscribe(() => {
       this.startChannel();

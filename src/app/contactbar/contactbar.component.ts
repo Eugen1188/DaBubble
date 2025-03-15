@@ -30,9 +30,10 @@ export class ContactbarComponent {
 
   currentChannel: any;
 
-  async ngOnInit() {
-    await this.loadUsers();
-    await this.loadChannels();
+  ngOnInit() {
+    this.loadUsers();
+    this.loadChannels();
+
     this.findCurrentUser();
   }
 

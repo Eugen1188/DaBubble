@@ -61,8 +61,4 @@ export class FireServiceService {
       throw error;
     }
   }
-
-  
-
-
 }
