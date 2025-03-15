@@ -5,30 +5,25 @@ import { Injectable } from '@angular/core';
 import { FireServiceService } from '../fire-service.service';
 import { UserService } from '../shared.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
-
 @Component({
   selector: 'app-contactbar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './contactbar.component.html',
-  styleUrl: './contactbar.component.scss'
+  styleUrl: './contactbar.component.scss',
 })
-
-
-
 export class ContactbarComponent {
-  constructor() { }
+  constructor() {}
   public channels: any[] = [];
   public users: any[] = [];
   active: boolean = false;
   message: boolean = false;
-  userService = inject(UserService)
+  userService = inject(UserService);
   firestore = inject(Firestore);
-  firestoreService = inject(FireServiceService)
+  firestoreService = inject(FireServiceService);
   currentUser: any;
   currentReciever: any;
   userID: string = '';
@@ -39,14 +34,13 @@ export class ContactbarComponent {
     await this.loadUsers();
     await this.loadChannels();
     this.findCurrentUser();
-
   }
 
   async loadUsers() {
     try {
       this.users = await this.firestoreService.getUsers();
     } catch (error) {
-      console.error("Error loading users in component:", error);
+      console.error('Error loading users in component:', error);
     }
   }
 
@@ -54,20 +48,19 @@ export class ContactbarComponent {
     try {
       this.channels = await this.firestoreService.getChannels();
     } catch (error) {
-      console.error("Error loading channels in component:", error);
+      console.error('Error loading channels in component:', error);
     }
   }
 
   findCurrentUser() {
     if (this.userService.user.uid) {
       this.userID = this.userService.user.uid;
-      this.currentUser = this.users.find(user => this.userID === user.id);
+      this.currentUser = this.users.find((user) => this.userID === user.id);
     } else {
+      console.log('users wurde nicht richtig geladen');
       console.log('user wurde nicht richtig geladen');
-
     }
   }
-
 
   openChannel(index: any) {
     this.currentChannel = this.channels[index];
@@ -75,21 +68,16 @@ export class ContactbarComponent {
   }
 
   openPersonalChat(index: any) {
-    this.currentReciever = this.users[index]
+    this.currentReciever = this.users[index];
     this.userService.getReciepent(this.currentReciever, this.currentUser);
-
   }
-
 
   toggleActive() {
     this.active = !this.active;
-
   }
 
   toggleMessage() {
     this.message = !this.message;
-
-
   }
 
   isOpen() {
@@ -101,6 +89,6 @@ export class ContactbarComponent {
   }
 
   openWindow(window: string) {
-    this.userService.loadComponent(window)
+    this.userService.loadComponent(window);
   }
 }
